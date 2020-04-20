@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            	<!-- CSS Files -->
+                {{encore_entry_link_tags('app')}}
+                <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+                <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+                <link rel="stylesheet" href="../assets/css/atlantis.min.css">
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+           	<div class="wrapper">
+        {% endblock %}
+        {% block javascripts %}
+        
+
+
+        {% endblock %}
+    </body>
+</html>

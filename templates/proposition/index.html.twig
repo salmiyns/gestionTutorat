@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Proposition index{% endblock %}
+
+{% block body %}
+    <h1>Proposition index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tuteur</th>
+                <th>Cours</th>
+                <th>Date_creation</th>
+                <th>Date_modification</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for proposition in propositions %}
+            <tr>
+                <td>{{ proposition.id }}</td>
+                <td>{{ proposition.Tuteur }}</td>
+                <td>{{ proposition.cours }}</td>
+                <td>{{ proposition.dateCreation ? proposition.dateCreation|date('Y-m-d') : '' }}</td>
+                <td>{{ proposition.dateModification ? proposition.dateModification|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('proposition_show', {'id': proposition.id}) }}">show</a>
+                    <a href="{{ path('proposition_edit', {'id': proposition.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('proposition_new') }}">Create new</a>
+{% endblock %}
