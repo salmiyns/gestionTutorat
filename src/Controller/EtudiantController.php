@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
- * @Security("is_granted('ROLE_PROF')")
  * @Route("/etudiant")
  */
 class EtudiantController extends AbstractController
@@ -23,14 +22,15 @@ class EtudiantController extends AbstractController
     {    
 
         
-        //etudiant/index.html.twig 
-        return $this->render('etudiant/index.html.twig', [
+        //etudiant/index.html.twig  index.html.twig  demo2.base.html.twig
+        return $this->render('/etudiant/index2.html.twig', [
             'etudiants' => $etudiantRepository->findAll(),
             'page_title'=>'Dashborad : Etudiant',
         ]);
     }
 
     /**
+     *  * @Security("is_granted('ROLE_PROF')")
      * @Route("/etudiant/new", name="etudiant_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
