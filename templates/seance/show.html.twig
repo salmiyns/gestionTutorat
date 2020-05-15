@@ -12,24 +12,20 @@
                 <td>{{ seance.id }}</td>
             </tr>
             <tr>
-                <th>Cours</th>
-                <td>{{ seance.cours }}</td>
+                <th>Titre</th>
+                <td>{{ seance.titre }}</td>
             </tr>
             <tr>
-                <th>Date</th>
-                <td>{{ seance.date ? seance.date|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Description</th>
+                <td>{{ seance.description }}</td>
             </tr>
             <tr>
-                <th>Classe</th>
-                <td>{{ seance.classe }}</td>
+                <th>Durée</th>
+                <td>{{ seance.durée }}</td>
             </tr>
             <tr>
-                <th>Objectif</th>
-                <td>{{ seance.objectif }}</td>
-            </tr>
-            <tr>
-                <th>Tuteur</th>
-                <td>{{ seance.tuteur }}</td>
+                <th>Temps</th>
+                <td>{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>

@@ -12,10 +12,13 @@ class PropositionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Tuteur')
-            ->add('cours')
+            ->add('titre')
+            ->add('description')
             ->add('date_creation')
             ->add('date_modification')
+            ->add('statut')
+            ->add('cours')
+            ->add('tuteur')
         ;
     }
 

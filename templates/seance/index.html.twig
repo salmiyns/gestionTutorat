@@ -9,11 +9,10 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Cours</th>
-                <th>Date</th>
-                <th>Classe</th>
-                <th>Objectif</th>
-                <th>Tuteur</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Durée</th>
+                <th>Temps</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,11 +20,10 @@
         {% for seance in seances %}
             <tr>
                 <td>{{ seance.id }}</td>
-                <td>{{ seance.cours }}</td>
-                <td>{{ seance.date ? seance.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ seance.classe }}</td>
-                <td>{{ seance.objectif }}</td>
-                <td>{{ seance.tuteur }}</td>
+                <td>{{ seance.titre }}</td>
+                <td>{{ seance.description }}</td>
+                <td>{{ seance.durée }}</td>
+                <td>{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('seance_show', {'id': seance.id}) }}">show</a>
                     <a href="{{ path('seance_edit', {'id': seance.id}) }}">edit</a>
@@ -33,7 +31,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

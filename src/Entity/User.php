@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\Cast\String_;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -69,6 +72,45 @@ class User implements UserInterface
      */
     private $status;
 
+
+    
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Enseignant", mappedBy="UserId", cascade={"persist", "remove"})
+     */
+    private $enseignant;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $sexe;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $about;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="UserId", orphanRemoval=true)
+     */
+    private $etudiants;
+
+    public function __construct()
+    {
+        $this->etudiants = new ArrayCollection();
+    }
+
+  
     public function getId(): ?int
     {
         return $this->id;
@@ -230,4 +272,125 @@ class User implements UserInterface
 
         return $this;
     }
+
+
+
+    public function getAvatarUrl(string $ext = null): string
+    {
+        $url = 'https://avatars.dicebear.com/v2/initials/'.$this->getFirstName()."%20".$this->getlastName();
+
+        
+        if ($ext) {
+            $url .= sprintf('.'.$ext);
+        }
+
+        return $url;
+    }
+   
+    
+    public function getEnseignant(): ?Enseignant
+    {
+        return $this->enseignant;
+    }
+
+    public function setEnseignant(Enseignant $enseignant): self
+    {
+        $this->enseignant = $enseignant;
+
+        // set the owning side of the relation if necessary
+        if ($enseignant->getUserId() !== $this) {
+            $enseignant->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(string $sexe): self
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getAbout(): ?string
+    {
+        return $this->about;
+    }
+
+    public function setAbout(?string $about): self
+    {
+        $this->about = $about;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Etudiant[]
+     */
+    public function getEtudiants(): Collection
+    {
+        return $this->etudiants;
+    }
+
+    public function addEtudiant(Etudiant $etudiant): self
+    {
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiant(Etudiant $etudiant): self
+    {
+        if ($this->etudiants->contains($etudiant)) {
+            $this->etudiants->removeElement($etudiant);
+            // set the owning side to null (unless already changed)
+            if ($etudiant->getUserId() === $this) {
+                $etudiant->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
+    
+
+   
+    
+
+
+    
+    
 }

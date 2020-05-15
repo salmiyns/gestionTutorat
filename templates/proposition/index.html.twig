@@ -1,41 +1,195 @@
-{% extends 'base.html.twig' %}
+
+{% extends "demo9.base.html.twig" %}
 
 {% block title %}Proposition index{% endblock %}
 
 {% block body %}
-    <h1>Proposition index</h1>
+    {% block mainheader %}
+    {{ parent() }}  
+    {% endblock %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tuteur</th>
-                <th>Cours</th>
-                <th>Date_creation</th>
-                <th>Date_modification</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for proposition in propositions %}
-            <tr>
-                <td>{{ proposition.id }}</td>
-                <td>{{ proposition.Tuteur }}</td>
-                <td>{{ proposition.cours }}</td>
-                <td>{{ proposition.dateCreation ? proposition.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>{{ proposition.dateModification ? proposition.dateModification|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('proposition_show', {'id': proposition.id}) }}">show</a>
-                    <a href="{{ path('proposition_edit', {'id': proposition.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% block content %}
+     
+           <div class="main-panel py-lg-4">
+			<div class="container container-full">
+				<div class="page-navs bg-white px-3">
+					<div class="nav-scroller">
+						<div class="nav nav-tabs nav-line nav-color-secondary">
+							<a class="nav-link active show" data-toggle="tab" href="#tab1">Tous
+								<span class="count ml-1">({{ propositions.getTotalItemCount }})</span>
+							</a>
+							<a class="nav-link" data-toggle="tab" href="#tab2">Propostions Validéés <span class="count ml-1">{# {{ propositionByStatut.getTotalItemCount }} #}</span></a>
+							<a class="nav-link" data-toggle="tab" href="#tab3">Propostions Rajetées <span class="count ml-1">(27)</span></a>
+						</div>
+					</div>
+				</div>
+			
+			
 
-    <a href="{{ path('proposition_new') }}">Create new</a>
+
+				<div class="page-inner mt-md-3 bg-white ">
+					<div class="row">
+					   <!--  Tabs Section -->
+						 
+							<div class="col-md-12">
+								<div class="d-flex justify-content-between ">
+									<div class="d-md-inline-block ">
+									<form>
+										<div class="input-group">
+											<div class="input-group-prepend">
+										<button type="submit" class="btn btn-search">
+											<i class="fa fa-search search-icon"></i>
+										</button>
+									</div>
+											<input type="text" class="form-control" aria-label="Text input with dropdown button" name="q" value="{{ app.request.query.get('q') }}">
+											<div class="input-group-append">
+												<button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#">Afficher</a>
+													<a class="dropdown-item" href="#">Modifier</a>
+													<div role="separator" class="dropdown-divider"></div>
+													<a class="dropdown-item" href="#">Suprimer </a>
+												</div>
+											</div>
+										</div>
+									</form>
+									</div>
+									<button type="button" class="btn btn-success d-none d-sm-inline-block">Nouvelle proposition</button>
+								</div>
+								{% for proposition in propositions %}
+
+								{% if app.user.id == proposition.PropositionUserId  %}
+									
+									{% if proposition.statut == 'valide'  %}							    
+											{% set propositionValide = proposition
+											%}
+									{% endif %}
+
+									{% set ActionsBtns = { ActionModifier: { Title: "Modifier", url: "#" },
+														ActionSuprimer: { Title: "Suprimer", url: "#" }, 
+														} 
+									%}
+									{% set Style = 'border: 1px dashed; border-top: 7px solid;' %}
+									{% set faClass = 'far fa-edit' %}
+										
+
+									
+								
+								
+								
+								{% else %}
+								{% set ActionsBtns = '' %}	
+								{% set faClass = 'fa-star' %}
+								{% set Style = '' %}	
+
+								
+								{% endif %}
+								<section class="card mt-4 " Style ="{{ Style }}">
+									<div class="list-group list-group-messages list-group-flush">
+										<div class="list-group-item unread">
+											<div class="list-group-item-figure">
+												<span class="rating rating-sm mr-3">
+													<input type="checkbox" id="star{{ proposition.id }}" value="{{ proposition.id }}">
+													<label for="star{{ proposition.id }}">
+														<span class="fa {{ faClass }}"></span>
+													</label>
+												</span>										
+											</div>
+											<div class="list-group-item-body pl-3 pl-md-4">
+												<div class="row">
+													<div class="col-12 col-lg-10">
+														<h4 class="list-group-item-title">
+															<a href="conversations.html">
+															{{ proposition.titre }}</a>
+														</h4>
+														<p class="list-group-item-text text-truncate">{{ proposition.description }} </p>
+													</div>
+													<div class="col-12 col-lg-2 text-lg-right">
+														<p class="list-group-item-text"> {{ proposition.dateCreation ? proposition.dateCreation|date('Y-m-d') : '' }} </p>
+														<div class="avatar-lg float-right"><img src="https://avatars.dicebear.com/v2/initials/{{ proposition.CreatedBy_lastName }}%20{{ proposition.CreatedBy_firstName }}.svg" alt="image profile" class="avatar-img rounded"></div>
+													</div>
+												</div>
+											</div>
+											<div class="list-group-item-figure">
+												<div class="dropdown">
+													<button class="btn-dropdown" data-toggle="dropdown">
+														<i class="icon-options-vertical"></i>
+													</button>
+													<div class="dropdown-arrow"></div>
+													<div class="dropdown-menu dropdown-menu-right">
+													<a href="#" class="dropdown-item">Afficher</a>
+													{% for action in ActionsBtns %}
+															<a href="#" class="dropdown-item"> {{ action.Title }} </a>
+													{% endfor %}
+													
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+								</section>
+								{% else %}                                    
+								<section class="card mt-4">
+								
+								<p class="text-danger"> Aucune proposition trouvée </p>
+								</section>
+								{% endfor %}
+
+								<div class="mt-1 mb-2">
+									<p class="text-muted"> Affiche 1 à 10 de {{ propositions.getTotalItemCount }} entrées  </p>
+
+									<ul class="pagination justify-content-center mb-5 mb-sm-0">
+										
+										
+										<li class="page-item">
+											{{ knp_pagination_render(propositions, null, {}, {
+										'position': 'right',
+										'size': 'small',
+										'rounded': true,
+									}) }}
+										</li>
+										
+										
+									</ul>
+								</div>
+							</div>
+						 
+						
+						
+						<div class="tab-pane fade" id="dropdown2">
+							<p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
+						</div>
+						<!-- End Tabs Section -->
+
+
+					</div>
+				</div>
+
+				 
+			</div>
+		</div>
+
+	{% block footer %}
+      {{ parent() }}  
+    {% endblock %}
+
+
+    {% block javascripts %}
+            {{ parent() }}
+    {% endblock %}
+
+
+   
+
+
+
+           
+           
+  {% endblock %}
+
+    
+
+
 {% endblock %}

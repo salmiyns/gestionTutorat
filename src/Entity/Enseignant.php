@@ -17,23 +17,41 @@ class Enseignant
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
-    private $user_id;
+    private $Titre;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="enseignant", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $UserId;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?int
+    public function getTitre(): ?string
     {
-        return $this->user_id;
+        return $this->Titre;
     }
 
-    public function setUserId(int $user_id): self
+    public function setTitre(string $Titre): self
     {
-        $this->user_id = $user_id;
+        $this->Titre = $Titre;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->UserId;
+    }
+
+    public function setUserId(User $UserId): self
+    {
+        $this->UserId = $UserId;
 
         return $this;
     }

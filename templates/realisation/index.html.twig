@@ -9,6 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Titre</th>
+                <th>Desicription</th>
                 <th>Date_creation</th>
                 <th>Date_modification</th>
                 <th>actions</th>
@@ -18,6 +20,8 @@
         {% for realisation in realisations %}
             <tr>
                 <td>{{ realisation.id }}</td>
+                <td>{{ realisation.titre }}</td>
+                <td>{{ realisation.desicription }}</td>
                 <td>{{ realisation.dateCreation ? realisation.dateCreation|date('Y-m-d') : '' }}</td>
                 <td>{{ realisation.dateModification ? realisation.dateModification|date('Y-m-d') : '' }}</td>
                 <td>
@@ -27,7 +31,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

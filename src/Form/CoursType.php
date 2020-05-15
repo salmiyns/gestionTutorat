@@ -16,11 +16,12 @@ class CoursType extends AbstractType
             ->add('description')
             ->add('objectif')
             ->add('tag')
-            ->add('logiciel_requise')
+            ->add('competences_req')
             ->add('niveau')
             ->add('image')
             ->add('date_creation')
             ->add('dernier_modification')
+            ->add('proposition')
         ;
     }
 

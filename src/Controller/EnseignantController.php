@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Enseignant;
 use App\Form\EnseignantType;
 use App\Repository\EnseignantRepository;
+use App\Repository\EtudiantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,17 @@ class EnseignantController extends AbstractController
     {
         return $this->render('enseignant/index.html.twig', [
             'enseignants' => $enseignantRepository->findAll(),
+        ]);
+    }
+
+
+        /**
+     * @Route("/etudiants", name="etudiants", methods={"GET"})
+     */
+    public function ListEtudiant(EtudiantRepository $etudiantRepository): Response
+    {
+        return $this->render('etudiant/index.html.twig', [
+            'etudiants' => $etudiantRepository->findAll(),
         ]);
     }
 

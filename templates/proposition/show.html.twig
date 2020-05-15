@@ -12,12 +12,12 @@
                 <td>{{ proposition.id }}</td>
             </tr>
             <tr>
-                <th>Tuteur</th>
-                <td>{{ proposition.Tuteur }}</td>
+                <th>Titre</th>
+                <td>{{ proposition.titre }}</td>
             </tr>
             <tr>
-                <th>Cours</th>
-                <td>{{ proposition.cours }}</td>
+                <th>Description</th>
+                <td>{{ proposition.description }}</td>
             </tr>
             <tr>
                 <th>Date_creation</th>
@@ -26,6 +26,10 @@
             <tr>
                 <th>Date_modification</th>
                 <td>{{ proposition.dateModification ? proposition.dateModification|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ proposition.statut }}</td>
             </tr>
         </tbody>
     </table>

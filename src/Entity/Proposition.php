@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,14 +19,14 @@ class Proposition
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
-    private $Tuteur;
+    private $titre;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $cours;
+    private $description;
 
     /**
      * @ORM\Column(type="date")
@@ -36,31 +38,58 @@ class Proposition
      */
     private $date_modification;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Cours", inversedBy="proposition", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cours;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tuteur", inversedBy="propositions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tuteur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Realisation", mappedBy="proposition", orphanRemoval=true)
+     */
+    private $realisations;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $statut;
+
+    public function __construct()
+    {
+        $this->realisations = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTuteur(): ?int
+    public function getTitre(): ?string
     {
-        return $this->Tuteur;
+        return $this->titre;
     }
 
-    public function setTuteur(int $Tuteur): self
+    public function setTitre(string $titre): self
     {
-        $this->Tuteur = $Tuteur;
+        $this->titre = $titre;
 
         return $this;
     }
 
-    public function getCours(): ?int
+    public function getDescription(): ?string
     {
-        return $this->cours;
+        return $this->description;
     }
 
-    public function setCours(int $cours): self
+    public function setDescription(?string $description): self
     {
-        $this->cours = $cours;
+        $this->description = $description;
 
         return $this;
     }
@@ -85,6 +114,73 @@ class Proposition
     public function setDateModification(\DateTimeInterface $date_modification): self
     {
         $this->date_modification = $date_modification;
+
+        return $this;
+    }
+
+    public function getCours(): ?Cours
+    {
+        return $this->cours;
+    }
+
+    public function setCours(Cours $cours): self
+    {
+        $this->cours = $cours;
+
+        return $this;
+    }
+
+    public function getTuteur(): ?Tuteur
+    {
+        return $this->tuteur;
+    }
+
+    public function setTuteur(?Tuteur $tuteur): self
+    {
+        $this->tuteur = $tuteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Realisation[]
+     */
+    public function getRealisations(): Collection
+    {
+        return $this->realisations;
+    }
+
+    public function addRealisation(Realisation $realisation): self
+    {
+        if (!$this->realisations->contains($realisation)) {
+            $this->realisations[] = $realisation;
+            $realisation->setProposition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealisation(Realisation $realisation): self
+    {
+        if ($this->realisations->contains($realisation)) {
+            $this->realisations->removeElement($realisation);
+            // set the owning side to null (unless already changed)
+            if ($realisation->getProposition() === $this) {
+                $realisation->setProposition(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
 
         return $this;
     }

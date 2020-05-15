@@ -12,9 +12,8 @@ class DemandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id_etudiant')
-            ->add('date_creation')
-            ->add('date_modification')
+            ->add('tutore')
+            ->add('cours')
         ;
     }
 

@@ -1,158 +1,37 @@
-{% extends "demo2.base.html.twig" %}
-                         
-                         
-                         
-{% block content %}
-						<div class="col-md-12">
-							<div class="card">
-                                <div class="card-header">
-									<div class="d-flex align-items-center">
-								1			<h4 class="card-title">List des etudiants </h4>
-										<a class="btn btn-primary btn-round ml-auto" href ="{{ path('etudiant_new') }}" >
-											<i class="fa fa-plus"></i>
-											Add Row
-										</a>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="table-responsive">
-										<table id="multi-filter-select" class="display table table-striped table-hover" >
-							                <thead>
-							                    <tr>
-							                        <th>Id</th>
-							                        <th>User_id</th>
-							                        <th>Matricule</th>
-							                        <th>Filiere</th>
-							                        <th>actions</th>
-							                    </tr>
-							                </thead>
-											<tfoot>
-												<tr>
-												    <th>Id</th>
-							                        <th>User_id</th>
-							                        <th>Matricule</th>
-							                        <th>Filiere</th>
-							                        <th>actions</th>
-												</tr>
-											</tfoot>  
-							                <tbody>
-							                {% for etudiant in etudiants %}
-							                    <tr>
-							                        <td>{{ etudiant.id }}</td>
-							                        <td>{{ etudiant.userId }}</td>
-							                        <td>{{ etudiant.matricule }}</td>
-							                        <td>{{ etudiant.filiere }}</td>
-							                        <td>
-                                                        
-							                            <a href="{{ path('etudiant_show', {'id': etudiant.id}) }}"><i class="far fa-eye"></i></a>
-                                                        <a href="{{ path('etudiant_edit', {'id': etudiant.id}) }}"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Modifier" aria-describedby="tooltip754208">
-																<i class="fa fa-edit"></i>
-														</a>
-							                        </td>
-							                    </tr>
-							                {% else %}
-							                    <tr>
-							                        <td colspan="5">no records found</td>
-							                    </tr>
-							                {% endfor %}
-							                </tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>				<div class="page-inner">
-					<div class="row justify-content-center">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>User_id</th>
-                        <th>Matricule</th>
-                        <th>Filiere</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for etudiant in etudiants %}
-                    <tr>
-                        <td>{{ etudiant.id }}</td>
-                        <td>{{ etudiant.userId }}</td>
-                        <td>{{ etudiant.matricule }}</td>
-                        <td>{{ etudiant.filiere }}</td>
-                        <td>
-                            <a href="{{ path('etudiant_show', {'id': etudiant.id}) }}">show</a>
-                            <a href="{{ path('etudiant_edit', {'id': etudiant.id}) }}">edit</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5">no records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+{% extends 'base.html.twig' %}
 
-            <a href="{{ path('etudiant_new') }}">Create new</a>
+{% block title %}Etudiant index{% endblock %}
 
-					</div> 
-					
-				</div>
-			</div>
-{% endblock %}
+{% block body %}
+    <h1>Etudiant index</h1>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matricule</th>
+                <th>Filiere</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etudiant in etudiants %}
+            <tr>
+                <td>{{ etudiant.id }}</td>
+                <td>{{ etudiant.Matricule }}</td>
+                <td>{{ etudiant.filiere }}</td>
+                <td>
+                    <a href="{{ path('etudiant_show', {'id': etudiant.id}) }}">show</a>
+                    <a href="{{ path('etudiant_edit', {'id': etudiant.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-
-
-{% block javascripts %}
-{{ parent() }}
-<script src="{{ asset('build/js/plugin/datatables/datatables.min.js')}}"></script>
-
-	<script >
-		$(document).ready(function() {
-			$('#basic-datatables').DataTable({
-			});
-
-			$('#multi-filter-select').DataTable( {
-				"pageLength": 5,
-				initComplete: function () {
-					this.api().columns().every( function () {
-						var column = this;
-						var select = $('<select class="form-control"><option value=""></option></select>')
-						.appendTo( $(column.footer()).empty() )
-						.on( 'change', function () {
-							var val = $.fn.dataTable.util.escapeRegex(
-								$(this).val()
-								);
-
-							column
-							.search( val ? '^'+val+'$' : '', true, false )
-							.draw();
-						} );
-
-						column.data().unique().sort().each( function ( d, j ) {
-							select.append( '<option value="'+d+'">'+d+'</option>' )
-						} );
-					} );
-				}
-			});
-
-			// Add Row
-			$('#add-row').DataTable({
-				"pageLength": 5,
-			});
-
-			var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-			$('#addRowButton').click(function() {
-				$('#add-row').dataTable().fnAddData([
-					$("#addName").val(),
-					$("#addPosition").val(),
-					$("#addOffice").val(),
-					action
-					]);
-				$('#addRowModal').modal('hide');
-
-			});
-		});
-	</script>
+    <a href="{{ path('etudiant_new') }}">Create new</a>
 {% endblock %}

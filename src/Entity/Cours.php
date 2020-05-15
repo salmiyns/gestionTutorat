@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,24 +24,24 @@ class Cours
     private $nom_cours;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $objectif;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tag;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $logiciel_requise;
+    private $competences_req;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -52,14 +54,36 @@ class Cours
     private $image;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date")
      */
     private $date_creation;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date")
      */
     private $dernier_modification;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Proposition", mappedBy="cours", cascade={"persist", "remove"})
+     */
+    private $proposition;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Realisation", mappedBy="cours", orphanRemoval=true)
+     */
+    private $realisations;
+
+    public function __construct()
+    {
+        $this->realisations = new ArrayCollection();
+    }
+
+ 
+    
+
+    
+
+    
 
     public function getId(): ?int
     {
@@ -107,21 +131,21 @@ class Cours
         return $this->tag;
     }
 
-    public function setTag(string $tag): self
+    public function setTag(?string $tag): self
     {
         $this->tag = $tag;
 
         return $this;
     }
 
-    public function getLogicielRequise(): ?string
+    public function getCompetencesReq(): ?string
     {
-        return $this->logiciel_requise;
+        return $this->competences_req;
     }
 
-    public function setLogicielRequise(?string $logiciel_requise): self
+    public function setCompetencesReq(?string $competences_req): self
     {
-        $this->logiciel_requise = $logiciel_requise;
+        $this->competences_req = $competences_req;
 
         return $this;
     }
@@ -155,7 +179,7 @@ class Cours
         return $this->date_creation;
     }
 
-    public function setDateCreation(?\DateTimeInterface $date_creation): self
+    public function setDateCreation(\DateTimeInterface $date_creation): self
     {
         $this->date_creation = $date_creation;
 
@@ -167,10 +191,63 @@ class Cours
         return $this->dernier_modification;
     }
 
-    public function setDernierModification(?\DateTimeInterface $dernier_modification): self
+    public function setDernierModification(\DateTimeInterface $dernier_modification): self
     {
         $this->dernier_modification = $dernier_modification;
 
         return $this;
     }
+
+    public function getProposition(): ?Proposition
+    {
+        return $this->proposition;
+    }
+
+    public function setProposition(Proposition $proposition): self
+    {
+        $this->proposition = $proposition;
+
+        // set the owning side of the relation if necessary
+        if ($proposition->getCours() !== $this) {
+            $proposition->setCours($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Realisation[]
+     */
+    public function getRealisations(): Collection
+    {
+        return $this->realisations;
+    }
+
+    public function addRealisation(Realisation $realisation): self
+    {
+        if (!$this->realisations->contains($realisation)) {
+            $this->realisations[] = $realisation;
+            $realisation->setCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealisation(Realisation $realisation): self
+    {
+        if ($this->realisations->contains($realisation)) {
+            $this->realisations->removeElement($realisation);
+            // set the owning side to null (unless already changed)
+            if ($realisation->getCours() === $this) {
+                $realisation->setCours(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
+    
+
+    
 }

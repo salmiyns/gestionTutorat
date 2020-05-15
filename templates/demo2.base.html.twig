@@ -27,9 +27,10 @@
          <!-- End Styles and Layouts -->
 
 </head>
+ {% block body %}
 <body>
 	<div class="wrapper">
-		
+		{% block mainheader %}
 		<div class="main-header" data-background-color="purple">
 			<div class="nav-top">
 				<div class="container d-flex flex-row">
@@ -199,29 +200,27 @@
 								<li class="nav-item dropdown hidden-caret">
 									<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 										<div class="avatar-sm">
-											<img src="{{ asset('build/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
+											<img src="{{ app.user.avatarUrl("svg") }}" alt="..." class="avatar-img rounded-circle">
 										</div>
 									</a>
 									<ul class="dropdown-menu dropdown-user animated fadeIn">
 										<div class="dropdown-user-scroll scrollbar-outer">
 											<li>
 												<div class="user-box">
-													<div class="avatar-lg"><img src="{{ asset('build/img/profile.jpg')}}" alt="image profile" class="avatar-img rounded"></div>
+													<div class="avatar-lg"><img src="{{ app.user.avatarUrl("svg") }}" alt="image profile" class="avatar-img rounded"></div>
 													<div class="u-text">
-														<h4>Hizrian</h4>
-														<p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+														<h4>{{ app.user.firstName }} {{ app.user.lastName }}</h4>
+														<p class="text-muted"> {{ app.user.email }} </p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">Voir le Profile</a>
 													</div>
 												</div>
 											</li>
 											<li>
 												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#">My Profile</a>
-												<a class="dropdown-item" href="#">My Balance</a>
-												<a class="dropdown-item" href="#">Inbox</a>
+												<a class="dropdown-item" href="#"> Mon Profile</a>
 												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#">Account Setting</a>
+												<a class="dropdown-item" href="#">Paramètre du compte</a>
 												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#">Logout</a>
+												<a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
 											</li>
 										</div>
 									</ul>
@@ -307,7 +306,7 @@
 				</div>
 			</div>
 		</div>
-
+        {% endblock %}
 		<div class="main-panel">
 			<div class="container">
 				<div class="page-inner">
@@ -422,4 +421,5 @@
     <!-- End  JavaScrtipts   -->
 
 </body>
+{% endblock %}
 </html>

@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>User_id</th>
+                <th>Titre</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -17,7 +17,7 @@
         {% for enseignant in enseignants %}
             <tr>
                 <td>{{ enseignant.id }}</td>
-                <td>{{ enseignant.userId }}</td>
+                <td>{{ enseignant.Titre }}</td>
                 <td>
                     <a href="{{ path('enseignant_show', {'id': enseignant.id}) }}">show</a>
                     <a href="{{ path('enseignant_edit', {'id': enseignant.id}) }}">edit</a>

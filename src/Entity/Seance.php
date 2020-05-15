@@ -17,91 +17,92 @@ class Seance
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $cours;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $classe;
+    private $titre;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $objectif;
+    private $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $tuteur;
+    private $durée;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Realisation", inversedBy="seances")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $realisation;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $temps;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCours(): ?int
+    public function getTitre(): ?string
     {
-        return $this->cours;
+        return $this->titre;
     }
 
-    public function setCours(int $cours): self
+    public function setTitre(string $titre): self
     {
-        $this->cours = $cours;
+        $this->titre = $titre;
 
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDescription(): ?string
     {
-        return $this->date;
+        return $this->description;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDescription(string $description): self
     {
-        $this->date = $date;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getClasse(): ?string
+    public function getDurée(): ?string
     {
-        return $this->classe;
+        return $this->durée;
     }
 
-    public function setClasse(string $classe): self
+    public function setDurée(?string $durée): self
     {
-        $this->classe = $classe;
+        $this->durée = $durée;
 
         return $this;
     }
 
-    public function getObjectif(): ?string
+    public function getRealisation(): ?Realisation
     {
-        return $this->objectif;
+        return $this->realisation;
     }
 
-    public function setObjectif(string $objectif): self
+    public function setRealisation(?Realisation $realisation): self
     {
-        $this->objectif = $objectif;
+        $this->realisation = $realisation;
 
         return $this;
     }
 
-    public function getTuteur(): ?int
+    public function getTemps(): ?\DateTimeInterface
     {
-        return $this->tuteur;
+        return $this->temps;
     }
 
-    public function setTuteur(int $tuteur): self
+    public function setTemps(\DateTimeInterface $temps): self
     {
-        $this->tuteur = $tuteur;
+        $this->temps = $temps;
 
         return $this;
     }

@@ -12,7 +12,8 @@ class EnseignantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user_id')
+            ->add('Titre')
+            ->add('UserId')
         ;
     }
 

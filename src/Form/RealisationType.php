@@ -12,8 +12,12 @@ class RealisationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('titre')
+            ->add('desicription')
             ->add('date_creation')
             ->add('date_modification')
+            ->add('proposition')
+            ->add('cours')
         ;
     }
 

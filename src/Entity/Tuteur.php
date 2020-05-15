@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,24 +19,79 @@ class Tuteur
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="App\Entity\Etudiant", inversedBy="tuteur", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_etudiant;
+    private $IdEtudiant;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposition", mappedBy="tuteur", orphanRemoval=true)
+     */
+    private $propositions;
+
+    public function __construct()
+    {
+        $this->propositions = new ArrayCollection();
+    }
+
+    
+
+
+    
+
+
+    
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdEtudiant(): ?int
+    public function getIdEtudiant(): ?Etudiant
     {
-        return $this->id_etudiant;
+        return $this->IdEtudiant;
     }
 
-    public function setIdEtudiant(int $id_etudiant): self
+    public function setIdEtudiant(Etudiant $IdEtudiant): self
     {
-        $this->id_etudiant = $id_etudiant;
+        $this->IdEtudiant = $IdEtudiant;
 
         return $this;
     }
+
+    /**
+     * @return Collection|Proposition[]
+     */
+    public function getPropositions(): Collection
+    {
+        return $this->propositions;
+    }
+
+    public function addProposition(Proposition $proposition): self
+    {
+        if (!$this->propositions->contains($proposition)) {
+            $this->propositions[] = $proposition;
+            $proposition->setTuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposition(Proposition $proposition): self
+    {
+        if ($this->propositions->contains($proposition)) {
+            $this->propositions->removeElement($proposition);
+            // set the owning side to null (unless already changed)
+            if ($proposition->getTuteur() === $this) {
+                $proposition->setTuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
+
+
+    
 }

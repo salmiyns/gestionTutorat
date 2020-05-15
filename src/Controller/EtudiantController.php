@@ -2,14 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Cours;
 use App\Entity\Etudiant;
+use App\Entity\Proposition;
+use App\Entity\Seance;
+use App\Entity\User;
 use App\Form\EtudiantType;
+use App\Repository\CoursRepository;
 use App\Repository\EtudiantRepository;
+use App\Repository\PropositionRepository;
+use App\Repository\SeanceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 /**
  * @Route("/etudiant")
  */
@@ -18,20 +25,30 @@ class EtudiantController extends AbstractController
     /**
      * @Route("/", name="etudiant_index", methods={"GET"})
      */
-    public function index(EtudiantRepository $etudiantRepository): Response
-    {    
+    public function index(CoursRepository $coursRepository ,SeanceRepository $seanceRepository , PropositionRepository $propositionRepository  ): Response
+    {
+        //etudiant/index.html.twig
+        $cours= $coursRepository->findAll();
 
-        
-        //etudiant/index.html.twig  index.html.twig  demo2.base.html.twig
-        return $this->render('/etudiant/index2.html.twig', [
-            'etudiants' => $etudiantRepository->findAll(),
-            'page_title'=>'Dashborad : Etudiant',
+        if($this->getUser()){
+            $user = $this->getUser()->getEmail();
+        }
+        else{
+            $user  = "AnonymousUser";
+        }
+        return $this->render('etudiant/index1.html.twig', [
+            'cours' =>  $cours,
+            'propositionsNonValid' => $propositionRepository->findByStatut('rejetée') ,
+            'propositionsValid' => $propositionRepository->findByStatut('valide'),
+            'propositionsEnAttent' => $propositionRepository->findByStatut('rejetée'),
+            'user' => $user,
+
+            
         ]);
     }
 
     /**
-     *  * @Security("is_granted('ROLE_PROF')")
-     * @Route("/etudiant/new", name="etudiant_new", methods={"GET","POST"})
+     * @Route("/new", name="etudiant_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {

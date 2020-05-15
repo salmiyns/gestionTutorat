@@ -7,7 +7,8 @@ use App\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\Migrations\Version\Factory;
-class UserFixture extends BaseFixture
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+class UserFixture extends BaseFixture implements FixtureGroupInterface
 {
     private $passwordEncoder;
 
@@ -15,7 +16,10 @@ class UserFixture extends BaseFixture
     {
         $this->passwordEncoder = $passwordEncoder;
     }
-
+    public static function getGroups(): array
+    {
+        return ['UserFixture'];
+    }
     protected function loadData(ObjectManager $manager)
     {
         $this->createMany(10, 'main_users', function($i) use ($manager) {

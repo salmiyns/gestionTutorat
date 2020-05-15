@@ -9,9 +9,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Id_etudiant</th>
-                <th>Date_creation</th>
-                <th>Date_modification</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,9 +16,6 @@
         {% for demande in demandes %}
             <tr>
                 <td>{{ demande.id }}</td>
-                <td>{{ demande.idEtudiant }}</td>
-                <td>{{ demande.dateCreation ? demande.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>{{ demande.dateModification ? demande.dateModification|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('demande_show', {'id': demande.id}) }}">show</a>
                     <a href="{{ path('demande_edit', {'id': demande.id}) }}">edit</a>
@@ -29,7 +23,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="2">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -17,57 +17,43 @@ class Demande
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tutore", inversedBy="demandes")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_etudiant;
+    private $tutore;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cours", inversedBy="demandes")
+     * @ORM\JoinColumn(nullable=false)
+     * cascade={"persist"}
      */
-    private $date_creation;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $date_modification;
+    private $cours;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdEtudiant(): ?int
+    public function getTutore(): ?Tutore
     {
-        return $this->id_etudiant;
+        return $this->tutore;
     }
 
-    public function setIdEtudiant(int $id_etudiant): self
+    public function setTutore(?Tutore $tutore): self
     {
-        $this->id_etudiant = $id_etudiant;
+        $this->tutore = $tutore;
 
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getCours(): ?Cours
     {
-        return $this->date_creation;
+        return $this->cours;
     }
 
-    public function setDateCreation(\DateTimeInterface $date_creation): self
+    public function setCours(?Cours $cours): self
     {
-        $this->date_creation = $date_creation;
-
-        return $this;
-    }
-
-    public function getDateModification(): ?\DateTimeInterface
-    {
-        return $this->date_modification;
-    }
-
-    public function setDateModification(\DateTimeInterface $date_modification): self
-    {
-        $this->date_modification = $date_modification;
+        $this->cours = $cours;
 
         return $this;
     }
