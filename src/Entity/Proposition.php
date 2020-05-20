@@ -38,11 +38,8 @@ class Proposition
      */
     private $date_modification;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Cours", inversedBy="proposition", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $cours;
+  
+    
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tuteur", inversedBy="propositions")
@@ -60,9 +57,15 @@ class Proposition
      */
     private $statut;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Cours", mappedBy="proposition", orphanRemoval=true)
+     */
+    private $cours;
+
     public function __construct()
     {
         $this->realisations = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,17 +121,7 @@ class Proposition
         return $this;
     }
 
-    public function getCours(): ?Cours
-    {
-        return $this->cours;
-    }
-
-    public function setCours(Cours $cours): self
-    {
-        $this->cours = $cours;
-
-        return $this;
-    }
+    
 
     public function getTuteur(): ?Tuteur
     {
@@ -181,6 +174,37 @@ class Proposition
     public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cours[]
+     */
+    public function getCours(): Collection
+    {
+        return $this->cours;
+    }
+
+    public function addCour(Cours $cour): self
+    {
+        if (!$this->cours->contains($cour)) {
+            $this->cours[] = $cour;
+            $cour->setProposition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCour(Cours $cour): self
+    {
+        if ($this->cours->contains($cour)) {
+            $this->cours->removeElement($cour);
+            // set the owning side to null (unless already changed)
+            if ($cour->getProposition() === $this) {
+                $cour->setProposition(null);
+            }
+        }
 
         return $this;
     }

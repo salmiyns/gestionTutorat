@@ -63,15 +63,19 @@ class Cours
      */
     private $dernier_modification;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Proposition", mappedBy="cours", cascade={"persist", "remove"})
-     */
-    private $proposition;
+
+    
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Realisation", mappedBy="cours", orphanRemoval=true)
      */
     private $realisations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Proposition", inversedBy="cours")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $proposition;
 
     public function __construct()
     {
@@ -198,23 +202,8 @@ class Cours
         return $this;
     }
 
-    public function getProposition(): ?Proposition
-    {
-        return $this->proposition;
-    }
-
-    public function setProposition(Proposition $proposition): self
-    {
-        $this->proposition = $proposition;
-
-        // set the owning side of the relation if necessary
-        if ($proposition->getCours() !== $this) {
-            $proposition->setCours($this);
-        }
-
-        return $this;
-    }
-
+   
+    
     /**
      * @return Collection|Realisation[]
      */
@@ -242,6 +231,18 @@ class Cours
                 $realisation->setCours(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProposition(): ?Proposition
+    {
+        return $this->proposition;
+    }
+
+    public function setProposition(?Proposition $proposition): self
+    {
+        $this->proposition = $proposition;
 
         return $this;
     }

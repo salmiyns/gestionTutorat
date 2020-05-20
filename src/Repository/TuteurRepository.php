@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Tuteur;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +20,62 @@ class TuteurRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tuteur::class);
     }
+
+    
+    //  * @return Tuteur[] Returns an array of Tuteur objects
+    //  */
+  
+    public function findByConnectedUserId($userId)
+    
+    {
+         
+        return $this->createQueryBuilder('t')
+            //->addSelect('t.id')
+            ->leftJoin('t.IdEtudiant', 'etudiant')   
+            ->leftJoin('etudiant.UserId', 'user')     
+           ->andWhere('user.id= :val')
+           ->setParameter('val', $userId)
+            ->orderBy('t.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+         
+    }
+    
+    
+    public function findByConnectedUserId_Byqb($userId): QueryBuilder
+    {
+         
+        $qb= $this->createQueryBuilder('t')
+            //->addSelect('t.id')
+            ->leftJoin('t.IdEtudiant', 'etudiant')   
+            ->leftJoin('etudiant.UserId', 'user')     
+           ->andWhere('user.id= :val')
+           ->setParameter('val', $userId)
+            ->orderBy('t.id', 'ASC')
+           // ->setMaxResults(1)
+            //->getQuery()
+            //->getResult()
+        ;
+        return $qb;
+    }
+    // /**
+    //  * @return Tuteur[] Returns an array of Tuteur objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('t.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
 
     // /**
     //  * @return Tuteur[] Returns an array of Tuteur objects

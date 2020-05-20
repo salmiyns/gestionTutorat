@@ -1,11 +1,162 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}New Proposition{% endblock %}
+{% extends "demo9.base.html.twig" %}
+
+{% block title %}Creer un nouvelle Proposition{% endblock %}
 
 {% block body %}
-    <h1>Create new Proposition</h1>
+    {% block mainheader %}
+    {{ parent() }}  
+    {% endblock %}
 
-    {{ include('proposition/_form.html.twig') }}
+    {% block content %}
+     
+ <div class="main-panel">
+			<div class="container">
+				<div class="page-inner">
+                <div class="page-navs bg-white">
+					<div class="nav-scroller">
+						<div class="nav nav-tabs nav-line nav-color-secondary d-flex align-items-center justify-contents-center w-100">
+							<a class="nav-link active show" data-toggle="tab" href="#tab1">Ajouter Une Propostion : 
+								<span class="count ml-1"></span>
+							</a>
 
-    <a href="{{ path('proposition_index') }}">back to list</a>
+							
+                            
+						</div>
+					</div>
+				</div>
+                <div class="row">
+						<div class="col-md-12">
+							<div class="card card-space">
+                                <div class="card-body">
+									<div class="col-12 col-md-12">
+ 
+                                                {{ include('proposition/_form.html.twig') }}
+
+                                                <a href="{{ path('proposition_index') }}">back to list</a>
+ 
+                                    
+										</div>
+                                    
+								</div>
+								
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					 
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+ {% block footer %}
+      {{ parent() }}  
+    {% endblock %}
+
+
+    {% block javascripts %}
+                {{ parent() }}  
+	<script src="{{ asset('build/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+
+          	<script>
+		//== Class definition
+		var SweetAlert2Demo = function() {
+
+			//== Demos
+			var initDemos = function() {
+                
+                $('#dformSuprimer').submit(function(e) {
+					swal({
+						title: 'Êtes-vous sûr?',
+						text: "Vous ne pourrez pas revenir sur cela!",
+						type: 'warning',
+						buttons:{
+							cancel: {
+								visible: true,
+								text : 'Non, Anuller!',
+								className: 'btn btn-danger'
+							},        			
+							confirm: {
+								text : 'Oui, Supprimer',
+								className : 'btn btn-success'
+							}
+						}
+					}).then((willDelete) => {
+						if (willDelete) {
+							swal("Cette Proposition a été supprimé  ", {
+								icon: "success",
+								buttons : {
+									confirm : {
+										className: 'btn btn-success'
+									}
+								}
+							});
+						} else {
+							swal("Your imaginary file is safe!", {
+								buttons : {
+									confirm : {
+										className: 'btn btn-success'
+									}
+								}
+							});
+						}
+					});
+				})
+
+			};
+
+			return {
+				//== Init
+				init: function() {
+					initDemos();
+				},
+			};
+		}();
+
+		//== Class Initialization
+		jQuery(document).ready(function() {
+			SweetAlert2Demo.init();
+		});
+	</script>
+    {% endblock %}
+
+
+   
+
+
+
+           
+           
+  {% endblock %}
+
+    
+
+
 {% endblock %}

@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Exception\RetryableException;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TuteurRepository")
  */
-class Tuteur
+class Tuteur  
 {
     /**
      * @ORM\Id()
@@ -59,6 +60,8 @@ class Tuteur
         return $this;
     }
 
+
+
     /**
      * @return Collection|Proposition[]
      */
@@ -90,6 +93,11 @@ class Tuteur
         return $this;
     }
 
+    public function __toString() 
+        {
+            return (string) $this->id; 
+        }
+        
     
 
 
