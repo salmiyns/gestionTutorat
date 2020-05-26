@@ -178,6 +178,13 @@ class Proposition
         return $this;
     }
 
+    public function __toString()
+    {
+        return  $this->getTitre();
+    }
+
+
+
     /**
      * @return Collection|Cours[]
      */
@@ -208,4 +215,8 @@ class Proposition
 
         return $this;
     }
+
+
+    
+   
 }

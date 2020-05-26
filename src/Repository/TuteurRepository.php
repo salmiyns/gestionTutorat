@@ -43,7 +43,9 @@ class TuteurRepository extends ServiceEntityRepository
          
     }
     
-    
+    /**
+     * @return Tuteur[]
+     */
     public function findByConnectedUserId_Byqb($userId): QueryBuilder
     {
          

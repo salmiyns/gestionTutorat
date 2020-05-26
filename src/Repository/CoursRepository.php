@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cours;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +18,24 @@ class CoursRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Cours::class);
+    }
+
+
+    public function findAllBysearchTerm(?string $term): QueryBuilder
+    {   
+         $qb = $this->createQueryBuilder('c')
+        ;
+        if ($term) {
+            $qb->andWhere(' c.nom_cours	 LIKE :term OR c.description LIKE :term OR c.tag LIKE :term OR c.objectif LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('c.date_creation', 'DESC')
+            
+            
+        ;
     }
 
     // /**

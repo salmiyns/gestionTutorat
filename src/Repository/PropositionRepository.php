@@ -107,7 +107,56 @@ class PropositionRepository extends ServiceEntityRepository
             
         ;
     }
+   
+   
+    /**
+     * @return Proposition[]
+     */
 
+    public function findPropositionByTuteurId_qb($tuteur):QueryBuilder
+    {
+         
+        $qb= $this->createQueryBuilder('p')
+            //->addSelect('t.id')
+            ->leftJoin('p.tuteur', 'tuteur')   
+           // ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
+           // ->leftJoin('etudiant.UserId', 'user')     
+           ->andWhere('p.tuteur= :val')
+           ->setParameter('val', $tuteur)
+            ->orderBy('p.id', 'ASC')
+            //->setMaxResults(1)
+            //->getQuery()
+            //->getResult()
+        ;
+
+        return $qb;
+         
+    }
+
+
+        /**
+     * @return Proposition[]
+     */
+
+    public function findPropositionByTuteurId($tuteur)
+    {
+         
+        return  $this->createQueryBuilder('p')
+            //->addSelect('t.id')
+            ->leftJoin('p.tuteur', 'tuteur')   
+           // ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
+           // ->leftJoin('etudiant.UserId', 'user')     
+           ->andWhere('p.tuteur= :val')
+           ->setParameter('val', $tuteur)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
+        ;
+
+         
+         
+    }
 
     /*
     public function findOneBySomeField($value): ?Proposition
