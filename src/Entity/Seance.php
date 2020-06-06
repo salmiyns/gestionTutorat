@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeanceRepository")
@@ -18,18 +19,19 @@ class Seance
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Seance.titre.not_blank")
+     * @Assert\Length(min="10", minMessage="this value was too short")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
+     *  @Assert\Length(min="10")
      */
     private $description;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $durée;
+
+    
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Realisation", inversedBy="seances")
@@ -41,6 +43,11 @@ class Seance
      * @ORM\Column(type="date")
      */
     private $temps;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $duree;
 
     public function getId(): ?int
     {
@@ -71,18 +78,7 @@ class Seance
         return $this;
     }
 
-    public function getDurée(): ?string
-    {
-        return $this->durée;
-    }
-
-    public function setDurée(?string $durée): self
-    {
-        $this->durée = $durée;
-
-        return $this;
-    }
-
+ 
     public function getRealisation(): ?Realisation
     {
         return $this->realisation;
@@ -106,4 +102,19 @@ class Seance
 
         return $this;
     }
+
+    public function getDuree(): ?string
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(string $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+
+
 }

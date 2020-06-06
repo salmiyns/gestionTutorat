@@ -55,6 +55,32 @@ class CoursRepository extends ServiceEntityRepository
     }
     */
 
+   /**
+   * @return Cours[] Returns an array of Cours objects
+  */
+ 
+  public function find_Cours_ByTuteurId($tuteur)
+  {
+       
+      return  $this->createQueryBuilder('c')
+          //->addSelect('t.id')
+          ->leftJoin('c.proposition', 'proposition')   
+          ->leftJoin('proposition.tuteur', 'tuteur')   
+         // ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
+         // ->leftJoin('etudiant.UserId', 'user')     
+         ->andWhere('proposition.tuteur= :val')
+         ->setParameter('val', $tuteur)
+          ->orderBy('c.id', 'ASC')
+          ->setMaxResults(100)
+          ->getQuery()
+          ->getResult()
+      ;
+
+       
+       
+  }
+   
+
     /*
     public function findOneBySomeField($value): ?Cours
     {

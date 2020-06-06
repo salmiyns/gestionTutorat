@@ -37,12 +37,7 @@ class Realisation
      * @ORM\Column(type="date")
      */
     private $date_modification;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Proposition", inversedBy="realisations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $proposition;
+ 
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Cours", inversedBy="realisations")
@@ -59,6 +54,17 @@ class Realisation
      * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="realisation", orphanRemoval=true)
      */
     private $inscriptions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tuteur", inversedBy="realisations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tuteur;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date_fin;
 
     public function __construct()
     {
@@ -118,19 +124,7 @@ class Realisation
 
         return $this;
     }
-
-    public function getProposition(): ?Proposition
-    {
-        return $this->proposition;
-    }
-
-    public function setProposition(?Proposition $proposition): self
-    {
-        $this->proposition = $proposition;
-
-        return $this;
-    }
-
+ 
     public function getCours(): ?Cours
     {
         return $this->cours;
@@ -204,4 +198,35 @@ class Realisation
 
         return $this;
     }
+
+    public function getTuteur(): ?Tuteur
+    {
+        return $this->tuteur;
+    }
+
+    public function setTuteur(?Tuteur $tuteur): self
+    {
+        $this->tuteur = $tuteur;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->date_fin;
+    }
+
+    public function setDateFin(\DateTimeInterface $date_fin): self
+    {
+        $this->date_fin = $date_fin;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return  $this->getTitre();
+    }
+   
+
 }

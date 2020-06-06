@@ -1,4 +1,156 @@
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="row">
+     <div class="col-lg-12 pr-lg-0">
+
+        <div class="page-section">
+            <div class="list-group list-group-form">
+                <div class="list-group-item">
+                    <div class="form-group row align-items-center mb-0">
+                        {{ form_label(form.titre, null, {
+                            'label': 'Nom du Cours',
+                            'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                         }) }}
+                        <div class="col-sm-9">
+                              {{ form_widget(form.titre, {'attr': {'placeholder': 'Titre'}}
+                              
+                               )  }}
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="form-group row align-items-center mb-0">
+                        {{ form_label(form.description, null, {
+                            'label': 'Description',
+                            'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                         }) }}                        
+                        
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="form-group row align-items-center mb-0">
+                                           
+                        <div class="col-sm-12">
+                                {{ form_widget(form.description)  }}                        
+                        </div>
+                    </div>
+                </div>
+                
+                 
+                
+
+                        
+                     <div class="list-group-item">
+                            <div class="form-group row align-items-center mb-0">
+                                    <div class="col-sm-8">
+                                        {{ form_label(form.temps, null, {
+                                            'label': 'Date   du Seance',
+                                            'label_attr': {'class': 'form-label col-form-label col-sm-4'}
+                                        }) }}  
+                                    </div>
+
+                                                       
+                                <div class="col-sm-4">
+                                     {{ form_widget(form.temps,{
+                                                                'attr': {'class': 'form-control flatpickr-input active'
+
+                                                                }}
+
+
+                                            )  }}               
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                                   <div class="list-group-item">
+                            <div class="form-group row align-items-center mb-0">
+                                    <div class="col-sm-8">
+                                        {{ form_label(form.duree, null, {
+                                            'label': 'Durée Du Seance ',
+                                            'label_attr': {'class': 'form-label col-form-label col-sm-4'}
+                                        }) }}  
+                                    </div>
+
+
+                                    
+
+                                                       
+                                        <div class="col-sm-4">
+                                                    <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                                         
+
+                                                        {{ form_widget(form.duree,{
+                                                                                    'attr': {'class': 'form-control '
+
+                                                                                    }}
+
+
+                                                                )  }}  
+                                                        
+                                                         
+                                                    </div>  
+                                                
+                                        </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="list-group-item">
+                            <div class="form-group row align-items-center mb-0">
+                                {{ form_label(form.realisation, null, {
+                                    'label': 'Realisateur',
+                                    'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                }) }}                        
+                                <div class="col-sm-9">
+                                        {{ form_widget(form.realisation, {'attr': {'placeholder': 'Realisateur Resposable du Seance '}}
+                                        
+                                        )  }}                        
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                         
+
+
+
+
+             
+
+
+
+
+
+
+
+
+
+
+
+                         
+                          <div class="list-group-item">
+                            <div class="form-group row align-items-center mb-0">
+                                    <div class="col-sm-9">
+                                        <a href="{{ path('realisation_index') }}">Retour à la liste</a>
+                                    </div>
+                                                      
+                                <div class="col-sm-3">
+                                      <button class="btn btn btn-accent">{{ button_label|default('Enregistrer') }}</button>                     
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+
+    </div>
+   
+</div>
+
 {{ form_end(form) }}

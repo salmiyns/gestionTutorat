@@ -60,15 +60,11 @@ class CoursFixtures  extends BaseFixture implements FixtureGroupInterface
             $tuteur = new Tuteur();
             $tuteur->setIdEtudiant($etudiant);
           
-            $cours = new Cours();
-            $cours->setDescription($this->faker->text());
-            $cours->setNomCours($this->faker->text());
-            $cours->setDateCreation($this->faker->dateTimeAD);
-            $cours->setDernierModification($this->faker->dateTimeAD);
+    
 
             $proposition = new Proposition();
             $proposition->setTuteur($tuteur);
-            $proposition->setTitre($this->faker->text);
+            $proposition->setTitre($this->faker->realText($maxNbChars = 200, $indexSize = 2) );
             $proposition->setDescription($this->faker->text);
             $proposition->setDateCreation($this->faker->dateTimeAD);
             $proposition->setDateModification($this->faker->dateTimeAD);
@@ -79,7 +75,7 @@ class CoursFixtures  extends BaseFixture implements FixtureGroupInterface
             
 
             $cours = new Cours();            
-            $cours->setNomCours($this->faker->text);
+            $cours->setNomCours($this->faker->realText($maxNbChars = 200, $indexSize = 2));
             $cours->setDescription($this->faker->text);
             $cours->setObjectif($this->faker->text);
             $cours->setTag($this->faker->name);

@@ -38,6 +38,7 @@ class UserFixture extends BaseFixture implements FixtureGroupInterface
             $user->setRegistrationDate(null);
             $user->setStatus("1");
             $user->setRoles(['ROLE_ADMIN']);
+            
 
             return $user;
         });

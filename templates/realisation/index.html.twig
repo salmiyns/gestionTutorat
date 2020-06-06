@@ -1,41 +1,660 @@
-{% extends 'base.html.twig' %}
+{% extends "huma.demo9.base.html.twig" %}
 
-{% block title %}Realisation index{% endblock %}
+{% block title %}Realisation{% endblock %}
 
 {% block body %}
-    <h1>Realisation index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Desicription</th>
-                <th>Date_creation</th>
-                <th>Date_modification</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for realisation in realisations %}
-            <tr>
-                <td>{{ realisation.id }}</td>
-                <td>{{ realisation.titre }}</td>
-                <td>{{ realisation.desicription }}</td>
-                <td>{{ realisation.dateCreation ? realisation.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>{{ realisation.dateModification ? realisation.dateModification|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('realisation_show', {'id': realisation.id}) }}">show</a>
-                    <a href="{{ path('realisation_edit', {'id': realisation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('realisation_new') }}">Create new</a>
-{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Realisation</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Realisation
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+                    <div class="row" role="tablist">
+                        <div class="col-auto d-flex flex-column">
+
+                        <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
+                            <input type="text" class="form-control pl-0" placeholder="Rechercher un cours" name="q" value="{{ app.request.query.get('q') }}">
+                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                         </form>
+ 
+                        </div>
+                        
+                        <div class="col-auto border-left">
+                            <a href="{{ path('realisation_new') }}" class="btn btn-accent">Nouvelle Realisation</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <!-- //   Page Content -->
+            
+				<div class="container-fluid page__container page__container page-section">
+                <div class="page-separator">
+                    <div class="page-separator__text">List des Realisations</div>
+                </div>
+                 {% block Content %}
+                <div class="row mb-lg-8pt">
+                        <div class="col-md-6">
+
+
+
+
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center mb-16pt">
+                                        <div class="flex">
+                                            <strong>Realisations Doit être livré cette semaine</strong>
+                                            <span class="text-20"></span>
+                                        </div>
+                                        <i class="material-icons text-50">more_horiz</i>
+                                    </div>
+
+                                    {% if   currentWeekRealisation.getTotalItemCount > 1 %}
+
+                                    <div class="alert alert-soft-warning mb-0 p-8pt">
+                                        <div class="d-flex align-items-start">
+                                            <div class="mr-8pt">
+                                                <i class="material-icons">error_outline</i>
+                                            </div>
+                                            <div class="flex">
+                                                <small class="text-100">attention ! Vous a avez {{ currentWeekRealisation.getTotalItemCount }} Realisation(s) à faire cette semaine.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     {% endif %}
+                                    
+
+                                 
+
+                                </div>
+
+                                <div class="list-group list-group-flush">
+  
+                              
+
+                                {% for realisation in currentWeekRealisation %}
+ 
+                                         <div class="list-group-item d-flex align-items-start p-16pt">
+                                        <div class="d-flex flex-column mr-16pt">
+                                            <small class="text-uppercase text-50">{{ realisation.date_fin ? realisation.date_fin|date('F') : '' }}</small>
+                                            <strong class="border-bottom-2 border-bottom-accent">{{ realisation.date_fin ? realisation.date_fin|date('d') : '' }}</strong>
+                                        </div>
+                                        <div class="flex col-md-10 col-lg-10">
+                                            <div class="mb-8pt"><a href="{{ path('realisation_show', {'id': realisation.id}) }}" ><strong>{{ realisation.titre }}</strong></a></div>
+
+
+
+
+
+                                            <p class="mb-0 text-50 text-muted text-ellipsis" style="overflo">{{ realisation.desicription|striptags|raw }}</p>
+                                            <a href="{{ path('realisation_show', {'id': realisation.id}) }}" class="text-70 text-underline">+ lire Plus</a>
+
+
+
+                                        </div>
+                                        <div class="dropdown ml-auto">
+                                                <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="{{ path('realisation_show', {'id': realisation.id}) }}" class="dropdown-item">Detailles</a>
+                                                    <a href="{{ path('realisation_edit', {'id': realisation.id}) }}" class="dropdown-item">Modifier</a>
+                                                    
+                                                </div>
+                                         </div>
+                                    </div>
+
+
+                                 {% else %}
+                                            <div class="alert alert-soft-warning mb-0 p-8pt">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="mr-8pt">
+                                                        <i class="material-icons">error_outline</i>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <small class="text-100">Aucune Realisations prévu cette semaine.</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                      
+                                      
+                                   {% endfor %}
+
+
+
+
+
+                                  
+
+
+                                 
+
+                                </div>
+
+
+                                {% if  currentWeekRealisation.getTotalItemCount  > 3   %}
+                                                    <div class="card p-8pt mb-0 d-inline-block">
+                                                        <ul class="pagination justify-content-start pagination-xsm m-0">	
+                                                                            <li class="page-item">
+
+
+                                                                                {{ knp_pagination_render(currentWeekRealisation, null, {}, {
+                                                                                    'position': 'center',
+                                                                                    'size': 'small',
+                                                                                    'rounded': true,
+                                                                                }) }}
+                                                                            </li>								
+                                                        </ul>
+                                                    </div>
+                                {% endif %}
+ 
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="col-md-6">
+
+
+
+
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center mb-16pt">
+                                        <div class="flex">
+                                            <strong>Seances Programmées  cette Semaine</strong>
+                                            <span class="text-20">(3)</span>
+                                        </div>
+                                        <i class="material-icons text-50">more_horiz</i>
+                                    </div>
+
+                                    <div class="alert alert-soft-warning mb-0 p-8pt">
+                                        <div class="d-flex align-items-start">
+                                            <div class="mr-8pt">
+                                                <i class="material-icons">error_outline</i>
+                                            </div>
+                                            <div class="flex">
+                                                <small class="text-100">Heads up! Q2 Report for 2018 has been released.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="list-group list-group-flush">
+
+                                    <div class="list-group-item d-flex align-items-start p-16pt">
+                                        <div class="d-flex flex-column mr-16pt">
+                                            <small class="text-uppercase text-50">FEB</small>
+                                            <strong class="border-bottom-2 border-bottom-accent">18</strong>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="mb-8pt"><strong>Promotional Advertising Specialty</strong></div>
+
+
+
+
+
+                                            <p class="mb-0 text-50">Differentiate and you stand out in a crowded marketplace. Present your uniqueness and ...</p>
+                                            <a href="" class="text-70 text-underline">read more</a>
+
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="list-group-item d-flex align-items-start p-16pt">
+                                        <div class="d-flex flex-column mr-16pt">
+                                            <small class="text-uppercase text-50">FEB</small>
+                                            <strong class="border-bottom-2 border-bottom-accent">17</strong>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="mb-8pt"><strong>Rebranding Strategy</strong></div>
+
+
+
+
+
+                                            <p class="mb-0 text-50">A good logo works in the simplest form. It is a memorable representation of your brand and ...</p>
+                                            <a href="" class="text-70 text-underline">read more</a>
+
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="list-group-item d-flex align-items-start p-16pt">
+                                        <div class="d-flex flex-column mr-16pt">
+                                            <small class="text-uppercase text-50">FEB</small>
+                                            <strong class="border-bottom-2 border-bottom-accent">11</strong>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="mb-8pt"><strong>Promotional Advertising Specialty</strong></div>
+
+
+
+
+
+
+
+                                            <a href="" class="d-flex align-items-center border-1 rounded mb-0 p-8pt">
+                                                <span class="mr-8pt p-8pt bg-secondary rounded" style="width: 40px; height: 40px;">
+                                                    <i class="material-icons icon-24pt text-white">file_download</i>
+                                                </span>
+                                                <span class="flex d-flex flex-column">
+                                                    <span class="text-100">Final Report.pdf</span>
+                                                    <span class="text-50 lh-1">1.3 Mb</span>
+                                                </span>
+                                                <span class="text-70 text-underline mr-8pt">download</span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="card-footer">
+
+                                    <ul class="pagination justify-content-start pagination-xsm m-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true" class="material-icons">chevron_left</span>
+                                                <span>Prev</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item dropdown">
+                                            <a class="page-link dropdown-toggle" data-toggle="dropdown" href="#" aria-label="Page">
+                                                <span>1</span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a href="" class="dropdown-item active">1</a>
+                                                <a href="" class="dropdown-item">2</a>
+                                                <a href="" class="dropdown-item">3</a>
+                                                <a href="" class="dropdown-item">4</a>
+                                                <a href="" class="dropdown-item">5</a>
+                                            </div>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span>Next</span>
+                                                <span aria-hidden="true" class="material-icons">chevron_right</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                      
+                      
+
+
+
+
+
+
+                        
+                        
+                    </div>
+
+
+
+
+
+
+                    
+
+
+
+
+
+
+                <div class="posts-cards mb-24pt">
+
+                <div class="row mb-lg-8pt">
+                        <div class="col-md-12">
+
+                           
+
+
+
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center mb-16pt">
+                                        <div class="flex">
+                                            <strong>Tous Les Realisations</strong>
+                                            <span class="text-20">(3)</span>
+                                        </div>
+                                        <i class="material-icons text-50">more_horiz</i>
+                                    </div>
+
+                                    <div class="alert alert-soft-warning mb-0 p-8pt">
+                                        <div class="d-flex align-items-start">
+                                            <div class="mr-8pt">
+                                                <i class="material-icons">error_outline</i>
+                                            </div>
+                                            <div class="flex">
+                                                <small class="text-100">Heads up! Q2 Report for 2018 has been released.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                           
+
+
+                                <div class="list-group list-group-flush">
+
+                                
+
+                                 {% for realisation in realisations %}
+                                 
+                                    <div class="list-group-item d-flex align-items-start p-16pt">
+                                        <div class="d-flex flex-column mr-16pt">
+                                            <small class="text-uppercase text-50">{{ realisation.date_creation ? realisation.date_creation|date('F') : '' }}</small>
+                                            <strong class="border-bottom-2 border-bottom-accent">{{ realisation.date_creation ? realisation.date_creation|date('d') : '' }}</strong>
+                                        </div>
+                                        <div class="flex col-md-10 col-lg-10">
+                                            <div class="mb-8pt"><a href="{{ path('realisation_show', {'id': realisation.id}) }}" ><strong>{{ realisation.titre }}</strong></a></div>
+
+
+
+
+
+                                            <p class="mb-0 text-50 text-muted text-ellipsis" style="overflo">{{ realisation.desicription|striptags|raw }}</p>
+                                            <a href="{{ path('realisation_show', {'id': realisation.id}) }}" class="text-70 text-underline">+ lire Plus</a>
+
+
+
+                                        </div>
+                                        <div class="dropdown ml-auto">
+                                                <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="{{ path('realisation_show', {'id': realisation.id}) }}" class="dropdown-item">Detailles</a>
+                                                    <a href="{{ path('realisation_edit', {'id': realisation.id}) }}" class="dropdown-item">Modifier</a>
+                                                    
+                                                </div>
+                                         </div>
+                                    </div>
+
+                                   {% else %}
+                                            <div class="alert alert-soft-warning mb-0 p-8pt">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="mr-8pt">
+                                                        <i class="material-icons">error_outline</i>
+                                                    </div>
+                                                    <div class="flex">
+                                                        <small class="text-100">Aucune Realisations prévu cette semaine.</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                      
+                                      
+                                   {% endfor %}
+
+                                       {% if  realisations|length > 3   %}
+                                                    <div class="card p-8pt mb-0 d-inline-block">
+                                                        <ul class="pagination justify-content-start pagination-xsm m-00">	
+                                                                            <li class="page-item">
+                                                                                {{ knp_pagination_render(realisations, null, {}, {
+                                                                                    'position': 'right',
+                                                                                    'size': 'small',
+                                                                                    'rounded': true,
+                                                                                }) }}
+                                                                            </li>								
+                                                        </ul>
+                                                    </div>
+                                        {% endif %}
+                                 </div>
+
+
+                                <div class="card-footer">
+
+                                    <ul class="pagination justify-content-start pagination-xsm m-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true" class="material-icons">chevron_left</span>
+                                                <span>Prev</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item dropdown">
+                                            <a class="page-link dropdown-toggle" data-toggle="dropdown" href="#" aria-label="Page">
+                                                <span>1</span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a href="" class="dropdown-item active">1</a>
+                                                <a href="" class="dropdown-item">2</a>
+                                                <a href="" class="dropdown-item">3</a>
+                                                <a href="" class="dropdown-item">4</a>
+                                                <a href="" class="dropdown-item">5</a>
+                                            </div>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span>Next</span>
+                                                <span aria-hidden="true" class="material-icons">chevron_right</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+                   
+                   
+
+                      
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+               
+               
+               
+               
+                </div>
+
+                
+            </div>
+            {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

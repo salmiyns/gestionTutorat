@@ -1,38 +1,313 @@
-{% extends 'base.html.twig' %}
+{% extends "huma.demo9.base.html.twig" %}
 
-{% block title %}Seance{% endblock %}
+{% block title %}Seances : Detailles {% endblock %}
+{% block stylesheets %}
+{{ parent() }}  
+        <!-- Flatpickr -->
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.rtl.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.rtl.css')}}" rel="stylesheet">
+    <!-- DateRangePicker -->
+     <link type="text/css" href="{{ asset('build/assets/vendor/daterangepicker.css')}}" rel="stylesheet">
+
+         <!-- Touchspin -->
+    <link type="text/css" href="{{ asset('build/assets/css/bootstrap-touchspin.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/bootstrap-touchspin.rtl.css')}}" rel="stylesheet">
+
+{% endblock %}
 
 {% block body %}
-    <h1>Seance</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ seance.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ seance.titre }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ seance.description }}</td>
-            </tr>
-            <tr>
-                <th>Durée</th>
-                <td>{{ seance.durée }}</td>
-            </tr>
-            <tr>
-                <th>Temps</th>
-                <td>{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('seance_index') }}">back to list</a>
 
-    <a href="{{ path('seance_edit', {'id': seance.id}) }}">edit</a>
 
-    {{ include('seance/_delete_form.html.twig') }}
-{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Seances</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Seances
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+                    <div class="row" role="tablist">
+                        <div class="col-auto d-flex flex-column">
+
+                        <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
+                            <input type="text" class="form-control pl-0" placeholder="Rechercher  une Seances" name="q" value="{{ app.request.query.get('q') }}">
+                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                         </form>
+ 
+                        </div>
+                        
+                        <div class="col-auto border-left">
+                            <a href="{{ path('seance_new') }}" class="btn btn-accent">Nouvelle Seances</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <!-- //   Page Content -->
+           
+           
+           <nav class="navbar navbar-expand-sm navbar-list border-bottom-2  py-sm-16pt">
+                <div class="container-fluid page__container">
+                    <ul class="nav navbar-nav w-100">
+                        <li class="nav-item navbar-list__item py-16pt py-sm-0">
+                            <a href="{{ path('seance_index') }}" class="btn btn-outline-primary btn-sm "><i class="material-icons icon--left">keyboard_backspace</i> Retour</a>
+                        </li>
+
+                        <li class="nav-item navbar-list__item py-16pt py-sm-0">
+                            <a href="{{ path('seance_edit', {'id': seance.id}) }}" class="btn btn-accent btn-sm">  Modifier</a>
+                        </li>
+
+                         <li class="nav-item navbar-list__item py-16pt py-sm-0">
+                            {{ include('seance/_delete_form.html.twig') }}
+                        </li>
+                        
+                    </ul>
+                </div>
+            </nav>
+            
+				<div class="container-fluid page__container page__container page-section">
+                 
+                 {% block Content %}
+
+                                     <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card mb-lg-0">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="flatpickrSample02" class="form-label">Date du Seance</label>
+                                        <input id="flatpickrSample02" type="text" class="d-none" placeholder="Flatpickr range example" data-toggle="flatpickr" data-flatpickr-mode="range" data-flatpickr-inline="true" value="{{ seance.temps ? seance.temps|date('Y-m-d H:i:s') : '' }}">
+                                    </div>
+                                    <div class="alert alert-light border-1 border-left-4 border-left-accent mb-0 p-8pt">
+                                        <div class="d-flex align-items-start">
+                                            <div class="mr-8pt">
+                                                <i class="material-icons text-50">error_outline</i>
+                                            </div>
+                                            <div class="flex">
+                                                <small>On <strong>January 9</strong>, there’s a shortage of iOS Developers. {{ seance.temps ? seance.temps|date('Y-m-d h:m:s') : '' }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <form>
+                                <div class="form-group">
+                                    <h1 class="h3 mb-2">{{ seance.titre }}</h1>                                   
+                                    
+                                </div>
+                                <div class="form-group mb-24pt">
+                                    <label for="Duree" class="form-label">Duree du Seance</label>
+                                    <input type="text" name="Duree" id="Duree" class="form-control" placeholder="{{ seance.duree }} H " disabled >
+                                </div>
+
+                                {{ seance.description|raw }}
+
+                                <p class="d-flex align-items-center">
+                                    <i class="material-icons text-accent mr-8pt">check_circle</i>
+                                    <small>You’re within your <strong>Anual Leave</strong> quota, which will reduce to <strong>15 days</strong>.</small>
+                                </p>
+
+                                 
+
+                                <button type="submit" class="btn btn-accent">Submit Request</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+               
+
+                
+            </div>
+            {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+                   <!-- DateRangePicker -->
+    <script src="{{ asset('build/assets/vendor/moment.min.js') }}"></script>
+    <script src="{{ asset('build/assets/vendor/daterangepicker.js') }}"></script>
+    <script src="{{ asset('build/assets/js/daterangepicker.js') }}"></script>
+
+    <!-- Touchspin -->
+    <script src="{{ asset('build/assets/vendor/jquery.bootstrap-touchspin.js') }}"></script>
+    <script src="{{ asset('build/assets/js/touchspin.js') }}"></script>
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 

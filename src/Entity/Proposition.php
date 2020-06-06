@@ -46,11 +46,7 @@ class Proposition
      * @ORM\JoinColumn(nullable=false)
      */
     private $tuteur;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Realisation", mappedBy="proposition", orphanRemoval=true)
-     */
-    private $realisations;
+ 
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -64,7 +60,6 @@ class Proposition
 
     public function __construct()
     {
-        $this->realisations = new ArrayCollection();
         $this->cours = new ArrayCollection();
     }
 
@@ -135,37 +130,8 @@ class Proposition
         return $this;
     }
 
-    /**
-     * @return Collection|Realisation[]
-     */
-    public function getRealisations(): Collection
-    {
-        return $this->realisations;
-    }
-
-    public function addRealisation(Realisation $realisation): self
-    {
-        if (!$this->realisations->contains($realisation)) {
-            $this->realisations[] = $realisation;
-            $realisation->setProposition($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRealisation(Realisation $realisation): self
-    {
-        if ($this->realisations->contains($realisation)) {
-            $this->realisations->removeElement($realisation);
-            // set the owning side to null (unless already changed)
-            if ($realisation->getProposition() === $this) {
-                $realisation->setProposition(null);
-            }
-        }
-
-        return $this;
-    }
-
+  
+    
     public function getStatut(): ?string
     {
         return $this->statut;

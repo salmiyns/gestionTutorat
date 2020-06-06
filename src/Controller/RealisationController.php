@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Proposition;
 use App\Entity\Realisation;
+use App\Entity\Tuteur;
 use App\Form\RealisationType;
+use App\Repository\PropositionRepository;
 use App\Repository\RealisationRepository;
+use App\Repository\TuteurRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,23 +23,60 @@ class RealisationController extends AbstractController
     /**
      * @Route("/", name="realisation_index", methods={"GET"})
      */
-    public function index(RealisationRepository $realisationRepository): Response
+    public function index(RealisationRepository $realisationRepository ,Request $request,PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser()->getId();
+        
+        
+         
+        $queryBuilder = $realisationRepository->findByUserId($user); 
+        $queryBuilder_RealisationsOf_currentWeek = $realisationRepository->findByUserId_currentWeek($user); 
+
+    
+        //dd($queryBuilder_RealisationsOf_currentWeek);
+
+
+        $realisation = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );    
+        
+        
+
+        $currentWeekRealisation = $paginator->paginate(
+            $queryBuilder_RealisationsOf_currentWeek, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            3/*limit per page*/
+        );  
+
         return $this->render('realisation/index.html.twig', [
-            'realisations' => $realisationRepository->findAll(),
+            'realisations' => $realisation,
+            'currentWeekRealisation' => $currentWeekRealisation,
         ]);
     }
 
     /**
      * @Route("/new", name="realisation_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request , TuteurRepository $tuteurRepository ,PropositionRepository $propositionRepository ): Response
     {
-        $realisation = new Realisation();
+        $user = $this->getUser();
+       
+        
+         $realisation = new Realisation();
+
+         $tuteur = $tuteurRepository->findByConnectedUserId($user);
+
         $form = $this->createForm(RealisationType::class, $realisation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $realisation->setDateCreation(new \DateTime());
+            $realisation->setDateModification(new \DateTime());
+            $realisation->setTuteur($tuteur[0]);
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($realisation);
             $entityManager->flush();

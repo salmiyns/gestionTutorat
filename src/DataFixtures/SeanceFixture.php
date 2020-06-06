@@ -48,6 +48,7 @@ class SeanceFixture extends BaseFixture implements FixtureGroupInterface
             $user->setRegistrationDate(null);
             $user->setStatus("1");
             $user->setRoles(['ROLE_Enseignant']);
+            $user->setSexe('Homme');
 
             $etudiant = new Etudiant();
             $etudiant->setMatricule(sprintf('GIN%d', $i));
@@ -57,19 +58,22 @@ class SeanceFixture extends BaseFixture implements FixtureGroupInterface
             $tuteur = new Tuteur();
             $tuteur->setIdEtudiant($etudiant);
           
+    
+
+            $proposition = new Proposition();
+             $proposition->setTuteur($tuteur);
+            $proposition->setTitre($this->faker->title);
+            $proposition->setDateCreation($this->faker->dateTimeAD);
+            $proposition->setDateModification($this->faker->dateTimeAD);
+            $proposition->setStatut('valide');
+
+
             $cours = new Cours();
             $cours->setDescription($this->faker->text());
             $cours->setNomCours($this->faker->text());
             $cours->setDateCreation($this->faker->dateTimeAD);
             $cours->setDernierModification($this->faker->dateTimeAD);
-
-            $proposition = new Proposition();
-            $proposition->setCours($cours);
-            $proposition->setTuteur($tuteur);
-            $proposition->setTitre($this->faker->title);
-            $proposition->setDateCreation($this->faker->dateTimeAD);
-            $proposition->setDateModification($this->faker->dateTimeAD);
-            $proposition->setStatut('valide');
+            $cours->setProposition($proposition);
 
 
             $realisation = new Realisation();
@@ -77,8 +81,10 @@ class SeanceFixture extends BaseFixture implements FixtureGroupInterface
             $realisation->setDesicription($this->faker->text);
             $realisation->setDateCreation($this->faker->dateTimeAD);
             $realisation->setDateModification($this->faker->dateTimeAD);
-            $realisation->setProposition($proposition); 
-            $realisation->setCours($cours); 
+            $realisation->setDateFin($this->faker->dateTimeAD);
+
+             $realisation->setCours($cours); 
+            $realisation->setTuteur($tuteur);
             
 
 
@@ -87,12 +93,15 @@ class SeanceFixture extends BaseFixture implements FixtureGroupInterface
             $seance = new Seance();
             $seance->setTitre($this->faker->name);
             $seance->setDescription($this->faker->text);
-            $seance->setDurée("2 H");
+            $seance->setDuree("2 H");
             $seance->setTemps($this->faker->dateTimeAD);
             $seance->setRealisation($realisation);
 
-            $manager->persist( $cours);
+            $manager->persist( $user);
+            $manager->persist( $etudiant);
             $manager->persist( $tuteur);
+
+            $manager->persist( $cours);
             $manager->persist( $proposition);
             $manager->persist( $realisation);
  

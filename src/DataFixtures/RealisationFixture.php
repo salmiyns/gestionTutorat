@@ -60,19 +60,21 @@ class RealisationFixture extends BaseFixture
             $tuteur = new Tuteur();
             $tuteur->setIdEtudiant($etudiant);
           
-            $cours = new Cours();
-            $cours->setDescription($this->faker->text());
-            $cours->setNomCours($this->faker->text());
-            $cours->setDateCreation($this->faker->dateTimeAD);
-            $cours->setDernierModification($this->faker->dateTimeAD);
+    
 
             $proposition = new Proposition();
-            $proposition->setCours($cours);
             $proposition->setTuteur($tuteur);
             $proposition->setTitre($this->faker->title);
             $proposition->setDateCreation($this->faker->dateTimeAD);
             $proposition->setDateModification($this->faker->dateTimeAD);
             $proposition->setStatut('valide');
+
+            $cours = new Cours();
+            $cours->setDescription($this->faker->text());
+            $cours->setNomCours($this->faker->text());
+            $cours->setDateCreation($this->faker->dateTimeAD);
+            $cours->setDernierModification($this->faker->dateTimeAD);
+            $cours->setProposition($proposition);
 
 
             $realisation = new Realisation();
@@ -80,12 +82,17 @@ class RealisationFixture extends BaseFixture
             $realisation->setDesicription($this->faker->text);
             $realisation->setDateCreation($this->faker->dateTimeAD);
             $realisation->setDateModification($this->faker->dateTimeAD);
-            $realisation->setProposition($proposition); 
             $realisation->setCours($cours); 
-            
+            $realisation->setTuteur($tuteur); 
 
-            $manager->persist( $cours);
+            
+            $manager->persist( $user);
+
+            $manager->persist( $etudiant);
+
             $manager->persist( $tuteur);
+            $manager->persist( $cours);
+
             $manager->persist( $proposition);
 
 

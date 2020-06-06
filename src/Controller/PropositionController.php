@@ -187,8 +187,7 @@ class PropositionController extends AbstractController
 
         $form->handleRequest($request);
         
-        $proposition->setDateCreation(new \DateTime());
-        $proposition->setDateModification(new \DateTime());
+        
         $tuteur =  $tuteurRepository->findByConnectedUserId($user);
 
 
@@ -196,8 +195,9 @@ class PropositionController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $proposition->setDateCreation(new \DateTime());
             $proposition->setDateModification(new \DateTime());
-            $proposition->setStatut('valide');
             $proposition->setTuteur($tuteur[0]);
+
+            $proposition->setStatut('valide');
             $entityManager->persist($proposition);
             $entityManager->flush();
  

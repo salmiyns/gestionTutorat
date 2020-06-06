@@ -54,7 +54,7 @@ class CoursController extends AbstractController
         $tuteur =  $tuteurRepository->findByConnectedUserId($user);
 
 
-        $listPropositions = $proposition->findPropositionByTuteurId($tuteur);
+        //$listPropositions = $proposition->findPropositionByTuteurId($tuteur);
         
         $cour = new Cours();
         $cour->setDateCreation(new \DateTime());

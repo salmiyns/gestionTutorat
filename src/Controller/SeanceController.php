@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Seance;
 use App\Form\SeanceType;
 use App\Repository\SeanceRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,21 @@ class SeanceController extends AbstractController
     /**
      * @Route("/", name="seance_index", methods={"GET"})
      */
-    public function index(SeanceRepository $seanceRepository): Response
+    public function index(SeanceRepository $seanceRepository,Request $request ,PaginatorInterface $paginator): Response
     {
+        $q = $request->query->get('q');
+        $queryBuilder = $seanceRepository->findAll(); 
+        $list_Seances = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );     
+        
+
+
+
         return $this->render('seance/index.html.twig', [
-            'seances' => $seanceRepository->findAll(),
+            'seances' => $list_Seances,
         ]);
     }
 

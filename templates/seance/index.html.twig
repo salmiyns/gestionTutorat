@@ -1,41 +1,268 @@
-{% extends 'base.html.twig' %}
+{% extends "huma.demo9.base.html.twig" %}
 
-{% block title %}Seance index{% endblock %}
+{% block title %}Realisation{% endblock %}
 
 {% block body %}
-    <h1>Seance index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Durée</th>
-                <th>Temps</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for seance in seances %}
-            <tr>
-                <td>{{ seance.id }}</td>
-                <td>{{ seance.titre }}</td>
-                <td>{{ seance.description }}</td>
-                <td>{{ seance.durée }}</td>
-                <td>{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('seance_show', {'id': seance.id}) }}">show</a>
-                    <a href="{{ path('seance_edit', {'id': seance.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('seance_new') }}">Create new</a>
-{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Seances</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Seances
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+                    <div class="row" role="tablist">
+                        <div class="col-auto d-flex flex-column">
+
+                        <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
+                            <input type="text" class="form-control pl-0" placeholder="Rechercher un cours" name="q" value="{{ app.request.query.get('q') }}">
+                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                         </form>
+ 
+                        </div>
+                        
+                        <div class="col-auto border-left">
+                            <a href="{{ path('seance_new') }}" class="btn btn-accent">Nouvelle Seance</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <!-- //   Page Content -->
+            
+				<div class="container-fluid page__container page__container page-section">
+                  
+                 {% block Content %}
+                        <div class="row">
+                                    <div class="col-lg-9 pr-lg-0">
+
+                                        <div class="page-section">
+                                            <h4>Seances</h4>
+
+                                            <div class="alert alert-soft-warning mb-lg-32pt">
+                                                <div class="d-flex flex-wrap align-items-center">
+                                                    <div class="mr-8pt">
+                                                        <i class="material-icons">access_time</i>
+                                                    </div>
+                                                    <div class="flex" style="min-width: 180px">
+                                                        <small class="text-100">
+                                                            Please pay your amount due of
+                                                            <strong>$9.00</strong> for invoice <a href="billing-invoice.html" class="text-underline">10002331</a>
+                                                        </small>
+                                                    </div>
+                                                    <a href="billing-payment.html" class="btn btn-sm btn-link">Pay Now</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="page-separator">
+                                                <div class="page-separator__text">List des Seances </div>
+                                            </div>
+
+                                            <div class="card table-responsive">
+                                                <table class="table table-flush table-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ knp_pagination_sortable(seances, 'Id', 'id')|raw }}.</th>
+                                                            <th>{{ knp_pagination_sortable(seances, 'Date', 'temps')|raw }}</th>
+                                                            <th class="text-center">{{ knp_pagination_sortable(seances, 'Durée', 'duree')|raw }} </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for seance in seances %}
+                                                        <tr>
+                                                            <td><a href="billing-invoice.html" class="text-underline">{{ seance.id }}</a></td>
+                                                            <td>{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</td>
+                                                            <td class="text-center">{{ seance.duree }} H</td>
+                                                            <td class="text-right">
+                                                                <div class="d-inline-flex align-items-center">
+                                                                    <a href="{{ path('seance_show', {'id': seance.id}) }}" class="btn btn-sm btn-outline-secondary mr-16pt">Detailles <i class="icon--right material-icons">keyboard_arrow_right</i></a>
+                                                                    <a href="{{ path('realisation_show', {'id': seance.realisation.id }) }}" alt="{{ seance.realisation.titre }}" title="{{ seance.realisation.titre }}" class="btn btn-sm btn-outline-secondary">Realisation <i class="icon--right material-icons">keyboard_arrow_right</i></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        {% else %}
+                                                            <td class="text-right">
+                                                                <div class="d-inline-flex align-items-center">
+                                                                    Aucun enregistrement trouvé
+                                                                </div>
+                                                            </td>
+                                                           
+                                                           
+                                                        {% endfor %}
+                                                        </tbody>
+                                                </table>
+
+                                                <div class="card p-8pt mb-0 d-inline-block">
+                                                        <ul class="pagination justify-content-start pagination-xsm m-00">	
+                                                                            <li class="page-item">
+                                                                                {{ knp_pagination_render(seances, null, {}, {
+                                                                                    'position': 'right',
+                                                                                    'size': 'small',
+                                                                                    'rounded': true,
+                                                                                }) }}
+                                                                            </li>								
+                                                        </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 page-nav">
+                                        <div class="page-section pt-lg-112pt">
+                                            <nav class="nav page-nav__menu">
+                                                <a class="nav-link" href="billing.html">Subscription</a>
+                                                <a class="nav-link" href="billing-upgrade.html">Upgrade Account</a>
+                                                <a class="nav-link" href="billing-payment.html">Payment Information</a>
+                                                <a class="nav-link active" href="billing-history.html">Payment History</a>
+                                                <a class="nav-link" href="billing-invoice.html">Invoice</a>
+                                            </nav>
+                                            <!-- <div class="page-nav__content">
+                        <button type="submit" class="btn btn-accent">Save changes</button>
+                    </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                
+
+                
+                </div>
+            {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
