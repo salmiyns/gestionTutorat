@@ -10,6 +10,7 @@ use Faker\Factory;
 use App\Entity\Proposition;
 use App\Entity\Tuteur;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -29,7 +30,7 @@ class PropositionFixture extends BaseFixture implements FixtureGroupInterface
     public function loadData(ObjectManager $manager)
     {
  
-        $this->createMany(50, 'Proposition', function($i) use ($manager) {
+        $this->createMany(11, 'Proposition', function($i) use ($manager) {
 
             $user = new User();
             $user->setEmail(sprintf('Enseignant%d@example.com', $i));
@@ -37,35 +38,32 @@ class PropositionFixture extends BaseFixture implements FixtureGroupInterface
                 $user,
                 'engage'
             ));
-    
+
+     
             $user->setFirstName($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
-            $user->setDateOfBirth('1985-04-01');
+            $user->setDateOfBirth( new DateTime());
             $user->setProfilePic('http://127.0.0.1:8000/build/images/profile.jpg');
-            $user->setActivationCode("");
-            $user->setRegistrationDate(null);
-            $user->setStatus("1");
+
             $user->setRoles(['ROLE_Enseignant']);
             $user->setSexe('HOMME');
+            $user->setIsActive(true);
+            $user->setVerified(true);
+
+
 
 
             $etudiant = new Etudiant();
             $etudiant->setMatricule(sprintf('GIN%d', $i));
             $etudiant->setFiliere(sprintf('FILIER%d', $i));
-            $etudiant->setUserId($user);
+            $etudiant->setIdUser($user);
 
             $tuteur = new Tuteur();
             $tuteur->setIdEtudiant($etudiant);
           
-            $cours = new Cours();
-            $cours->setDescription($this->faker->text());
-            $cours->setNomCours($this->faker->text());
-            $cours->setDateCreation($this->faker->dateTimeAD);
-            $cours->setDernierModification($this->faker->dateTimeAD);
-
+ 
             $proposition = new Proposition();
-            $proposition->setCours($cours);
-            $proposition->setTuteur($tuteur);
+             $proposition->setTuteur($tuteur);
             $proposition->setTitre($this->faker->text);
             $proposition->setDescription($this->faker->text);
             $proposition->setDateCreation($this->faker->dateTimeAD);
@@ -77,8 +75,7 @@ class PropositionFixture extends BaseFixture implements FixtureGroupInterface
             $manager->persist( $user);
             $manager->persist( $etudiant);
             $manager->persist( $tuteur);
-            $manager->persist( $cours);
-
+ 
             
             
             return $proposition;

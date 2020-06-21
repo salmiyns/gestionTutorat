@@ -21,6 +21,8 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+             
+            user_checker: App\Security\UserChecker
             anonymous: lazy
             provider: app_user_provider
             guard:
@@ -47,10 +49,14 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
     access_control:        
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forgot_password$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset_pass, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: ^/activation, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: ^/article$, roles: ROLE_Enseignant }        
-        #- { path: ^/dashboord_etudiant$, roles: ROLE_Etudiant }
+        - { path: ^/dashboord_etudiant$, roles: ROLE_Etudiant }
         - { path: ^/etudiant$, roles: ROLE_Etudiant }
-        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
         
         

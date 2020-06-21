@@ -1,0 +1,282 @@
+{% extends "huma.demo9.base.html.twig" %}
+
+{% block title %}Proposition index{% endblock %}
+
+{% block body %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Cours</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Cours
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+                    <div class="row" role="tablist">
+                        <div class="col-auto d-flex flex-column">
+
+                        <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
+                            <input type="text" class="form-control pl-0" placeholder="Rechercher un cours" name="q" value="{{ app.request.query.get('q') }}">
+                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                         </form>
+ 
+                        </div>
+                        
+                        <div class="col-auto border-left">
+                            <a href="{{ path('cours_new') }}" class="btn btn-accent">Nouveau cours</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <!-- //   Page Content -->
+            
+				<div class="container-fluid page__container page__container page-section">
+                <div class="page-separator">
+                    <div class="page-separator__text">Cours Prévu : cette semaine</div>
+                </div>
+                 {% block Content %}
+                <div class="posts-cards mb-24pt">
+                   {% for cour in cours %}
+                    <div class="card posts-card">
+                        <div class="posts-card__content d-flex align-items-center flex-wrap">
+                            <div class="avatar avatar-lg mr-3">
+                                <a href=""><img src="{{ asset('uploads/cours_image/'~cour.image) }}" alt="avatar" class="avatar-img rounded"></a>
+                            </div>
+                            <div class="posts-card__title flex d-flex flex-column">
+                                <h5 class="card-title m-0"><a href="{{ path('cours_show', {'id': cour.id}) }}" class="headings-color">{{ cour.nomCours }}</a></h5>
+                                <small class="text-50">35 Participants</small>
+                            </div>
+                            <div class="d-flex align-items-center flex-column flex-sm-row posts-card__meta">
+                                <div class="mr-3 text-50 text-uppercase posts-card__tag d-flex align-items-center">
+                                    <i class="material-icons text-muted-light mr-1">folder_open</i> future
+                                </div>
+                                <div class="mr-3 text-50 posts-card__date">
+                                    <small> {{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }} {{ cour.dateCreation ? cour.dateCreation|format_datetime(locale='en')  }}</small>
+                                </div>
+                                <div class="media mr-2 ml-sm-auto align-items-center">
+                                    <div class="media-left mr-2 avatar-group">
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Janell D.">
+                                            <img src="http://luma.humatheme.com/assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Janell D.">
+                                            <img src="http://luma.humatheme.com/assets/images/256_michael-dam-258165-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                        </div>
+
+                                         
+
+                                    </div>
+                                    <div class="media-body">
+
+                                        <a href="">+2 Plus</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown ml-auto">
+                                <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted"><i class="material-icons">more_vert</i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{{ path('cours_show', {'id': cour.id}) }}" class="dropdown-item">Detailles</a>
+                                    <a href="{{ path('cours_edit', {'id': cour.id}) }}" class="dropdown-item">Modifier</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    {% else %}
+                    <div class="alert alert-soft-accent alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="d-flex flex-wrap align-items-start">
+                            <div class="mr-8pt">
+                            <i class="material-icons">access_time</i>
+                            </div>
+                            <div class="flex" style="min-width: 180px">
+                            <small class="text-black-100">
+                                <strong>nous sommes désolés . - </strong>  Le cours que vous recherchez est introuvable
+                            </small>
+                            </div>
+                        </div>
+                        </div>
+
+                      {% endfor %}
+
+                      {% if  cours|length > 10   %}
+                                <div class="card p-8pt mb-0 d-inline-block">
+                                     <ul class="pagination justify-content-start pagination-xsm m-00">	
+                                                        <li class="page-item">
+                                                            {{ knp_pagination_render(cours, null, {}, {
+                                                                'position': 'right',
+                                                                'size': 'small',
+                                                                'rounded': true,
+                                                            }) }}
+                                                        </li>								
+                                    </ul>
+                                 </div>
+                    {% endif %}
+
+                      
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+               
+               
+               
+               
+                </div>
+
+                
+            </div>
+            {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

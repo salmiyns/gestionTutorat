@@ -1,0 +1,166 @@
+{% extends "huma.demo9.base.html.twig" %}
+
+{% block title %}Utilisateurs : Ajouter Utilisateur {% endblock %}
+
+{% block body %}
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Modifier Utilisateur</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="index.html">Acceuil</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Utilisateurs
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+                   
+                   
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+             <!-- //   Page Content -->
+            
+				<div class="container-fluid page__container page__container page-section">
+                  
+                 {% block Content %}
+				   <h1>User index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                 <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Date_of_birth</th>
+                <th>Profile_pic</th>
+                <th>Telephone</th>
+                <th>Sexe</th>
+                <th>Adresse</th>
+                <th>About</th>
+                <th>IsActive</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                 <th>IsVerified</th>
+            
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                 <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.dateOfBirth ? user.dateOfBirth|date('Y-m-d') : '' }}</td>
+                <td>    <img src="{{ vich_uploader_asset(user, 'imageFile') }}"></td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.sexe }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.about }}</td>
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                 <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="20">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_user_register_new') }}">Create new</a>
+
+               
+
+                
+            </div>
+            {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+
+    
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 

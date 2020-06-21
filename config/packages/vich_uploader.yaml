@@ -1,0 +1,24 @@
+vich_uploader:
+    db_driver: orm        # or mongodb or phpcr - default db driver
+    twig: true            # set to false to disable twig integration
+    form: true            # set to false to disable form integration
+    storage: file_system  # or gaufrette or flysystem
+    metadata:
+        auto_detection: true
+        cache: file
+    mappings:
+        user_images:
+            uri_prefix:         '%app.path.user_images%'
+            upload_destination: '%kernel.project_dir%/public%app.path.user_images%'
+
+
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+        
+
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'

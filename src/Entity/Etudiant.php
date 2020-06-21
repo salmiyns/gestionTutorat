@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EtudiantRepository")
  */
-class Etudiant 
+class Etudiant  
 {
     /**
      * @ORM\Id()
@@ -17,33 +17,27 @@ class Etudiant
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,unique=true, nullable=true)
      */
     private $Matricule;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 , nullable=true)
      */
     private $filiere;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $niveau;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="etudiant", cascade={"persist", "remove"})
+     */
+    private $idUser;
+
  
     
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Tuteur", mappedBy="IdEtudiant", cascade={"persist", "remove"})
-     */
-    private $tuteur;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Tutore", mappedBy="etudiant", cascade={"persist", "remove"})
-     */
-    private $tutore;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="etudiants")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $UserId;
 
 
     
@@ -80,57 +74,38 @@ class Etudiant
         return $this;
     }
 
+    public function getNiveau(): ?string
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(?string $niveau): self
+    {
+        $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?User $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
    
     
  
     
 
-    public function getTuteur(): ?Tuteur
-    {
-        return $this->tuteur;
-    }
+   
 
-    public function setTuteur(Tuteur $tuteur): self
-    {
-        $this->tuteur = $tuteur;
-
-        // set the owning side of the relation if necessary
-        if ($tuteur->getIdEtudiant() !== $this) {
-            $tuteur->setIdEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function getTutore(): ?Tutore
-    {
-        return $this->tutore;
-    }
-
-    public function setTutore(Tutore $tutore): self
-    {
-        $this->tutore = $tutore;
-
-        // set the owning side of the relation if necessary
-        if ($tutore->getEtudiant() !== $this) {
-            $tutore->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function getUserId(): ?User
-    {
-        return $this->UserId;
-    }
-
-    public function setUserId(?User $UserId): self
-    {
-        $this->UserId = $UserId;
-
-        return $this;
-    }
-
+    
   
     
 

@@ -32,7 +32,7 @@ class TuteurRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             //->addSelect('t.id')
             ->leftJoin('t.IdEtudiant', 'etudiant')   
-            ->leftJoin('etudiant.UserId', 'user')     
+            ->leftJoin('etudiant.idUser', 'user')     
            ->andWhere('user.id= :val')
            ->setParameter('val', $userId)
             ->orderBy('t.id', 'ASC')
@@ -46,13 +46,13 @@ class TuteurRepository extends ServiceEntityRepository
     /**
      * @return Tuteur[]
      */
-    public function findByConnectedUserId_Byqb($userId): QueryBuilder
+    public function findTuteur_qb(): QueryBuilder
     {
          
         $qb= $this->createQueryBuilder('t')
             //->addSelect('t.id')
             ->leftJoin('t.IdEtudiant', 'etudiant')   
-            ->leftJoin('etudiant.UserId', 'user')     
+            ->leftJoin('etudiant.idUser', 'user')     
            ->andWhere('user.id= :val')
            ->setParameter('val', $userId)
             ->orderBy('t.id', 'ASC')

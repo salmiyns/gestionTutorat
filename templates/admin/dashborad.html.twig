@@ -1,0 +1,408 @@
+{% extends "huma.demo9.base.html.twig" %}
+
+{% block title %}Admin index{% endblock %}
+
+{% block body %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Admin Dashboard</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Admin Dashboard
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+               
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    {% block Content %}
+                            <div class="container-fluid page__container">
+                                                    <div class="page-section">
+
+                                                        <div class="row mb-lg-8pt">
+                                                            <div class="col-lg-12">
+
+                                                              
+                                                                <div class="row">
+                                                                     <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{propositions}}</div>
+                                                                                    <p class="mb-0"><strong>Propositions</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('proposition_index') }}" class="btn btn-outline-secondary">Voir les Propositions <br></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+                                                                 <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{cours }}</div>
+                                                                                    <p class="mb-0"><strong>Cours</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('cours_index') }}" class="btn btn-outline-secondary">Voir les Cours </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                 <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{seances }}</div>
+                                                                                    <p class="mb-0"><strong>Seances</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('seance_index') }}" class="btn btn-outline-secondary">Voir les Seances</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                
+                                                                 <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{realisations }}</div>
+                                                                                    <p class="mb-0"><strong>Resalisations</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('realisation_index') }}" class="btn btn-outline-secondary">Voir les Resalisations</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+                                                                
+                                                                   
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+
+                                                            <div class="row mb-lg-8pt">
+                                                                <div class="col-lg-12">
+                                                                    <div class="page-separator">
+                                                                            <div class="page-separator__text">
+                                                                            Comptes Utilisateurs
+                                                                            </div>
+                                                                    </div>
+
+                                                                    <div class="card mb-32pt">
+                                                                        <div class="table-responsive" data-toggle="lists" data-lists-sort-by=
+                                                                        "js-lists-values-from" data-lists-sort-desc="true" data-lists-values=
+                                                                        '["js-lists-values-name", "js-lists-values-status", "js-lists-values-policy", "js-lists-values-reason", "js-lists-values-days", "js-lists-values-available", "js-lists-values-from", "js-lists-values-to"]'>
+                                                                                            <table class="table mb-0 thead-border-top-0 table-nowrap">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th style="width: 18px;" class="pr-0">
+                                                                                                    <div class="custom-control custom-checkbox">
+                                                                                                        <input type="checkbox" class=
+                                                                                                        "custom-control-input js-toggle-check-all" data-target="#leaves"
+                                                                                                        id="customCheckAll" /> <label class="custom-control-label" for=
+                                                                                                        "customCheckAll"><span class="text-hide">Toggle
+                                                                                                        all</span></label>
+                                                                                                    </div>
+                                                                                                    </th>
+
+                                                                                                    <th {% if users.isSorted('firstName') %} class="sorted "{% endif %} >
+                                                                                                      {{ knp_pagination_sortable(users, 'Compte Membre', 'firstName') }}</th>
+
+                                                                                                    <th style="width: 48px;"><a href="javascript:void(0)" class="sort"
+                                                                                                    data-sort="js-lists-values-status">Status</a></th>
+
+                                                                                                    
+                                                                                                    
+                                                                                                    <th {% if users.isSorted('createdAt') %} class="sorted sort"{% endif %}  style="width: 150px;" >
+                                                                                                    
+                                                                                                      {{ knp_pagination_sortable(users, 'Date Inscription', 'createdAt') }}
+                                                                                                    
+                                                                                                    </th>
+
+                                                                                                     <th {% if users.isSorted('activatedAt') %} class="sorted sort"{% endif %}  style="width: 48px;" >
+                                                                                                    
+                                                                                                      {{ knp_pagination_sortable(users, 'Active', 'activatedAt') }}
+                                                                                                    
+                                                                                                    </th>
+    
+
+                                                                                                    <th style="width: 24px;"></th>
+                                                                                                </tr>
+                                                                                                </thead>
+
+                                                                                                <tbody class="list" id="leaves">
+
+                                                                                                 {% for user in users %}
+                                                                                                <tr>
+                                                                                                    <td class="pr-0">
+                                                                                                        <div class="avatar avatar-xs">
+                                                                                                            <img src="https://avatars.dicebear.com/v2/initials/{{ user.firstName }}%20{{ user.lastName }}.svg" alt="Avatar" class="avatar-img rounded-circle">
+                                                                                                        </div>
+                                                                                                    </td>
+
+                                                                                                    <td>
+                                                                                                    <div class="media flex-nowrap align-items-center" style=
+                                                                                                    "white-space: nowrap;">
+                                                                                                        
+
+                                                                                                        <div class="media-body">
+                                                                                                        <div class="d-flex align-items-center">
+                                                                                                            <div class="flex d-flex flex-column">
+                                                                                                            <p class="mb-0"><strong class="js-lists-values-name">{{ user.firstName }}
+                                                                                                            {{ user.lastName }}</strong></p><small class=
+                                                                                                            "js-lists-values-email text-50">{{ user.email }}</small>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    </td>
+
+                                                                                                    <td>
+                                                                                                    <div class="d-flex flex-column">
+                                                                                                        <small class=
+                                                                                                        "js-lists-values-status text-50 mb-4pt">{{ user.isActive ? 'Yes' : 'No' }}</small>
+                                                                                                    </div>
+                                                                                                    </td>
+
+
+                                                                                                    <td><small class="js-lists-values-reason text-50">{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</small></td>
+
+                                                                                                    <td><small class="js-lists-values-days text-50"> {{ user.activatedAt ? user.activatedAt|ago  }}</small></td>
+
+                                                                                                  
+                                                                                                  
+
+                                                                                                    <td class="text-right">
+                                                                                                        <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                                                                            <div class="dropdown-menu dropdown-menu-right" style="">
+                                                                                                                <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="dropdown-item">Modifer</a>
+                                                                                                                <a href="{{ path('user_delete', {'id': user.id}) }}" class="dropdown-item">Suprimer</a>
+                                                                                                              
+                                                                                                              
+                                                                                                            </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                 {% else %}
+                                                                                                    <tr>
+                                                                                                        <td colspan="20">no records found</td>
+                                                                                                    </tr>
+                                                                                                {% endfor %}
+                                                                                        
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                        </div>
+
+                                                                        <div class="card-footer p-8pt">
+                                                                                    <div class="card p-8pt mb-0 d-inline-block">
+                                                                                        <ul class="pagination justify-content-start pagination-xsm m-00">	
+                                                                                                            <li class="page-item">
+                                                                                                                {{ knp_pagination_render(users, null, {}, {
+                                                                                                                    'position': 'right',
+                                                                                                                    'size': 'small',
+                                                                                                                    'rounded': true,
+                                                                                                                }) }}
+                                                                                                            </li>								
+                                                                                        </ul>
+                                                                                    </div>
+                                                                         </div><!-- <div class="card-body bordet-top text-right">
+                                                                            15 <span class="text-50">of 1,430</span> <a href="#" class="text-50"><i class="material-icons ml-1">arrow_forward</i></a>
+                                                                            </div> -->
+                                                                    </div>
+                                                                </div>
+                                                             </div>
+      
+
+
+
+   
+   
+
+                                                    </div>
+                                                </div>
+
+
+                    {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

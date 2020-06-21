@@ -1,0 +1,7 @@
+<h1>Activation de votre compte</p>
+<p>Binevenu sur notre platform  </p>
+vos information pour connecter a notre platforme : <br>
+Votre email : {{username}}<br>
+Mot de pass : {{password}}<br>
+<p>Vous avez créé un compte sur notre site, veuillez cliquer sur le lien ci-dessous pour l'activer</p>
+<p><a href="{{ absolute_url(path('activation', {'token': token})) }}">Activer mon compte</a></p>
