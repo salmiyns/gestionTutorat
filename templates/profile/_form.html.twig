@@ -4,15 +4,38 @@
 
 
 				  <div class="row">
-				  		<div class="col-md-8">
+				  		<div class="col-md-9">
 
                                <div class="page-separator">
 										<div class="page-separator__text"> Informations Du Utilisateur </div>
 									</div>
 
 
+
+
+
                                         <div class="list-group list-group-form">
                                                 {{ form_errors(form) }}
+
+                                                <div class="list-group-item">
+                                                        <div class="form-group row align-items-center mb-0">
+                                                            <label class="col-form-label form-label col-sm-3">Votre Photo</label>
+                                                            <div class="col-sm-9 media align-items-center">
+                                                               {% if vich_uploader_asset(user, 'imageFile') is null %}
+                                                                            <img src="https://avatars.dicebear.com/v2/initials/{{ app.user.firstname }}%20{{ app.user.lastname }}.svg" 
+                                                                            onclick="document.getElementById('user1_imageFile_file').click();" width="56" class="rounded-circle" >
+                                                                {% else %}
+                                                                    <img src="{{ vich_uploader_asset(user, 'imageFile')|imagine_filter('user_avatar') }}"  width="56" class="rounded-circle" onclick="document.getElementById('user1_imageFile_file').click();" >
+                                                                {% endif %}
+                                                                <div class="media-body">
+                                                                    <div class="custom-file">
+                                                                        {{ form_widget(form.imageFile) }}
+                                                                        <label class="custom-file-label" for="profile_imageFile_file">changer votre photo de profile</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                             <div class="list-group-item">
                                                 <div class="form-group row align-items-center mb-0">
@@ -137,14 +160,10 @@
                                                     
                                                     
                                                     <div class="list-group-item">
-                                                        <div class="form-group row align-items-center mb-0">
-                                                                <div class="col-sm-9">
-                                                                    <a href="{{ path('admin_user_index') }}">Retour à la liste</a>
-                                                                </div>
-                                                                                
-                                                            <div class="col-sm-3">
-                                                                <button class="btn btn btn-accent">{{ button_label|default('Enregistrer') }}</button>                     
-                                                            </div>
+                                                        <div class="form-group ">
+                                                                
+                                                                <button class="btn btn btn-accent float-right">{{ button_label|default('Enregistrer') }}</button>                     
+                                                             
                                                         </div>
                                                     </div>
 
@@ -168,43 +187,15 @@
                              
                         </div>
 
-						 <div class="col-lg-4   ">
-                         <br>
-                         <br>
-                         <div class="text-center">
-                               {% if vich_uploader_asset(user, 'imageFile') is null %}
-									<img src="https://avatars.dicebear.com/v2/initials/{{ app.user.firstname }}%20{{ app.user.lastname }}.svg" 
-                                    onclick="document.getElementById('user1_imageFile_file').click();" class=" shadow p-1 mb-5 bg-black rounded"
-                                    id=" " style="cursor:pointer"  alt="Avatar" class="avatar-img rounded" >
-                        {% else %}
-                             <img src="{{ vich_uploader_asset(user, 'imageFile')|imagine_filter('user_avatar') }}" class="  shadow p-1 mb-5 bg-black rounded" onclick="document.getElementById('user1_imageFile_file').click();" >
-                        {% endif %}
-                                                             {{ form_widget(form.imageFile ,{'attr': {'class': 'task_field'}}) }}
- 
+					 <div class="col-lg-3 page-nav">
+                            <div class="page-section pt-lg-112pt">
+                                <nav class="nav page-nav__menu">
+                                 <a class="nav-link active" href="{{ path('user_profile') }}">Details</a>
+                                     <a class="nav-link " href="{{ path('profile_changePassword') }}">Changer Mot de Passe</a>
+                                  </nav>
+                                
+                            </div>
                         </div>
-                        {{ form_errors(form.imageFile) }}
-                                 <br>
-
-                                   
-
-
-
-							 
-									<!-- // Realisateurs -->
-									<div class="page-separator">
-										<div class="page-separator__text">Roles </div>
-									</div>
-
-									<div class="mb-4">
-									   <div class="card card-body">
-												  {{ form_widget(form.roles) }}
-										</div>
-										{{ form_errors(form.roles) }}
-									</div>
-									
-									 <!-- // End Realisateurs -->
-									
-						</div>
 
 							  
 

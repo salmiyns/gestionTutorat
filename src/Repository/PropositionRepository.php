@@ -59,7 +59,10 @@ class PropositionRepository extends ServiceEntityRepository
     
 
 
-
+    // /**
+    //  * @return Proposition[] Returns an array of Proposition objects
+    //  */
+    
     public function getWithSearchQueryBuilder_withStatus($value,?string $term): QueryBuilder
     {   
          $qb = $this->createQueryBuilder('p')

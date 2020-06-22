@@ -438,13 +438,24 @@
 
              <!-- //   Page Content -->
              {% block Content %}
-               <div class="row">
-             	 {% for message in app.flashes('success') %}
-						<div class="alert alert-success" role="alert">
-							{{ message }}
-						</div>
-					{% endfor %}
-                </div>
+                   {% if app.session.flashbag.peekAll|length > 0 %}
+                        {% for type, messages in app.session.flashbag.all %}
+                            {% for message in messages %}
+                     <div class="alert alert-accent" role="alert">
+                            <div class="d-flex flex-wrap align-items-start">
+                                <div class="mr-8pt">
+                                    <i class="material-icons">access_time</i>
+                                </div>
+                                <div class="flex {{ type ? type : '' }}" style="min-width: 180px">
+                                    <small class="text-black-100">
+                                        <strong>{{ message|trans({}, domain|default('messages')) }}</strong> 
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                         {% endfor %}
+                        {% endfor %}
+                    {% endif %}
             {% endblock %}
             <!-- // END content -->
 

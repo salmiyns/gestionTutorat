@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -36,6 +37,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+
+
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder2(?string $term): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        if ($term) {
+            $qb->andWhere('u.firstName LIKE :term OR u.lastName LIKE :term OR u.email LIKE :term   ')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('u.createdAt', 'DESC')
+        ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
@@ -64,4 +85,29 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+     /**
+     * @return User[] Returns an array of User objects     
+   
+     **/
+
+     
+    public function getWithSearchQueryBuilder($term): QueryBuilder
+    {   
+         $qb = $this->createQueryBuilder('u')
+       
+        ;
+        if ($term) {
+            $qb->andWhere(' u.email LIKE :term OR u.description LIKE :term OR u.firstname LIKE :u.firstname  OR u.lastname LIKE :u.lastname   OR u.date_of_birth LIKE :u.date_of_birth  OR u.isVerified LIKE :u.isVerified  OR u.createdAt LIKE :u.createdAt')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('u.createdAt', 'DESC')
+            
+            
+        ;
+    }
+
 }

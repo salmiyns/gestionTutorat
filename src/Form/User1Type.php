@@ -84,6 +84,7 @@ class User1Type extends AbstractType
 
             $builder
             ->add('imageFile', VichImageType::class, [
+                 'required'=>false,
                  'allow_delete' => false,
                  'image_uri' => false,
 

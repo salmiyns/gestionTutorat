@@ -23,3 +23,26 @@ liip_imagine:
                     size:          [512, 512]
                     mode:          outbound
                     allow_upscale: true
+        user_avatar_120:
+            jpeg_quality:          85
+            png_compression_level: 8
+
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail:
+                    size:          [128, 128]
+                    mode:          outbound
+                    allow_upscale: true
+
+        user_avatar_40:
+            jpeg_quality:          85
+            png_compression_level: 8
+
+            filters:
+                auto_rotate: ~
+                strip: ~
+                thumbnail:
+                    size:          [40, 40]
+                    mode:          outbound
+                    allow_upscale: true

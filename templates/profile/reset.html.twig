@@ -36,7 +36,7 @@
                     <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
 
                         <div class="mb-24pt mb-sm-0 mr-sm-24pt">
-                            <h2 class="mb-0">Ajouter Utilisateur</h2>
+                            <h2 class="mb-0">Profile</h2>
 
 
                             <ol class="breadcrumb p-0 m-0">
@@ -44,7 +44,7 @@
 
                                 <li class="breadcrumb-item active">
 
-                                    Utilisateurs
+                                    Compte
 
                                 </li>
 
@@ -70,7 +70,7 @@
 				<div class="container-fluid page__container page__container page-section">
                   
                  {% block Content %}
-				   {{ include('admin/user/_form.html.twig') }}
+				   {{ include('profile/_form_reset_password.html.twig') }}
 
                
 
@@ -101,7 +101,8 @@
 
     {% block javascripts %}
 	{{ parent() }}  
-        
+
+    
     {% endblock %}
  
 

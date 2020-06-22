@@ -18,6 +18,8 @@ use App\Repository\SeanceRepository;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
+use DateTime;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,12 +75,20 @@ class AdminController extends AbstractController
     /**
      * @Route("/users", name="admin_user_index", methods={"GET"})
      */
-    public function userindex(UserRepository $userRepository): Response
+    public function userindex(UserRepository $userRepository ,Request $request, PaginatorInterface $paginator): Response
     {
-
+        $q = $request->query->get('q');
+        
+        $queryBuilder = $userRepository->getWithSearchQueryBuilder2($q); 
+        $users = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );          
+       
         
         return $this->render('admin/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
           
         ]);
     }
@@ -204,9 +214,16 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdatedAt(new DateTime());
+
+            if  (empty($user->getCreatedAt())){
+
+                $user->setCreatedAt(new DateTime());
+
+            }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('admin_user_index');
         }
 
         return $this->render('admin/user/edit.html.twig', [
@@ -226,6 +243,6 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('admin_user_index');
     }
 }

@@ -1,6 +1,6 @@
 {% extends "huma.demo9.base.html.twig" %}
 
-{% block title %}Utilisateurs : Ajouter Utilisateur {% endblock %}
+{% block title %}Utilisateurs  {% endblock %}
 
 {% block body %}
 
@@ -36,11 +36,11 @@
                     <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
 
                         <div class="mb-24pt mb-sm-0 mr-sm-24pt">
-                            <h2 class="mb-0">Ajouter Utilisateur</h2>
+                            <h2 class="mb-0">  Utilisateurs</h2>
 
 
                             <ol class="breadcrumb p-0 m-0">
-                                <li class="breadcrumb-item"><a href="index.html">Acceuil</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('admin_homepage') }}">Acceuil</a></li>
 
                                 <li class="breadcrumb-item active">
 
@@ -68,9 +68,13 @@
              <!-- //   Page Content -->
             
 				<div class="container-fluid page__container page__container page-section">
+               
+
+
                   
                  {% block Content %}
-				   {{ include('admin/user/_form.html.twig') }}
+
+
 
                
 
@@ -101,7 +105,13 @@
 
     {% block javascripts %}
 	{{ parent() }}  
-        
+
+        <!-- List.js -->
+        <script src="{{ asset('build/assets/js/list.js') }}" type="text/javascript"></script>
+        <!-- Tables -->
+        <script src="asset('build/assets/js/toggle-check-all.js') }}"></script>
+        <script src="asset('build/assets/js/check-selected-row.js') }}"></script>
+    
     {% endblock %}
  
 
