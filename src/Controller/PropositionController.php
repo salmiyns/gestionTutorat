@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PhpParser\Node\Expr\Cast\Array_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -177,6 +178,9 @@ class PropositionController extends AbstractController
      */
     public function new(Request $request,TuteurRepository $tuteurRepository): Response
     {
+        $this->denyAccessUnlessGranted(new Expression(
+            '"ROLE_TUTEUR" in role_names or (not is_anonymous() and user.isSuperAdmin())'
+        ));
          
         $user = $this->getUser();
         $proposition = new Proposition();
