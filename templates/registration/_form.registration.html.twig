@@ -1,0 +1,103 @@
+{{ form_start(registrationForm) }}
+<div class=" py-32pt py-lg-64pt">
+                <div class="container-fluid page__container">
+                    <div class="col-lg-10 p-0 mx-auto">
+                        <div class="row">
+                            <div class="col-md-6 mb-24pt mb-md-0">
+                                 
+                                    <div class="form-group">
+                                        {{ form_label(registrationForm.firstName, null, {
+                                                    'label': 'Nom',
+                                                    'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                            }) }}
+
+                                            {{ form_widget(registrationForm.firstName, {'attr': {'placeholder': 'votre nom'}}
+                                            
+                                            )  }}                                    
+                                    </div>
+
+                                    <div class="form-group">
+                                        {{ form_label(registrationForm.lastName, null, {
+                                                    'label': 'Prenom',
+                                                    'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                            }) }}
+
+                                            {{ form_widget(registrationForm.lastName, {'attr': {'placeholder': 'votre prenom'}}
+                                            
+                                            )  }}                                    
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        {{ form_label(registrationForm.email, null, {
+                                                    'label': 'Email',
+                                                    'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                            }) }}
+
+                                            {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'email.@exemple.com'}}
+                                            
+                                            )  }}                                    
+                                    </div>
+
+                                    <div class="form-group">
+                                        {{ form_label(registrationForm.plainPassword, null, {
+                                                    'label': 'Mot de Passe',
+                                                    'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                            }) }}
+
+                                            {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'votre mot de passe'}}
+                                            
+                                            )  }}                                    
+                                    </div>
+
+
+                                    
+                                    <div class="form-group mb-24pt">
+                                        <label class="form-label" for="password">Password:</label>
+                                        <input id="password" type="password" class="form-control" placeholder="Your password ...">
+                                    </div>
+
+                                    <button class="btn btn btn-accent">{{ button_label|default('Créer un compte') }}</button>                     
+
+ 
+
+         
+
+                                  
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-0">
+                                    <div class="card-body">
+                                        
+                                        <div class="d-flex mb-8pt">
+                                            <div class="flex"><strong class="text-70">Subscription</strong></div>
+                                            <strong>Etudiant</strong>
+                                        </div>
+
+                                         
+                                         
+                                        <div class="custom-control custom-checkbox">
+                                        {{ form_label(registrationForm.agreeTerms, null, {
+                                                    'label': 'Termes et conditions',
+                                                    'label_attr': {'class': 'custom-control-label'}
+                                            }) }}
+
+                                            {{ form_widget(registrationForm.agreeTerms)  }}        
+                                        
+                                             <small class="form-text text-muted">En cochant ici et de continuer, j'accepte les conditions et les Termes d'utilisation</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+  {{ form_end(registrationForm) }}
+
+        
+  
+ 
+
+ 
