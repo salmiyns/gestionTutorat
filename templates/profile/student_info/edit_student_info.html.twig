@@ -1,7 +1,17 @@
 {% extends "huma.demo9.base.html.twig" %}
 
 {% block title %}Utilisateurs : Ajouter Utilisateur {% endblock %}
+{% block stylesheets %}
+{{ parent() }}  
+        <!-- Flatpickr -->
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.rtl.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.rtl.css')}}" rel="stylesheet">
+    <!-- DateRangePicker -->
+     <link type="text/css" href="{{ asset('build/assets/vendor/daterangepicker.css')}}" rel="stylesheet">
 
+{% endblock %}
 {% block body %}
 
 
@@ -36,7 +46,7 @@
                     <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
 
                         <div class="mb-24pt mb-sm-0 mr-sm-24pt">
-                            <h2 class="mb-0">Modifier Utilisateur</h2>
+                            <h2 class="mb-0">Profile</h2>
 
 
                             <ol class="breadcrumb p-0 m-0">
@@ -44,7 +54,7 @@
 
                                 <li class="breadcrumb-item active">
 
-                                    Utilisateurs
+                                    Compte
 
                                 </li>
 
@@ -68,10 +78,12 @@
              <!-- //   Page Content -->
             
 				<div class="container-fluid page__container page__container page-section">
-                  
+                 
+                             
+                           
                  {% block Content %}
-                  {{ parent() }}  
-				   {{ include('admin/user/_form.html.twig') }}
+                    {{ parent() }}  
+				   {{ include('profile/student_info/_form.html.twig') }}
 
                
 
@@ -101,7 +113,10 @@
 
 
     {% block javascripts %}
-	{{ parent() }}  
+	{{ parent() }} 
+
+        <script src="{{ asset('build/assets/vendor/daterangepicker.js')}}"></script>
+       <script src="{{ asset('build/assets/js/daterangepicker.js')}}"></script> 
 
     
     {% endblock %}

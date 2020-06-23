@@ -66,7 +66,8 @@
             <!-- // END Page Header -->
              
              <!-- //   Page Content -->
-            
+            {% block Content %}
+                  {{ parent() }}  
 				<div class="container-fluid page__container page__container page-section">
                 <div class="card mb-32pt">
                     <div class="card-body">
@@ -148,7 +149,7 @@
 
 
                   
-                 {% block Content %}
+                 
 
 
 

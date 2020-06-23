@@ -1,0 +1,124 @@
+{{ form_start(form) }}
+ 
+
+
+
+				  <div class="row">
+				  		<div class="col-md-9">
+
+                               <div class="page-separator">
+										<div class="page-separator__text"> Informations Du Etudiant </div>
+									</div>
+
+
+
+
+
+                                        <div class="list-group list-group-form">
+                                                {{ form_errors(form) }}
+
+                                            
+
+                                            <div class="list-group-item">
+                                                <div class="form-group row align-items-center mb-0">
+                                                    {{ form_label(form.Matricule, null, {
+                                                        'label': 'Matricule',
+                                                        'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    }) }}
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.Matricule, {'attr': {'placeholder': 'ex: ABD8759'}}
+                                                        
+                                                        )  }}
+                                                    </div>
+                                                     {{ form_errors(form.Matricule) }}
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                            <div class="form-group row align-items-center mb-0">
+                                                    {{ form_label(form.filiere, null, {
+                                                        'label': 'filiere',
+                                                        'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    }) }}
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.filiere, {'attr': {'placeholder': 'ex:filiere'}}
+                                                        
+                                                        )  }}
+                                                    </div>
+                                                     {{ form_errors(form.filiere) }}
+                                                </div>
+                                            </div>
+
+
+                                               <div class="list-group-item">
+                                                    <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.niveau, null, {
+                                                                'label': 'Email',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}
+                                                            <div class="col-sm-9">
+                                                                {{ form_widget(form.niveau, {'attr': {'placeholder': 'ex:email@example.com'}}
+                                                                
+                                                                )  }}
+                                                            </div>
+                                                            {{ form_errors(form.niveau) }}
+                                                        </div>
+                                                 </div>
+                                          
+                                          
+                                            
+                                           
+                                           
+
+                                                   
+
+
+
+                                                    
+                                                    
+                                                    <div class="list-group-item">
+                                                        <div class="form-group ">
+                                                                
+                                                                <button class="btn btn btn-accent float-right">{{ button_label|default('Enregistrer') }}</button>                     
+                                                             
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+
+                                        </div>
+                                
+
+                                
+                              
+
+                          
+                                        
+
+                            
+
+                             
+                        </div>
+
+					 <div class="col-lg-3 page-nav">
+                            <div class="page-section pt-lg-112pt">
+                                <nav class="nav page-nav__menu">
+                                 <a class="nav-link  " href="{{ path('user_profile') }}">Details</a>
+                                  <a class="nav-link active" href="{{ path('student_info') }}">Informations Etudiant</a>
+                                   <a class="nav-link  " href="{#{ path('ensignant_info') }#}">Informations Ensignant</a>
+                                     <a class="nav-link " href="{{ path('profile_changePassword') }}">Changer Mot de Passe</a>
+                                  </nav>
+                                
+                            </div>
+                        </div>
+
+							  
+
+							 
+
+						
+				  </div>
+{{ form_end(form) }}

@@ -25,20 +25,22 @@ class Tuteur
      */
     private $IdEtudiant;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Proposition", mappedBy="tuteur", orphanRemoval=true)
-     */
-    private $propositions;
+ 
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Realisation", mappedBy="tuteur", orphanRemoval=true)
      */
     private $realisations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Proposition::class, mappedBy="tuteur")
+     */
+    private $proposi;
+
     public function __construct()
     {
-        $this->propositions = new ArrayCollection();
-        $this->realisations = new ArrayCollection();
+         $this->realisations = new ArrayCollection();
+        $this->proposi = new ArrayCollection();
     }
 
     
@@ -67,37 +69,8 @@ class Tuteur
     }
 
 
-
-    /**
-     * @return Collection|Proposition[]
-     */
-    public function getPropositions(): Collection
-    {
-        return $this->propositions;
-    }
-
-    public function addProposition(Proposition $proposition): self
-    {
-        if (!$this->propositions->contains($proposition)) {
-            $this->propositions[] = $proposition;
-            $proposition->setTuteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProposition(Proposition $proposition): self
-    {
-        if ($this->propositions->contains($proposition)) {
-            $this->propositions->removeElement($proposition);
-            // set the owning side to null (unless already changed)
-            if ($proposition->getTuteur() === $this) {
-                $proposition->setTuteur(null);
-            }
-        }
-
-        return $this;
-    }
+ 
+ 
 
     public function __toString() 
         {
@@ -129,6 +102,37 @@ class Tuteur
             // set the owning side to null (unless already changed)
             if ($realisation->getTuteur() === $this) {
                 $realisation->setTuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Proposition[]
+     */
+    public function getProposi(): Collection
+    {
+        return $this->proposi;
+    }
+
+    public function addProposi(Proposition $proposi): self
+    {
+        if (!$this->proposi->contains($proposi)) {
+            $this->proposi[] = $proposi;
+            $proposi->setTuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposi(Proposition $proposi): self
+    {
+        if ($this->proposi->contains($proposi)) {
+            $this->proposi->removeElement($proposi);
+            // set the owning side to null (unless already changed)
+            if ($proposi->getTuteur() === $this) {
+                $proposi->setTuteur(null);
             }
         }
 

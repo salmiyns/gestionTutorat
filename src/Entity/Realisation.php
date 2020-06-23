@@ -55,12 +55,7 @@ class Realisation
      */
     private $inscriptions;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tuteur", inversedBy="realisations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $tuteur;
-
+   
     /**
      * @ORM\Column(type="date")
      */
@@ -199,17 +194,8 @@ class Realisation
         return $this;
     }
 
-    public function getTuteur(): ?Tuteur
-    {
-        return $this->tuteur;
-    }
-
-    public function setTuteur(?Tuteur $tuteur): self
-    {
-        $this->tuteur = $tuteur;
-
-        return $this;
-    }
+   
+    
 
     public function getDateFin(): ?\DateTimeInterface
     {

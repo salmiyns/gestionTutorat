@@ -33,17 +33,18 @@ class UserFixture extends BaseFixture implements FixtureGroupInterface
 
             $date= new DateTime();
 
-           /* $user->setFirstname($this->faker->firstName);
+            $user->setFirstname($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
-            $user->setDateNaissance($date);
-            $user->setProfilePic('http://127.0.0.1:8000/build/images/profile.jpg');
+           // $user->setDateNaissance($date);
+           // $user->setProfilePic('http://127.0.0.1:8000/build/images/profile.jpg');
         
             $user->setRoles(['ROLE_ADMIN']);
             $user->setSexe("Homme");
-            $user->setIsActive(false);
+            $user->setIsActive(true);
             $user->setCreatedAt($date);
             $user->setUpdatedAt($date);
-            */
+            $user->setVerified(true);
+
             
 
             return $user;

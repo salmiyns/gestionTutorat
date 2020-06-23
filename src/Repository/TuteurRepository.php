@@ -22,40 +22,39 @@ class TuteurRepository extends ServiceEntityRepository
     }
 
     
-    //  * @return Tuteur[] Returns an array of Tuteur objects
-    //  */
-  
-    public function findByConnectedUserId($userId)
-    
+    public function findByUserId($userId)
     {
-         
-        return $this->createQueryBuilder('t')
-            //->addSelect('t.id')
+        return   $this->createQueryBuilder('t')
+            ->select('t.id')
             ->leftJoin('t.IdEtudiant', 'etudiant')   
-            ->leftJoin('etudiant.idUser', 'user')     
-           ->andWhere('user.id= :val')
-           ->setParameter('val', $userId)
+            ->leftJoin('etudiant.idUser', 'user')   
+            ->andWhere('user.id = :userID')
+             ->setParameter('userID', $userId )
             ->orderBy('t.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult()
+            //->getSingleResult() 
         ;
-         
+       
+       
+
+        
     }
     
     /**
      * @return Tuteur[]
      */
-    public function findTuteur_qb(): QueryBuilder
+    public function findTuteur_qb($userId): QueryBuilder
     {
          
         $qb= $this->createQueryBuilder('t')
-            //->addSelect('t.id')
-            ->leftJoin('t.IdEtudiant', 'etudiant')   
-            ->leftJoin('etudiant.idUser', 'user')     
-           ->andWhere('user.id= :val')
-           ->setParameter('val', $userId)
-            ->orderBy('t.id', 'ASC')
+        ->select('t')
+        ->leftJoin('t.IdEtudiant', 'etudiant')   
+        ->leftJoin('etudiant.idUser', 'user')   
+        ->andWhere('user.id = :userID')
+         ->setParameter('userID', $userId )
+        ->orderBy('t.id', 'ASC')
            // ->setMaxResults(1)
             //->getQuery()
             //->getResult()
@@ -65,19 +64,22 @@ class TuteurRepository extends ServiceEntityRepository
     // /**
     //  * @return Tuteur[] Returns an array of Tuteur objects
     //  */
-    /*
-    public function findByExampleField($value)
+   
+    public function findByExampleField($value) 
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+        ->select('t.id')
+            ->leftJoin('t.IdEtudiant', 'etudiant')   
+            ->andWhere('etudiant.id = :val')
             ->setParameter('val', $value)
             ->orderBy('t.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
+            ;
+            
     }
-    */
+    
 
     // /**
     //  * @return Tuteur[] Returns an array of Tuteur objects

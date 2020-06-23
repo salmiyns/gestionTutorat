@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Proposition;
 use App\Entity\Tuteur;
 use App\Form\PropositionType;
+use App\Repository\EtudiantRepository;
 use App\Repository\PropositionRepository;
 use App\Repository\TuteurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +16,9 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\TuteurrRepository;
+
+
 
 /**
  * @Route("/proposition")
@@ -41,7 +45,7 @@ class PropositionController extends AbstractController
         $proposition = new Proposition();
 
         
-        $tuteur =  $tuteurRepository->findByConnectedUserId($user);
+        $tuteur =  $tuteurRepository->findByUserId($user);
 
         $form = $this->createForm(PropositionType::class, $proposition);
         if (empty($tuteur)  ) { 
@@ -155,7 +159,7 @@ class PropositionController extends AbstractController
     /**
      * @Route("/tuuur", name="tuuur", methods={"GET"})
      */
-    public function index_tuuurpenAttente(TuteurRepository $repository ,Request $request,  PaginatorInterface $paginator): Response
+    public function index_tuuurpenAttente(TuteurrRepository $repository ,Request $request,  PaginatorInterface $paginator): Response
     {
 
         $user = $this->getUser()->getId();
@@ -175,12 +179,13 @@ class PropositionController extends AbstractController
     /**
      * @Route("/new", name="proposition_new", methods={"GET","POST"})
      */
-    public function new(Request $request,TuteurRepository $tuteurRepository): Response
+    public function new(Request $request,TuteurrRepository $tuteurRepository,EtudiantRepository $etudiantRepository): Response
     {
          
-        $user = $this->getUser();
+        $user = $this->getUser()->getId();
+        $etudiant=$etudiantRepository->findOneBy(['idUser'=> $user ]);
         $proposition = new Proposition();
-       
+        
         
         $form = $this->createForm(PropositionType::class, $proposition);
         
@@ -188,14 +193,18 @@ class PropositionController extends AbstractController
         $form->handleRequest($request);
         
         
-        $tuteur =  $tuteurRepository->findByConnectedUserId($user);
+       // $tuteur =$tuteurRepository->findAll();
+        //$tuteur =$tuteurRepository->findOneBy(['id'=>$tuteurs[0]['id']]);
+        $etudiantId=$etudiant->getId();
+        $tuteur = $tuteurRepository->findOneBy(['etudiant'=> $etudiantId]);
 
-
+        //dd($tuteur);
+        // dd($tuteur[0]['id']);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $proposition->setDateCreation(new \DateTime());
             $proposition->setDateModification(new \DateTime());
-            $proposition->setTuteur($tuteur[0]);
+            $proposition->setTuteurr($tuteur);
 
             $proposition->setStatut('valide');
             $entityManager->persist($proposition);

@@ -41,11 +41,6 @@ class Proposition
   
     
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tuteur", inversedBy="propositions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $tuteur;
  
 
     /**
@@ -57,6 +52,16 @@ class Proposition
      * @ORM\OneToMany(targetEntity="App\Entity\Cours", mappedBy="proposition", orphanRemoval=true)
      */
     private $cours;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Tuteur::class, inversedBy="proposi")
+     */
+    private $tuteur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Tuteurr::class, inversedBy="propositions")
+     */
+    private $tuteurr;
 
     public function __construct()
     {
@@ -117,19 +122,7 @@ class Proposition
     }
 
     
-
-    public function getTuteur(): ?Tuteur
-    {
-        return $this->tuteur;
-    }
-
-    public function setTuteur(?Tuteur $tuteur): self
-    {
-        $this->tuteur = $tuteur;
-
-        return $this;
-    }
-
+ 
   
     
     public function getStatut(): ?string
@@ -178,6 +171,30 @@ class Proposition
                 $cour->setProposition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTuteur(): ?Tuteur
+    {
+        return $this->tuteur;
+    }
+
+    public function setTuteur(?Tuteur $tuteur): self
+    {
+        $this->tuteur = $tuteur;
+
+        return $this;
+    }
+
+    public function getTuteurr(): ?Tuteurr
+    {
+        return $this->tuteurr;
+    }
+
+    public function setTuteurr(?Tuteurr $tuteurr): self
+    {
+        $this->tuteurr = $tuteurr;
 
         return $this;
     }

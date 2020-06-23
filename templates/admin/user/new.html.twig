@@ -70,6 +70,7 @@
 				<div class="container-fluid page__container page__container page-section">
                   
                  {% block Content %}
+                  {{ parent() }}  
 				   {{ include('admin/user/_form.html.twig') }}
 
                

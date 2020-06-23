@@ -7,14 +7,19 @@ use App\Entity\Etudiant;
 use App\Entity\Proposition;
 use App\Entity\Realisation;
 use App\Entity\Seance;
+use App\Entity\Tuteur;
+use App\Entity\Tuteurr;
+use App\Entity\Tutore;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\User1Type;
 use App\Form\UserType;
 use App\Repository\CoursRepository;
+use App\Repository\EtudiantRepository;
 use App\Repository\PropositionRepository;
 use App\Repository\RealisationRepository;
 use App\Repository\SeanceRepository;
+use App\Repository\TutoreRepository;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
@@ -133,7 +138,21 @@ class AdminController extends AbstractController
 
                 }
                 elseif ($role== 'ROLE_TUTEUR' || $role == 'ROLE_TUTORE'){
-                     $etudiant = new Etudiant();
+                    
+                    $etudiant = new Etudiant();
+                    if($role == 'ROLE_TUTEUR' ){
+                       // $tuteur=new Tuteur();
+                        $tuteur=new Tuteurr();
+                        $tuteur->setEtudiant($etudiant);
+                        $entityManager->persist($tuteur);
+                     }
+                     else{
+                        $tutore=new Tutore();
+                        $tutore->setEtudiant($etudiant);
+                        $entityManager->persist($tutore);
+                     }
+
+                     
                      $etudiant->setIdUser($user);
                      $entityManager->persist($etudiant);
 
@@ -208,7 +227,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="admin_user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user ,EtudiantRepository $etudiantRepository , TutoreRepository $tutoreRepository): Response
     {
         $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
@@ -216,12 +235,68 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUpdatedAt(new DateTime());
 
+
+            $roles=array();
+            $roles= $form->get('roles')->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            
+            
+            foreach($roles as $role)
+            {
+                if($role == 'ROLE_ENSEIGNANT'){
+                    $enseignant = new Enseignant();
+                    $enseignant->setIdUser($user);
+                    $entityManager->persist($enseignant);
+                     
+
+                }
+                elseif ($role == 'ROLE_TUTEUR' || $role == 'ROLE_TUTORE'){
+
+                    $etudiant= $etudiantRepository->findOneBy(['idUser'=>$user]);
+
+                    if(!$etudiant){
+                        $etudiant = new Etudiant();
+                        $etudiant->setIdUser($user);
+                        $entityManager->persist($etudiant);
+                    }
+                    
+
+
+                     
+                     
+                     if($role == 'ROLE_TUTEUR' ){
+                        //$tuteur=new Tuteur();
+                        $tuteur=new Tuteurr();
+                        $tuteur->setEtudiant($etudiant);
+                        $entityManager->persist($tuteur);
+                     }
+                     else{
+                        $tutore=new Tutore();
+                        $tutore->setEtudiant($etudiant);
+                        $entityManager->persist($tutore);
+                     }
+
+
+
+                    
+
+                    
+
+                }
+               
+            }
+
             if  (empty($user->getCreatedAt())){
 
                 $user->setCreatedAt(new DateTime());
 
             }
-            $this->getDoctrine()->getManager()->flush();
+           
+            $entityManager->flush();
+
+
+            
 
             return $this->redirectToRoute('admin_user_index');
         }
