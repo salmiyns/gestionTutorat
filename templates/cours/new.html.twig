@@ -1,7 +1,18 @@
 {% extends "huma.demo9.base.html.twig" %}
 
 {% block title %}Cours : Ajouter Nouveau Cours {% endblock %}
+{% block stylesheets %}
 
+{{ parent() }}  
+        <!-- Flatpickr -->
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.rtl.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.rtl.css')}}" rel="stylesheet">
+    <!-- DateRangePicker -->
+     <link type="text/css" href="{{ asset('build/assets/vendor/daterangepicker.css')}}" rel="stylesheet">
+
+{% endblock %}
 {% block body %}
 
 

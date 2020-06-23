@@ -4,8 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tuteur;
 use App\Form\TuteurType;
-use App\Repository\TuteurRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +17,7 @@ class TuteurController extends AbstractController
     /**
      * @Route("/", name="tuteur_index", methods={"GET"})
      */
-    public function index(TuteurRepository $tuteurRepository): Response
+    public function index(): Response
     {
         return $this->render('tuteur/index.html.twig', [
             'tuteurs' => $tuteurRepository->findAll(),

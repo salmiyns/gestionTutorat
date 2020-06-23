@@ -38,9 +38,9 @@ class EtudiantController extends AbstractController
         }
         return $this->render('etudiant/index1.html.twig', [
             'cours' =>  $cours,
-            'propositionsNonValid' => $propositionRepository->findByStatut('rejetée') ,
-            'propositionsValid' => $propositionRepository->findByStatut('valide'),
-            'propositionsEnAttent' => $propositionRepository->findByStatut('rejetée'),
+            'propositionsNonValid' => $propositionRepository->findOnlyByStatut('rejetée') ,
+            'propositionsValid' => $propositionRepository->findOnlyByStatut('valide'),
+            'propositionsEnAttent' => $propositionRepository->findOnlyByStatut('rejetée'),
             'user' => $user,
 
             

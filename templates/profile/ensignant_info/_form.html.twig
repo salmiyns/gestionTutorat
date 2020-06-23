@@ -1,0 +1,137 @@
+{{ form_start(form) }}
+ 
+
+
+
+				  <div class="row">
+				  		<div class="col-md-9">
+
+                               <div class="page-separator">
+										<div class="page-separator__text"> Informations Du Ensignant </div>
+									</div>
+
+
+
+
+
+                                        <div class="list-group list-group-form">
+                                                {{ form_errors(form) }}
+
+                                            
+
+                                            <div class="list-group-item">
+                                                <div class="form-group row align-items-center mb-0">
+                                                    {{ form_label(form.Titre, null, {
+                                                        'label': 'Titre',
+                                                        'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    }) }}
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.Titre, {'attr': {'placeholder': 'ex: Titre'}}
+                                                        
+                                                        )  }}
+                                                    </div>
+                                                     {{ form_errors(form.Titre) }}
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                            <div class="form-group row align-items-center mb-0">
+                                                    {{ form_label(form.departement, null, {
+                                                        'label': 'departement',
+                                                        'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    }) }}
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.departement, {'attr': {'placeholder': 'ex:departement'}}
+                                                        
+                                                        )  }}
+                                                    </div>
+                                                     {{ form_errors(form.departement) }}
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="list-group-item">
+                                            <div class="form-group row align-items-center mb-0">
+                                                    {{ form_label(form.type, null, {
+                                                        'label': 'type',
+                                                        'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    }) }}
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.type)  }}
+                                                    </div>
+                                                     {{ form_errors(form.type) }}
+                                                </div>
+                                            </div>
+
+
+                                               <div class="list-group-item">
+                                                    <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.date_embauche, null, {
+                                                                'label': 'date embauche',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}
+                                                            <div class="col-sm-9">
+                                                                {{ form_widget(form.date_embauche)  }}
+                                                            </div>
+                                                            {{ form_errors(form.date_embauche) }}
+                                                        </div>
+                                                 </div>
+                                          
+                                          
+                                            
+                                           
+                                           
+
+                                                   
+
+
+
+                                                    
+                                                    
+                                                    <div class="list-group-item">
+                                                        <div class="form-group ">
+                                                                
+                                                                <button class="btn btn btn-accent float-right">{{ button_label|default('Enregistrer') }}</button>                     
+                                                             
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+
+                                        </div>
+                                
+
+                                
+                              
+
+                          
+                                        
+
+                            
+
+                             
+                        </div>
+
+					 <div class="col-lg-3 page-nav">
+                            <div class="page-section pt-lg-112pt">
+                                <nav class="nav page-nav__menu">
+                                 <a class="nav-link  " href="{{ path('user_profile') }}">Details</a>
+                                  <a class="nav-link " href="{{ path('student_info') }}">Informations Etudiant</a>
+                                   <a class="nav-link  active" href="{{ path('ensignant_info') }}">Informations Ensignant</a>
+                                     <a class="nav-link " href="{{ path('profile_changePassword') }}">Changer Mot de Passe</a>
+                                  </nav>
+                                
+                            </div>
+                        </div>
+
+							  
+
+							 
+
+						
+				  </div>
+{{ form_end(form) }}

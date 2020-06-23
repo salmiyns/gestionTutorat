@@ -74,14 +74,14 @@
 						<label class="custom-control-label" for="rememberme">Remember Me</label>
 					</div>
 					
-					<a href="#" class="link float-right">Forget Password ?</a>
+					<a href=" {{ path('app_forgotten_password') }}" class="link float-right">Mot de passe oublié?</a>
 				</div>
 				<div class="form-action mb-3">
-					<button type="submit" class="btn btn-primary btn-rounded btn-login">Sign In</button>
+					<button type="submit" class="btn btn-primary btn-rounded btn-login">Se connecter</button>
 				</div>
 				<div class="login-account">
-					<span class="msg">Don't have an account yet ?</span>
-					<a href="#" id="show-signup" class="link">Sign Up</a>
+					<span class="msg">Vous n'avez pas encore de compte ?</span>
+					<a href="{{ path('app_register') }}" id="show-signup" class="link">S'inscrire</a>
 				</div>
 			</div>
 		</div>

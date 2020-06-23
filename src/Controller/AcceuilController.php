@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AcceuilController extends AbstractController
 {
     /**
-     * @Route("/dashboord_etudiant", name="dashboord_etudiant")
+     * @Route("/", name="app_homepage")
      */
 
      
@@ -31,9 +31,9 @@ class AcceuilController extends AbstractController
 
         return $this->render('demo9.base.html.twig', [
             'cours' =>  $cours,
-            'propositionsNonValid' => $propositionRepository->findByStatut('rejetée') ,
-            'propositionsValid' => $propositionRepository->findByStatut('valide'),
-            'propositionsEnAttent' => $propositionRepository->findByStatut('rejetée'),
+            //'propositionsNonValid' => $propositionRepository->findByStatut('rejetée') ,
+            //'propositionsValid' => $propositionRepository->findByStatut('valide'),
+            //'propositionsEnAttent' => $propositionRepository->findByStatut('rejetée'),
             //'user' => $user,
 
             

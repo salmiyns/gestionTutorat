@@ -30,7 +30,7 @@ class PropositionRepository extends ServiceEntityRepository
         ->addSelect('user.id as PropositionUserId, user.firstName as CreatedBy_firstName,user.lastName as CreatedBy_lastName , p.id	, p.titre	, p.description , p.date_creation as dateCreation, p.statut')
             ->leftJoin('p.tuteur', 'tuteur') 
             ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-            ->leftJoin('etudiant.UserId', 'user')   
+            ->leftJoin('etudiant.idUser', 'user')   
             ->andWhere('p.statut = :val AND user.id = :userID')
             ->setParameter('val', $value)
             ->setParameter('userID', $userId )
@@ -47,7 +47,7 @@ class PropositionRepository extends ServiceEntityRepository
         ->addSelect('user.id as PropositionUserId, user.firstName as CreatedBy_firstName,user.lastName as CreatedBy_lastName , p.id	, p.titre	, p.description , p.date_creation as dateCreation, p.statut')
             ->leftJoin('p.tuteur', 'tuteur') 
             ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-            ->leftJoin('etudiant.UserId', 'user')   
+            ->leftJoin('etudiant.idUser', 'user')   
             ->andWhere('p.statut = :val')
             ->setParameter('val', $value)
             ->orderBy('p.id', 'ASC')
@@ -59,14 +59,17 @@ class PropositionRepository extends ServiceEntityRepository
     
 
 
-
+    // /**
+    //  * @return Proposition[] Returns an array of Proposition objects
+    //  */
+    
     public function getWithSearchQueryBuilder_withStatus($value,?string $term): QueryBuilder
     {   
          $qb = $this->createQueryBuilder('p')
         ->addSelect('user.id as PropositionUserId, user.firstName as CreatedBy_firstName,user.lastName as CreatedBy_lastName , p.id	, p.titre	, p.description , p.date_creation as dateCreation, p.statut')
         ->leftJoin('p.tuteur', 'tuteur') 
         ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-        ->leftJoin('etudiant.UserId', 'user')     
+        ->leftJoin('etudiant.idUser', 'user')     
         ->andWhere('p.statut = :val')
         ->setParameter('val', $value)
         ;
@@ -89,7 +92,7 @@ class PropositionRepository extends ServiceEntityRepository
         ->addSelect('user.id as PropositionUserId, user.firstName as CreatedBy_firstName,user.lastName as CreatedBy_lastName , p.id	, p.titre	, p.description , p.date_creation as dateCreation, p.statut')
         ->leftJoin('p.tuteur', 'tuteur') 
         ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-        ->leftJoin('etudiant.UserId', 'user')     
+        ->leftJoin('etudiant.idUser', 'user')     
         ->andWhere('p.statut = :val')
         ->setParameter('val', $value)
         ->andWhere('user.id = :userId')

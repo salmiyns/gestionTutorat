@@ -1,0 +1,215 @@
+{{ form_start(form) }}
+ 
+
+
+
+				  <div class="row">
+				  		<div class="col-md-8">
+
+                               <div class="page-separator">
+										<div class="page-separator__text"> Informations Du Utilisateur </div>
+									</div>
+
+
+                                        <div class="list-group list-group-form">
+                                                {{ form_errors(form) }}
+
+                                            <div class="list-group-item">
+                                                <div class="form-group row align-items-center mb-0">
+                                                    {{ form_label(form.lastName, null, {
+                                                        'label': 'Nom',
+                                                        'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    }) }}
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.lastName, {'attr': {'placeholder': 'ex:malcom'}}
+                                                        
+                                                        )  }}
+                                                    </div>
+                                                     {{ form_errors(form.lastName) }}
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                            <div class="form-group row align-items-center mb-0">
+                                                    {{ form_label(form.firstName, null, {
+                                                        'label': 'Prenom',
+                                                        'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    }) }}
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.firstName, {'attr': {'placeholder': 'ex:Jhon'}}
+                                                        
+                                                        )  }}
+                                                    </div>
+                                                     {{ form_errors(form.firstName) }}
+                                                </div>
+                                            </div>
+
+
+                                               <div class="list-group-item">
+                                                    <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.email, null, {
+                                                                'label': 'Email',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}
+                                                            <div class="col-sm-9">
+                                                                {{ form_widget(form.email, {'attr': {'placeholder': 'ex:email@example.com'}}
+                                                                
+                                                                )  }}
+                                                            </div>
+                                                            {{ form_errors(form.email) }}
+                                                        </div>
+                                                 </div>
+                                          
+                                          
+                                            
+                                           
+                                           
+
+                                                    <div class="list-group-item">
+                                                        <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.date_of_birth, null, {
+                                                                'label': 'Date naissance',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}       
+                                                            <div class="col-sm-9">
+                                                                    {{ form_widget(form.date_of_birth)  }}                        
+                                                            </div>
+                                                            {{ form_errors(form.date_of_birth) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                        <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.sexe, null, {
+                                                                'label': 'Sexe',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}                        
+                                                            <div class="col-sm-9">
+                                                                    {{ form_widget(form.sexe)  }}                        
+                                                            </div>
+                                                            {{ form_errors(form.sexe) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="list-group-item">
+                                                        <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.telephone, null, {
+                                                                'label': 'Telephone',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}                        
+                                                            <div class="col-sm-9">
+                                                                    {{ form_widget(form.telephone, {'attr': {'placeholder': 'ex:+212698765432'}}
+                                                                
+                                                                )   }}                        
+                                                            </div>
+                                                            {{ form_errors(form.telephone) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="list-group-item">
+                                                        <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.adresse, null, {
+                                                                'label': 'Adresse',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}                        
+                                                            <div class="col-sm-9">
+                                                                    {{ form_widget(form.adresse)  }}                        
+                                                            </div>
+                                                            {{ form_errors(form.adresse) }}
+                                                        </div>
+                                                    </div>
+
+
+
+                                                     <div class="list-group-item">
+                                                        <div class="form-group row align-items-center mb-0">
+                                                            {{ form_label(form.about, null, {
+                                                                'label': 'A propos',
+                                                                'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                            }) }}                        
+                                                            <div class="col-sm-9">
+                                                                    {{ form_widget(form.about)  }}                        
+                                                            </div>
+                                                            {{ form_errors(form.about) }}
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    
+                                                    
+                                                    <div class="list-group-item">
+                                                        <div class="form-group row align-items-center mb-0">
+                                                                <div class="col-sm-9">
+                                                                    <a href="{{ path('admin_user_index') }}">Retour à la liste</a>
+                                                                </div>
+                                                                                
+                                                            <div class="col-sm-3">
+                                                                <button class="btn btn btn-accent">{{ button_label|default('Enregistrer') }}</button>                     
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+
+                                        </div>
+                                
+
+                                
+                              
+
+                          
+                                        
+
+                            
+
+                             
+                        </div>
+
+						 <div class="col-lg-4   ">
+                         <br>
+                         <br>
+                         <div class="text-center">
+                               {% if vich_uploader_asset(user, 'imageFile') is null %}
+									<img src="https://avatars.dicebear.com/v2/initials/{{ app.user.firstname }}%20{{ app.user.lastname }}.svg" 
+                                    onclick="document.getElementById('user1_imageFile_file').click();" class=" shadow p-1 mb-5 bg-black rounded"
+                                    id=" " style="cursor:pointer"  alt="Avatar" class="avatar-img rounded" >
+                        {% else %}
+                             <img src="{{ vich_uploader_asset(user, 'imageFile')|imagine_filter('user_avatar') }}" class="  shadow p-1 mb-5 bg-black rounded" onclick="document.getElementById('user1_imageFile_file').click();" >
+                        {% endif %}
+                                                             {{ form_widget(form.imageFile ,{'attr': {'class': 'task_field'}}) }}
+ 
+                        </div>
+                        {{ form_errors(form.imageFile) }}
+                                 <br>
+
+                                   
+
+
+
+							 
+									<!-- // Realisateurs -->
+									<div class="page-separator">
+										<div class="page-separator__text">Roles </div>
+									</div>
+
+									<div class="mb-4">
+									   <div class="card card-body">
+												  {{ form_widget(form.roles) }}
+										</div>
+										{{ form_errors(form.roles) }}
+									</div>
+									
+									 <!-- // End Realisateurs -->
+									
+						</div>
+
+							  
+
+							 
+
+						
+				  </div>
+{{ form_end(form) }}

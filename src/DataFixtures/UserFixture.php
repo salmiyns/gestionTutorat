@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\ApiToken;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\Migrations\Version\Factory;
@@ -30,14 +31,20 @@ class UserFixture extends BaseFixture implements FixtureGroupInterface
                 'engage'
             ));
 
-            $user->setFirstName($this->faker->firstName);
+            $date= new DateTime();
+
+            $user->setFirstname($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
-            $user->setDateOfBirth('1985-04-01');
-            $user->setProfilePic('http://127.0.0.1:8000/build/images/profile.jpg');
-            $user->setActivationCode("");
-            $user->setRegistrationDate(null);
-            $user->setStatus("1");
+           // $user->setDateNaissance($date);
+           // $user->setProfilePic('http://127.0.0.1:8000/build/images/profile.jpg');
+        
             $user->setRoles(['ROLE_ADMIN']);
+            $user->setSexe("Homme");
+            $user->setIsActive(true);
+            $user->setCreatedAt($date);
+            $user->setUpdatedAt($date);
+            $user->setVerified(true);
+
             
 
             return $user;

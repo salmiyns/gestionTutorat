@@ -10,6 +10,7 @@ use Faker\Factory;
 use App\Entity\Seance;
 use App\Entity\Tuteur;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -42,18 +43,22 @@ class SeanceFixture extends BaseFixture implements FixtureGroupInterface
     
             $user->setFirstName($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
-            $user->setDateOfBirth('1985-04-01');
+            $user->setDateOfBirth(new DateTime());
             $user->setProfilePic('http://127.0.0.1:8000/build/images/profile.jpg');
-            $user->setActivationCode("");
-            $user->setRegistrationDate(null);
-            $user->setStatus("1");
-            $user->setRoles(['ROLE_Enseignant']);
+             $user->setRoles(['ROLE_Enseignant']);
             $user->setSexe('Homme');
+            $user->setIsActive(true);
+            $user->setVerified(true);
+            $user->setCreatedAt(new DateTime());
+            $user->setActivatedAt(new DateTime());
+
+
+
 
             $etudiant = new Etudiant();
             $etudiant->setMatricule(sprintf('GIN%d', $i));
             $etudiant->setFiliere(sprintf('FILIER%d', $i));
-            $etudiant->setUserId($user);
+            $etudiant->setIdUser($user);
 
             $tuteur = new Tuteur();
             $tuteur->setIdEtudiant($etudiant);
