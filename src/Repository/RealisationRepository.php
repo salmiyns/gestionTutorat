@@ -24,12 +24,12 @@ class RealisationRepository extends ServiceEntityRepository
 
 
     
-    public function findByUserId($userId)
+    public function findByidUser($idUser)
     {
         return $this->createQueryBuilder('r')
        ->addSelect('cours.id as coursId , 
                     cours.nom_cours as nom_cours , 
-                    user.id as realisation_UserId,  
+                    user.id as realisation_idUser,  
                     user.firstName as CreatedBy_firstName,
                     user.lastName as CreatedBy_lastName ,
                     r.id , 
@@ -40,12 +40,12 @@ class RealisationRepository extends ServiceEntityRepository
                         
        ')
 
-       ->leftJoin('r.tuteur', 'tuteur') 
+       ->leftJoin('r.tuteur', 'tuteurr') 
        ->leftJoin('r.cours', 'cours') 
-       ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-        ->leftJoin('etudiant.UserId', 'user')   
-        ->andWhere(' user.id = :userID')
-        ->setParameter('userID', $userId )
+       ->leftJoin('tuteurr.etudiant', 'etudiant')   
+        ->leftJoin('etudiant.idUser', 'user')   
+        ->andWhere(' user.id = :idUser')
+        ->setParameter('idUser', $idUser )
         ->orderBy('r.id', 'ASC')
         //->setMaxResults(10)
         ->getQuery()
@@ -55,15 +55,15 @@ class RealisationRepository extends ServiceEntityRepository
 
 
 
-    public function getRealisation_byUser($userId)
+    public function getRealisation_byUser($idUser)
     {
         $qb = $this->createQueryBuilder('r')
  
-       ->leftJoin('r.tuteur', 'tuteur') 
-       ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-        ->leftJoin('etudiant.UserId', 'user')   
-        ->andWhere(' user.id = :userID')
-        ->setParameter('userID', $userId )
+       ->leftJoin('r.tuteur', 'tuteurr') 
+       ->leftJoin('tuteurr.etudiant', 'etudiant')   
+        ->leftJoin('etudiant.idUser', 'user')   
+        ->andWhere(' user.id = :idUser')
+        ->setParameter('idUser', $idUser )
 
         ->orderBy('r.id', 'ASC')
         //->setMaxResults(100)
@@ -81,12 +81,12 @@ class RealisationRepository extends ServiceEntityRepository
    
 
 
-    public function findByUserId_qb($userId):QueryBuilder
+    public function findByidUser_qb($idUser):QueryBuilder
     {
         $qb= $this->createQueryBuilder('r')
        /*->addSelect('cours.id as coursId , 
                     cours.nom_cours as nom_cours , 
-                    user.id as realisation_UserId,  
+                    user.id as realisation_idUser,  
                     user.firstName as CreatedBy_firstName,
                     user.lastName as CreatedBy_lastName ,
                     r.id , 
@@ -97,12 +97,12 @@ class RealisationRepository extends ServiceEntityRepository
                         
        ')*/
 
-       ->leftJoin('r.tuteur', 'tuteur') 
+       ->leftJoin('r.tuteur', 'tuteurr') 
        ->leftJoin('r.cours', 'cours') 
-       ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-        ->leftJoin('etudiant.UserId', 'user')   
-        ->andWhere(' user.id = :userID')
-        ->setParameter('userID', $userId )
+       ->leftJoin('tuteurr.etudiant', 'etudiant')   
+        ->leftJoin('etudiant.idUser', 'user')   
+        ->andWhere(' user.id = :idUser')
+        ->setParameter('idUser', $idUser )
         ->orderBy('r.id', 'ASC')
         //->setMaxResults(10)
        // ->getQuery()
@@ -116,7 +116,7 @@ class RealisationRepository extends ServiceEntityRepository
    
 
 
-    public function findByUserId_currentWeek($userId): QueryBuilder
+    public function findByidUser_currentWeek($idUser): QueryBuilder
     {
         $weekstart = (date('D') != 'Mon') ? date('Y-m-d', strtotime('last Monday')) : date('Y-m-d');
         $weekend = (date('D') != 'Sat') ? date('Y-m-d', strtotime('next Saturday')) : date('Y-m-d');
@@ -125,7 +125,7 @@ class RealisationRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('r')
         ->addSelect('cours.id as coursId , 
         cours.nom_cours as nom_cours , 
-        user.id as realisation_UserId,  
+        user.id as realisation_idUser,  
         user.firstName as CreatedBy_firstName,
         user.lastName as CreatedBy_lastName ,
         r.id , 
@@ -134,12 +134,12 @@ class RealisationRepository extends ServiceEntityRepository
         r.date_creation,
         r.date_fin
         ')
-       ->leftJoin('r.tuteur', 'tuteur') 
+       ->leftJoin('r.tuteur', 'tuteurr') 
        ->leftJoin('r.cours', 'cours') 
-       ->leftJoin('tuteur.IdEtudiant', 'etudiant')   
-        ->leftJoin('etudiant.UserId', 'user')   
-        ->Where(' user.id = :userID')
-        ->setParameter('userID', $userId )
+       ->leftJoin('tuteurr.etudiant', 'etudiant')   
+        ->leftJoin('etudiant.idUser', 'user')   
+        ->Where(' user.id = :idUser')
+        ->setParameter('idUser', $idUser )
         ->andWhere('r.date_fin BETWEEN :dateMin AND :dateMax ')
         ->setParameter('dateMin', $weekstart )
         ->setParameter('dateMax', $weekend )

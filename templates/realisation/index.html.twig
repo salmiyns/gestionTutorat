@@ -86,10 +86,11 @@
                          </form>
  
                         </div>
-                        
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
                         <div class="col-auto border-left">
                             <a href="{{ path('realisation_new') }}" class="btn btn-accent">Nouvelle Realisation</a>
                         </div>
+                        {% endif  %}
                     </div>
 
                 </div>
@@ -117,12 +118,14 @@
 
 
              <!-- //   Page Content -->
-            
+             {% block Content %}
 				<div class="container-fluid page__container page__container page-section">
+                {{ parent() }}
                 <div class="page-separator">
                     <div class="page-separator__text">List des Realisations</div>
                 </div>
-                 {% block Content %}
+                
+                 
                 <div class="row mb-lg-8pt">
                         <div class="col-md-6">
 

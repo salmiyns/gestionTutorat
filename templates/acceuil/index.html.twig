@@ -1,283 +1,586 @@
-{% extends "demo2.base.html.twig" %}
+{% extends "huma.demo9.base.html.twig" %}
 
-				{% block content %}                   
-                    <div class="row">
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">Propositions Validées</div>
-								</div>
-								<div class="card-body pb-0">
-									<div class="d-flex">
-										<div class="avatar">
-											<img src="{{ asset('build/img/logoproduct.svg')}}" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">CSS</h6>
-											<small class="text-muted">Cascading Style Sheets</small>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$17</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar">
-											<img src="{{ asset('build/img/logoproduct.svg')}}" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">J.CO Donuts</h6>
-											<small class="text-muted">The Best Donuts</small>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$300</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar">
-											<img src="{{ asset('build/img/logoproduct3.svg')}}" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h6 class="fw-bold mb-1">Ready Pro</h6>
-											<small class="text-muted">Bootstrap 4 Admin Dashboard</small>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$350</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="pull-in">
-										<canvas id="topProductsChart"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-body">
-									<div class="card-title fw-mediumbold"> Cours demandés </div>
-									<div class="card-list">
-										<div class="item-list">
-											<div class="avatar">
-												<img src="{{ asset('build/img/jm_denis.jpg')}}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Jimmy Denis</div>
-												<div class="status">Graphic Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="{{ asset('build/img/chadengle.jpg')}}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Chad</div>
-												<div class="status">CEO Zeleaf</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="{{ asset('build/img/talha.jpg')}}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Talha</div>
-												<div class="status">Front End Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="{{ asset('build/img/mlane.jpg')}}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">John Doe</div>
-												<div class="status">Back End Developer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="{{ asset('build/img/talha.jpg')}}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Talha</div>
-												<div class="status">Front End Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="{{ asset('build/img/jm_denis.jpg')}}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Jimmy Denis</div>
-												<div class="status">Graphic Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card card-primary bg-primary-gradient">
-								<div class="card-body">
-									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Cours Enregistrés</h4>
-									<h1 class="mb-4 fw-bold">{{ cours|length}}</h1>
-                                    <h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Propositions</h4>
-									<ul class="list-unstyled">
-										<li class="d-flex justify-content-between pb-1 pt-1"><small>Propositions Validées</small> <span>{{propositionsValid|length}}</span></li>
-										<li class="d-flex justify-content-between pb-1 pt-1"><small>Propositions Non Validées</small> <span> {{propositionsNonValid|length}}</span></li>
-										<li class="d-flex justify-content-between pb-1 pt-1"><small>Propositions En Attente</small> <span> {{propositionsEnAttent|length}}</span></li>
-									</ul>                                    
-                                    
- 									<h4 class="mt-5 pb-3 mb-0 fw-bold">Top Courses Demandés</h4>
-									<ul class="list-unstyled">
-										<li class="d-flex justify-content-between pb-1 pt-1"><small>/product/readypro/index.html</small> <span>7</span></li>
-										<li class="d-flex justify-content-between pb-1 pt-1"><small>/product/atlantis/demo.html</small> <span>10</span></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">Programmes Et Séances</div>
-								</div>
-								<div class="card-body">
-									<ol class="activity-feed">
-										<li class="feed-item feed-item-secondary">
-											<time class="date" datetime="9-25">Sep 25</time>
-											<span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
-										</li>
-										<li class="feed-item feed-item-success">
-											<time class="date" datetime="9-24">Sep 24</time>
-											<span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
-										</li>
-										<li class="feed-item feed-item-info">
-											<time class="date" datetime="9-23">Sep 23</time>
-											<span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
-										</li>
-										<li class="feed-item feed-item-warning">
-											<time class="date" datetime="9-21">Sep 21</time>
-											<span class="text">Responded to need <a href="#">"In-Kind Opportunity"</a></span>
-										</li>
-										<li class="feed-item feed-item-danger">
-											<time class="date" datetime="9-18">Sep 18</time>
-											<span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
-										</li>
-										<li class="feed-item">
-											<time class="date" datetime="9-17">Sep 17</time>
-											<span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
-										</li>
-									</ol>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-head-row">
-										<div class="card-title">Tous les Propositions</div>
-										<div class="card-tools">
-											<ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
-												<li class="nav-item">
-													<a class="nav-link" id="pills-today" data-toggle="pill" href="#pills-today" role="tab" aria-selected="true">Today</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link active" id="pills-week" data-toggle="pill" href="#pills-week" role="tab" aria-selected="false">Week</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link" id="pills-month" data-toggle="pill" href="#pills-month" role="tab" aria-selected="false">Month</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="d-flex">
-										<div class="avatar avatar-online">
-											<span class="avatar-title rounded-circle border border-white bg-info">J</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Joko Subianto <span class="text-warning pl-3">pending</span></h6>
-											<span class="text-muted">I am facing some trouble with my viewport. When i start my</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">8:40 PM</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-offline">
-											<span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Prabowo Widodo <span class="text-success pl-3">open</span></h6>
-											<span class="text-muted">I have some query regarding the license issue.</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">1 Day Ago</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-away">
-											<span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Lee Chong Wei <span class="text-muted pl-3">closed</span></h6>
-											<span class="text-muted">Is there any update plan for RTL version near future?</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Days Ago</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-offline">
-											<span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Peter Parker <span class="text-success pl-3">open</span></h6>
-											<span class="text-muted">I have some query regarding the license issue.</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Day Ago</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-away">
-											<span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Logan Paul <span class="text-muted pl-3">closed</span></h6>
-											<span class="text-muted">Is there any update plan for RTL version near future?</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Days Ago</small>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-                 {% endblock %}	
+{% block title %}Admin index{% endblock %}
+
+{% block body %}
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">  Dashboard</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                      Dashboard
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+               
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    {% block Content %}
+                    {{ parent() }}  
+                            <div class="container-fluid page__container">
+                                                    <div class="page-section">
+
+                                                        <div class="row mb-lg-8pt">
+                                                            <div class="col-lg-12">
+
+                                                              
+                                                                <div class="row">
+                                                                     <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{propositions}}</div>
+                                                                                    <p class="mb-0"><strong>Propositions</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('proposition_index') }}" class="btn btn-outline-secondary">Voir les Propositions <br></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+                                                                 <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{cours }}</div>
+                                                                                    <p class="mb-0"><strong>Cours</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('cours_index') }}" class="btn btn-outline-secondary">Voir les Cours </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                 <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{seances }}</div>
+                                                                                    <p class="mb-0"><strong>Seances</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('seance_index') }}" class="btn btn-outline-secondary">Voir les Seances</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                
+                                                                 <div class="col-md-3">
+
+
+                                                                        <div class="card ">
+                                                                            <div class="card-header pb-0 border-0 d-flex">
+                                                                                <div class="flex">
+                                                                                    <div class="h2 mb-0">{{realisations }}</div>
+                                                                                    <p class="mb-0"><strong>Resalisations</strong></p>
+                                                                                </div>
+                                                                                <i class="material-icons text-50">more_horiz</i>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="text-50 mb-16pt">
+                                                                                                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <a href="{{ path('realisation_index') }}" class="btn btn-outline-secondary">Voir les Resalisations</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+                                                                
+                                                                   
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+														<!-- Section 2-->
+
+														<div class="row card-group-row mb-lg-8pt">
+																		<div class="col-lg card-group-row__col">
+																			<div class="card card-group-row__card">
+																				<div class="card-header d-flex align-items-center">
+																					<strong class="flex">Cours</strong>
+																					<div><a href="#" data-target="#todo" class="js-toggle-check-all" data-domfactory-upgraded="toggle-check-all">Voir Tous les Cours</a></div>
+																				</div>
+																				<div class="progress rounded-0" style="height: 4px;">
+																					<div class="progress-bar bg-primary" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+																				</div>
+																				<div class="card-body">
+																					<ul class="list-unstyled list-todo" id="todo">
+																					{% for cour  in listCours %}
+																						<li>
+																							<div class="custom-control custom-checkbox">
+																								
+																								<a href="{{ path('cours_show', {'id': cour.id}) }}"><label style="cursor:pointer" class="custom-control-label">{{ cour.nomCours }}</label></a>
+																							</div>
+																						</li>
+																					{% else %}
+																						<li>
+																							<div class="alert alert-soft-warning mb-0 p-8pt">
+																										<div class="d-flex align-items-start">
+																											<div class="mr-8pt">
+																												<i class="material-icons">error_outline</i>
+																											</div>
+																											<div class="flex">
+																												<small class="text-100">Aucun Cours Ajouté.</small>
+																											</div>
+																										</div>
+																							</div>
+																						</li>
+																					{% endfor %}
+
+
+
+																					</ul>
+																				</div>
+																				<div class="card-footer p-8pt">
+
+																					 {{ knp_pagination_render(listCours) }}
+
+																				</div>
+																			</div>
+																		</div>
+																		
+
+
+																		<div class="ard card-group-row__card">
+
+																			<div class="page-separator">
+																				<div class="page-separator__text">Seances</div>
+																			</div>
+
+																			<div class="card">
+																				<div class="card-header">
+																					<div class="d-flex align-items-center">
+																						<div class="flex">
+																							<strong>Aujourd'hui</strong>
+																							
+																						</div>
+																						<i class="material-icons text-50">more_horiz</i>
+																					</div>
+																				</div>
+																				<div class="card-body">
+																					 {% for seance in seancesThisWeek %}
+																					<div class="list-group-item d-flex align-items-start p-16pt">
+																						<div class="d-flex flex-column mr-16pt">
+																							<small class="text-uppercase text-50">{{ seance.temps ? seance.temps|date('F') : '' }}</small>
+																							<strong class="border-bottom-2 border-bottom-accent">{{ seance.temps ? seance.temps|date('d') : '' }}</strong>
+																						</div>
+																						<div class="flex">
+																							<div><strong> <a href="{{ path('seance_show', {'id': seance.id}) }}">{{ seance.titre}} </a></strong></div>
+
+																							<div class="lh-1 mb-16pt"><small class="text-50">{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</small></div>
+ 																						</div>
+																					</div>
+
+																					
+																					{% else %}
+																					<div class="alert alert-soft-warning mb-0 p-8pt">
+																									<div class="d-flex align-items-start">
+																										<div class="mr-8pt">
+																											<i class="material-icons">error_outline</i>
+																										</div>
+																										<div class="flex">
+																											<small class="text-100">Aucune Seances prévu cette semaine.</small>
+																										</div>
+																									</div>
+																					 </div>
+																					{% endfor %}
+																					<div class="card-body text-center">
+																						<a href="{{ path('seance_index') }}" class="text-70 text-underline">Voir Tous</a>
+																					</div>
+																				</div>
+																			</div>
+
+
+
+
+																			<div class="card">
+																				<div class="card-header">
+																					<div class="d-flex align-items-center">
+																						<div class="flex">
+																							<strong>Seances : Cette Semaine</strong>
+																							<span class="text-20">({{ seancesThisWeek|length }}) </span>
+																						</div>
+																						<i class="material-icons text-50">more_horiz</i>
+																					</div>
+
+																				</div>
+
+																				<div class="list-group list-group-flush">
+																				   {% for seance in seancesThisWeek %}
+																					<div class="list-group-item d-flex align-items-start p-16pt">
+																						<div class="d-flex flex-column mr-16pt">
+																							<small class="text-uppercase text-50">{{ seance.temps ? seance.temps|date('F') : '' }}</small>
+																							<strong class="border-bottom-2 border-bottom-accent">{{ seance.temps ? seance.temps|date('d') : '' }}</strong>
+																						</div>
+																						<div class="flex">
+																							<div><strong><a href="{{ path('seance_show', {'id': seance.id}) }}">{{ seance.titre}} </a></strong></div>
+
+																							<div class="lh-1 mb-16pt"><small class="text-50">{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</small></div>
+ 																						</div>
+																					</div>
+
+																					
+																					{% else %}
+																					<div class="alert alert-soft-warning mb-0 p-8pt">
+																									<div class="d-flex align-items-start">
+																										<div class="mr-8pt">
+																											<i class="material-icons">error_outline</i>
+																										</div>
+																										<div class="flex">
+																											<small class="text-100">Aucune Seances prévu cette semaine.</small>
+																										</div>
+																									</div>
+																					 </div>
+																					{% endfor %}
+
+
+																				</div>
+																				
+																					
+																					<div class="card-body text-center">
+																						<a href="{{ path('seance_index') }}" class="text-70 text-underline">Voir Tous</a>
+																					</div>
+																			</div>
+
+
+																			
+																		 
+																			
+																			 
+
+																		</div>
+																		 
+														 </div>
+
+
+														<!-- end Section 2 -->
+
+
+
+
+													 
+
+
+
+														
+
+
+
+
+
+														 {% if is_granted("ROLE_ADMIN")  %}
+                                                            <div class="row mb-lg-8pt">
+                                                                <div class="col-lg-12">
+                                                                    <div class="page-separator">
+                                                                            <div class="page-separator__text">
+                                                                            Comptes Utilisateurs
+                                                                            </div>
+                                                                    </div>
+
+                                                                    <div class="card mb-32pt">
+                                                                        <div class="table-responsive" data-toggle="lists" data-lists-sort-by=
+                                                                        "js-lists-values-from" data-lists-sort-desc="true" data-lists-values=
+                                                                        '["js-lists-values-name", "js-lists-values-status", "js-lists-values-policy", "js-lists-values-reason", "js-lists-values-days", "js-lists-values-available", "js-lists-values-from", "js-lists-values-to"]'>
+                                                                                            <table class="table mb-0 thead-border-top-0 table-nowrap">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th style="width: 18px;" class="pr-0">
+                                                                                                    <div class="custom-control custom-checkbox">
+                                                                                                        <input type="checkbox" class=
+                                                                                                        "custom-control-input js-toggle-check-all" data-target="#leaves"
+                                                                                                        id="customCheckAll" /> <label class="custom-control-label" for=
+                                                                                                        "customCheckAll"><span class="text-hide">Toggle
+                                                                                                        all</span></label>
+                                                                                                    </div>
+                                                                                                    </th>
+
+                                                                                                    <th {% if users.isSorted('firstName') %} class="sorted "{% endif %} >
+                                                                                                      {{ knp_pagination_sortable(users, 'Compte Membre', 'firstName') }}</th>
+
+                                                                                                    <th style="width: 48px;"><a href="javascript:void(0)" class="sort"
+                                                                                                    data-sort="js-lists-values-status">Status</a></th>
+
+                                                                                                    
+                                                                                                    
+                                                                                                    <th {% if users.isSorted('createdAt') %} class="sorted sort"{% endif %}  style="width: 150px;" >
+                                                                                                    
+                                                                                                      {{ knp_pagination_sortable(users, 'Date Inscription', 'createdAt') }}
+                                                                                                    
+                                                                                                    </th>
+
+                                                                                                     <th {% if users.isSorted('activatedAt') %} class="sorted sort"{% endif %}  style="width: 48px;" >
+                                                                                                    
+                                                                                                      {{ knp_pagination_sortable(users, 'Active', 'activatedAt') }}
+                                                                                                    
+                                                                                                    </th>
+    
+
+                                                                                                    <th style="width: 24px;"></th>
+                                                                                                </tr>
+                                                                                                </thead>
+
+                                                                                                <tbody class="list" id="leaves">
+
+                                                                                                 {% for user in users %}
+                                                                                                <tr>
+                                                                                                    <td class="pr-0">
+                                                                                                        <div class="avatar avatar-xs">
+                                                                                                            <img src="https://avatars.dicebear.com/v2/initials/{{ user.firstName }}%20{{ user.lastName }}.svg" alt="Avatar" class="avatar-img rounded-circle">
+                                                                                                        </div>
+                                                                                                    </td>
+
+                                                                                                    <td>
+                                                                                                    <div class="media flex-nowrap align-items-center" style=
+                                                                                                    "white-space: nowrap;">
+                                                                                                        
+
+                                                                                                        <div class="media-body">
+                                                                                                        <div class="d-flex align-items-center">
+                                                                                                            <div class="flex d-flex flex-column">
+                                                                                                            <p class="mb-0"><strong class="js-lists-values-name">{{ user.firstName }}
+                                                                                                            {{ user.lastName }}</strong></p><small class=
+                                                                                                            "js-lists-values-email text-50">{{ user.email }}</small>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    </td>
+
+                                                                                                    <td>
+                                                                                                    <div class="d-flex flex-column">
+                                                                                                        <small class=
+                                                                                                        "js-lists-values-status text-50 mb-4pt">{{ user.isActive ? 'Yes' : 'No' }}</small>
+                                                                                                    </div>
+                                                                                                    </td>
+
+
+                                                                                                    <td><small class="js-lists-values-reason text-50">{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</small></td>
+
+                                                                                                    <td><small class="js-lists-values-days text-50"> {{ user.activatedAt ? user.activatedAt|ago  }}</small></td>
+
+                                                                                                  
+                                                                                                  
+
+                                                                                                    <td class="text-right">
+                                                                                                        <a href="#" data-toggle="dropdown" data-caret="false" class="text-muted" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                                                                            <div class="dropdown-menu dropdown-menu-right" style="">
+                                                                                                                <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="dropdown-item">Modifer</a>
+                                                                                                                <a href="{{ path('user_delete', {'id': user.id}) }}" class="dropdown-item">Suprimer</a>
+                                                                                                              
+                                                                                                              
+                                                                                                            </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                 {% else %}
+                                                                                                    <tr>
+                                                                                                        <td colspan="20">no records found</td>
+                                                                                                    </tr>
+                                                                                                {% endfor %}
+                                                                                        
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                        </div>
+
+                                                                        <div class="card-footer p-8pt">
+                                                                                    <div class="card p-8pt mb-0 d-inline-block">
+                                                                                        <ul class="pagination justify-content-start pagination-xsm m-00">	
+                                                                                                            <li class="page-item">
+                                                                                                                {{ knp_pagination_render(users, null, {}, {
+                                                                                                                    'position': 'right',
+                                                                                                                    'size': 'small',
+                                                                                                                    'rounded': true,
+                                                                                                                }) }}
+                                                                                                            </li>								
+                                                                                        </ul>
+                                                                                    </div>
+                                                                         </div><!-- <div class="card-body bordet-top text-right">
+                                                                            15 <span class="text-50">of 1,430</span> <a href="#" class="text-50"><i class="material-icons ml-1">arrow_forward</i></a>
+                                                                            </div> -->
+                                                                    </div>
+                                                                </div>
+                                                             </div>
+															 {% endif %}
+      
+
+
+
+   
+   
+
+                                                    </div>
+                                                </div>
+
+
+                    {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -76,10 +76,11 @@
                          </form>
  
                         </div>
-                        
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
                         <div class="col-auto border-left">
                             <a href="{{ path('realisation_new') }}" class="btn btn-accent">Nouvelle Realisations</a>
                         </div>
+                        {% endif  %}
                     </div>
 
                 </div>

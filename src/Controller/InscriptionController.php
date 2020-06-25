@@ -9,9 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\IsNull;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+
 
 /**
  * @Route("/inscription")
+ * @IsGranted({"ROLE_ADMIN","TUTEUR","TUTORE"})
+ * 
  */
 class InscriptionController extends AbstractController
 {
@@ -27,6 +34,7 @@ class InscriptionController extends AbstractController
 
     /**
      * @Route("/new", name="inscription_new", methods={"GET","POST"})
+     * @IsGranted({"ROLE_ADMIN","TUTEUR","TUTORE"})
      */
     public function new(Request $request): Response
     {
@@ -50,6 +58,7 @@ class InscriptionController extends AbstractController
 
     /**
      * @Route("/{id}", name="inscription_show", methods={"GET"})
+     * @IsGranted({"ROLE_ADMIN","TUTEUR","TUTORE"})
      */
     public function show(Inscription $inscription): Response
     {
@@ -60,6 +69,7 @@ class InscriptionController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="inscription_edit", methods={"GET","POST"})
+     * @IsGranted({"ROLE_ADMIN","TUTEUR","TUTORE"})
      */
     public function edit(Request $request, Inscription $inscription): Response
     {
@@ -80,6 +90,7 @@ class InscriptionController extends AbstractController
 
     /**
      * @Route("/{id}", name="inscription_delete", methods={"DELETE"})
+     * @IsGranted({"ROLE_ADMIN","TUTEUR","TUTORE"})
      */
     public function delete(Request $request, Inscription $inscription): Response
     {

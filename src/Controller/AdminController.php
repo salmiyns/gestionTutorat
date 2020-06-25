@@ -10,16 +10,19 @@ use App\Entity\Seance;
 use App\Entity\Tuteur;
 use App\Entity\Tuteurr;
 use App\Entity\Tutore;
+use App\Entity\Tutoree;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\User1Type;
 use App\Form\UserType;
 use App\Repository\CoursRepository;
+use App\Repository\EnseignantRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PropositionRepository;
 use App\Repository\RealisationRepository;
 use App\Repository\SeanceRepository;
-use App\Repository\TutoreRepository;
+use App\Repository\TuteurrRepository;
+use App\Repository\TutoreeRepository;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
@@ -35,7 +38,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Mailer\MailerInterface;
  use Symfony\Component\Mime\Address;
-
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin")
@@ -227,7 +233,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="admin_user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user ,EtudiantRepository $etudiantRepository , TutoreRepository $tutoreRepository): Response
+    public function edit(Request $request, User $user ,EtudiantRepository $etudiantRepository ,TutoreeRepository $tutoreRepository, EnseignantRepository $enseignantRepository,TuteurrRepository $tuteurrRepository): Response
     {
         $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
@@ -245,9 +251,12 @@ class AdminController extends AbstractController
             foreach($roles as $role)
             {
                 if($role == 'ROLE_ENSEIGNANT'){
+                    $enseignant= $enseignantRepository->findOneBy(['idUser'=>$user]);
+                    if(!$enseignant){
                     $enseignant = new Enseignant();
                     $enseignant->setIdUser($user);
                     $entityManager->persist($enseignant);
+                    }
                      
 
                 }
@@ -260,23 +269,38 @@ class AdminController extends AbstractController
                         $etudiant->setIdUser($user);
                         $entityManager->persist($etudiant);
                     }
+                    else {
+
+                        if($role == 'ROLE_TUTEUR' ){
+                            //$tuteur=new Tuteur();
+                            $tuteur= $tuteurrRepository->findOneBy(['etudiant'=>$etudiant]);
+                            
+                            if(!$tuteur){
+                                $tuteur= new Tuteurr();
+                                $tuteur->setEtudiant($etudiant);
+                                $entityManager->persist($tuteur);
+                            }
+                           
+                         }
+                         else{
+                            $tutore= $tutoreRepository->findOneBy(['etudiant'=>$etudiant]);
+                            //dd($tutore);
+                            if(is_null($tutore)){
+                            $tutore=new Tutoree();
+                            $tutore->setEtudiant($etudiant);
+                            $entityManager->persist($tutore);
+                            }
+                         }
+                        
+                    }
+
+                    
                     
 
 
                      
                      
-                     if($role == 'ROLE_TUTEUR' ){
-                        //$tuteur=new Tuteur();
-                        $tuteur=new Tuteurr();
-                        $tuteur->setEtudiant($etudiant);
-                        $entityManager->persist($tuteur);
-                     }
-                     else{
-                        $tutore=new Tutore();
-                        $tutore->setEtudiant($etudiant);
-                        $entityManager->persist($tutore);
-                     }
-
+                     
 
 
                     
@@ -296,10 +320,13 @@ class AdminController extends AbstractController
             $entityManager->flush();
 
 
+            $this->addFlash('success', "l'utilisateur a été Modifier avec succès");
+            return $this->redirectToRoute('admin_user_index');
+
+
             
 
-            return $this->redirectToRoute('admin_user_index');
-        }
+         }
 
         return $this->render('admin/user/edit.html.twig', [
             'user' => $user,
@@ -308,16 +335,46 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/user/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/user/delete/{id}", name="admin_user_delete",  methods={"GET","POST"})
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(Request $request, User $user,CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+
+       /* $token = new CsrfToken('delete', $request->query->get('_csrf_token'));
+
+        if (!$csrfTokenManager->isTokenValid($token)) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
+        }*/
+
+
+
+        
+
+
+
+        if ($user) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($user);
+            $em->flush();
         }
+
+
+        $this->addFlash('success', "l'utilisateur a été Suprimer avec succès");
+ 
+  
+         
 
         return $this->redirectToRoute('admin_user_index');
     }
+
+
+
+
+    
 }

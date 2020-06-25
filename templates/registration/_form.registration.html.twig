@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         {{ form_label(registrationForm.plainPassword, null, {
                                                     'label': 'Mot de Passe',
-                                                    'label_attr': {'class': 'form-label col-form-label col-sm-3'}
+                                                    'label_attr': {'class': 'form-label col-form-label '}
                                             }) }}
 
                                             {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'votre mot de passe'}}
@@ -52,10 +52,6 @@
 
 
                                     
-                                    <div class="form-group mb-24pt">
-                                        <label class="form-label" for="password">Password:</label>
-                                        <input id="password" type="password" class="form-control" placeholder="Your password ...">
-                                    </div>
 
                                     <button class="btn btn btn-accent">{{ button_label|default('Créer un compte') }}</button>                     
 

@@ -77,10 +77,11 @@
                          </form>
  
                         </div>
-                        
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
                         <div class="col-auto border-left">
                             <a href="" class="btn btn-accent">Nouvelle Realisation</a>
                         </div>
+                        {% endif  %}
                     </div>
 
                 </div>
@@ -94,7 +95,9 @@
 				<div class="container-fluid page__container page__container page-section">
                   
                  {% block Content %}
+                 
 				  <div class="row">
+                  {{ parent() }}
 				  		<div class="col-md-8">
 
                                <div class="page-separator">
@@ -120,15 +123,12 @@
                         </div>
 
 						 <div class="col-lg-4">
-								<div class="page-separator">
-									<div class="page-separator__text">Realisateur </div>
-								</div>
+							 
 
 
 
 
-
-								<!-- card-->
+									<!-- card-->
 								<div class="card mb-lg-0">
 		                                <div class="card-header d-flex align-items-center">
 		                                    <strong class="flex">Tuteur</strong>
@@ -141,12 +141,16 @@
     										<div class="d-flex align-items-center">
                                         		<div class="mr-3">
                                             			<div class="avatar avatar-xl">
-                                                			<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="people" class="avatar-img rounded-circle">
-                                            			</div>
+														    {% if vich_uploader_asset(app.user, 'imageFile') is null %}
+															<img src="https://avatars.dicebear.com/v2/initials/{{ user.firstname }}%20{{ user.lastname }}.svg"  alt="Avatar" class="rounded-circle mr-8pt" >
+															{% else %}
+																<img src="{{ vich_uploader_asset(user, 'imageFile') }}" class="rounded-circle mr-8pt"><br>
+															{% endif %}
+                                             			</div>
                                         		 </div>
                                             <div class="flex">
-                                           		 <h4 class="mb-0">Michelle Smith</h4>
-                                            	 <p class="text-50 mb-0">Personal Development Teacher since 2014</p>
+                                           		 <h4 class="mb-0">{{user.firstname}} {{user.lastname}}</h4>
+                                            	 <p class="text-50 mb-0">{{user.about}}</p>
                                         	</div>
                                     	</div>
                                  </div>
@@ -164,7 +168,7 @@
 									<br/>
 									<!-- // Realisateurs -->
 									<div class="page-separator">
-										<div class="page-separator__text">Realisateurs Participants </div>
+										<div class="page-separator__text">Realisateurs   </div>
 									</div>
 
 									<div class="mb-4">

@@ -39,9 +39,11 @@ class PropositionType extends AbstractType
 
         $builder
             ->add('titre')
-            ->add('description',TextareaType::class, [
-                'help' => 'Choose something catchy!'
-            ])
+            //->add('description',TextareaType::class, [
+            //    'help' => 'Choose something catchy!'
+            //])
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
+
           
           /*  ->add('date_creation',null, [
                 'widget' => 'single_text',

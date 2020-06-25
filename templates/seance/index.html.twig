@@ -1,6 +1,6 @@
 {% extends "huma.demo9.base.html.twig" %}
 
-{% block title %}Realisation{% endblock %}
+{% block title %}Seances{% endblock %}
 
 {% block body %}
 
@@ -86,10 +86,11 @@
                          </form>
  
                         </div>
-                        
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
                         <div class="col-auto border-left">
                             <a href="{{ path('seance_new') }}" class="btn btn-accent">Nouvelle Seance</a>
                         </div>
+                        {% endif %}
                     </div>
 
                 </div>
@@ -117,31 +118,18 @@
 
 
              <!-- //   Page Content -->
-            
+            {% block Content %}
 				<div class="container-fluid page__container page__container page-section">
+                {{ parent() }}  
                   
-                 {% block Content %}
+                 
                         <div class="row">
                                     <div class="col-lg-9 pr-lg-0">
 
                                         <div class="page-section">
                                             <h4>Seances</h4>
 
-                                            <div class="alert alert-soft-warning mb-lg-32pt">
-                                                <div class="d-flex flex-wrap align-items-center">
-                                                    <div class="mr-8pt">
-                                                        <i class="material-icons">access_time</i>
-                                                    </div>
-                                                    <div class="flex" style="min-width: 180px">
-                                                        <small class="text-100">
-                                                            Please pay your amount due of
-                                                            <strong>$9.00</strong> for invoice <a href="billing-invoice.html" class="text-underline">10002331</a>
-                                                        </small>
-                                                    </div>
-                                                    <a href="billing-payment.html" class="btn btn-sm btn-link">Pay Now</a>
-                                                </div>
-                                            </div>
-
+                                            
                                             <div class="page-separator">
                                                 <div class="page-separator__text">List des Seances </div>
                                             </div>
@@ -159,7 +147,7 @@
                                                     <tbody>
                                                     {% for seance in seances %}
                                                         <tr>
-                                                            <td><a href="billing-invoice.html" class="text-underline">{{ seance.id }}</a></td>
+                                                            <td><a href="{{ path('seance_show', {'id': seance.id}) }}" class="text-underline">{{ seance.id }}</a></td>
                                                             <td>{{ seance.temps ? seance.temps|date('Y-m-d') : '' }}</td>
                                                             <td class="text-center">{{ seance.duree }} H</td>
                                                             <td class="text-right">
@@ -200,11 +188,10 @@
                                     <div class="col-lg-3 page-nav">
                                         <div class="page-section pt-lg-112pt">
                                             <nav class="nav page-nav__menu">
-                                                <a class="nav-link" href="billing.html">Subscription</a>
-                                                <a class="nav-link" href="billing-upgrade.html">Upgrade Account</a>
-                                                <a class="nav-link" href="billing-payment.html">Payment Information</a>
-                                                <a class="nav-link active" href="billing-history.html">Payment History</a>
-                                                <a class="nav-link" href="billing-invoice.html">Invoice</a>
+                                                <a class="nav-link active" href="billing.html">Tous</a>
+                                                <a class="nav-link active" href="billing-upgrade.html">Aujourd'hui</a>
+                                                <a class="nav-link active" href="billing-payment.html">Cette Semaine</a>
+                                                
                                             </nav>
                                             <!-- <div class="page-nav__content">
                         <button type="submit" class="btn btn-accent">Save changes</button>

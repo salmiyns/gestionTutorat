@@ -19,14 +19,14 @@ class Seance
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Seance.titre.not_blank")
-     * @Assert\Length(min="10", minMessage="this value was too short")
+     * @Assert\NotBlank(message="Le titre doit etre 10 caracteres min ")
+     * @Assert\Length(min="10", minMessage="Le titre doit etre 10 caracteres min ")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
-     *  @Assert\Length(min="10")
+     *  
      */
     private $description;
 
@@ -36,6 +36,7 @@ class Seance
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Realisation", inversedBy="seances")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="aucune Realisation ajoutée Par ce compte . vous douvez ajouter une Realisation")
      */
     private $realisation;
 

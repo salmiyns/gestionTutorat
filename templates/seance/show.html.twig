@@ -76,7 +76,7 @@
 
 
                             <ol class="breadcrumb p-0 m-0">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('seance_index') }}">Home</a></li>
 
                                 <li class="breadcrumb-item active">
 
@@ -97,7 +97,7 @@
 
                         <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
                             <input type="text" class="form-control pl-0" placeholder="Rechercher  une Seances" name="q" value="{{ app.request.query.get('q') }}">
-                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                            <button class="btn" type="submit"><i class="material-icons">Rechercher</i></button>
                          </form>
  
                         </div>
@@ -140,7 +140,7 @@
                         <li class="nav-item navbar-list__item py-16pt py-sm-0">
                             <a href="{{ path('seance_index') }}" class="btn btn-outline-primary btn-sm "><i class="material-icons icon--left">keyboard_backspace</i> Retour</a>
                         </li>
-
+                        {% if is_granted('ROLE_ADMIN') or  is_granted('ROLE_TUTEUR')  %}
                         <li class="nav-item navbar-list__item py-16pt py-sm-0">
                             <a href="{{ path('seance_edit', {'id': seance.id}) }}" class="btn btn-accent btn-sm">  Modifier</a>
                         </li>
@@ -148,7 +148,7 @@
                          <li class="nav-item navbar-list__item py-16pt py-sm-0">
                             {{ include('seance/_delete_form.html.twig') }}
                         </li>
-                        
+                        {% endif  %}
                     </ul>
                 </div>
             </nav>
@@ -170,9 +170,7 @@
                                             <div class="mr-8pt">
                                                 <i class="material-icons text-50">error_outline</i>
                                             </div>
-                                            <div class="flex">
-                                                <small>On <strong>January 9</strong>, there’s a shortage of iOS Developers. {{ seance.temps ? seance.temps|date('Y-m-d h:m:s') : '' }}</small>
-                                            </div>
+                                             
                                         </div>
                                     </div>
                                 </div>
@@ -191,14 +189,7 @@
 
                                 {{ seance.description|raw }}
 
-                                <p class="d-flex align-items-center">
-                                    <i class="material-icons text-accent mr-8pt">check_circle</i>
-                                    <small>You’re within your <strong>Anual Leave</strong> quota, which will reduce to <strong>15 days</strong>.</small>
-                                </p>
-
                                  
-
-                                <button type="submit" class="btn btn-accent">Submit Request</button>
                             </form>
                         </div>
                     </div>

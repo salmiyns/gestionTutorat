@@ -1,59 +1,141 @@
-
-{% extends "demo9.base.html.twig" %}
+{% extends "huma.demo9.base.html.twig" %}
 
 {% block title %}Proposition index{% endblock %}
 
 {% block body %}
-    {% block mainheader %}
-    {{ parent() }}  
-    {% endblock %}
 
-    {% block content %}
 
-<div class="main-panel">
-			<div class="container">
-				<div class="page-inner page-inner-fill">
-					
-                    <br>
-					<!-- Customized Card -->
-					<div class="page-navs bg-white py-3 pr-2">
-							<div class="card-title fw-bold" > Propositions : ({{ propositions.getTotalItemCount }}) elements</div>
-					 </div>
-					 <hr Style="width: 100%; height: 4px; background: #f3f3f3;" />
-								<div class="d-flex justify-content-between ">
-									<div class="d-md-inline-block ">
-										<form>
-											<div class="input-group">
-												<div class="input-group-prepend">
-													<button type="submit" class="btn btn-icon btn-black btn-search">
-														<i class="fa fa-search search-icon"></i>
-													</button>
-												</div>
-												<input type="text" class="form-control" aria-label="Text input with dropdown button" name="q" value="{{ app.request.query.get('q') }}">
-												<div class="input-group-append">
-													<button class="btn btn-primary btn-border  dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-													<div class="dropdown-menu">
-														<a class="dropdown-item" href="#">Date</a>
-														<a class="dropdown-item" href="#">Nom</a>
-														<div role="separator" class="dropdown-divider"></div>
-														<a class="dropdown-item" href="#">Statut </a>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-									<button type="button" class="btn btn-black" data-toggle="modal" data-target="#addRowModal" >
-										<i class="fa fa-plus"></i>
-										Nouvelle proposition
-									</button>
-						</div>
-             <div>
-				</div>
-									 <hr Style="width: 100%; height: 4px; background: #f3f3f3;" />
 
- 					<div class="row">
-					 
-					 {% if propositions.getTotalItemCount != 0 %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Propositions</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="{{ path('proposition_index') }}">Acceuil</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Propositions
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+                    <div class="row" role="tablist">
+                        <div class="col-auto d-flex flex-column">
+
+                        <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
+                            <input type="text" class="form-control pl-0" placeholder="Rechercher une Propostion" name="q" value="{{ app.request.query.get('q') }}">
+                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                         </form>
+ 
+                        </div>
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
+                        <div class="col-auto border-left">
+                            <a href="{{ path('proposition_new') }}" class="btn btn-accent">Nouvelle Proposition</a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <!-- //   Page Content -->
+            
+				<div class="container-fluid page__container page__container page-section">
+               
+                 {% block Content %}
+	
+						<div class="container-fluid page__container">
+                <div class="page-section">
+
+                   
+ 
+
+
+                    <div class="page-separator">
+                        <div class="page-separator__text">Propositions</div>
+                    </div>
+
+                    <div class="row card-group-row">
+						{% if propositions.getTotalItemCount != 0 %}
  
 							{% for proposition in propositions %}
 
@@ -73,135 +155,141 @@
 											{% set ActionsBtns = '' %}	
 											{% set faClass = 'fa-star' %}
 											{% set Style = '' %}
-									{% endif %}			 
-											<div class="col-md-4">
-												<div class="card card-post card-round">
-													<div class="card-body">
-														<div class="d-flex">
-															<div class="avatar">
-															<img src="https://avatars.dicebear.com/v2/initials/{{ proposition.CreatedBy_lastName }}%20{{ proposition.CreatedBy_firstName }}.svg" alt="créé par"  title="créé par" class="avatar-img rounded-circle">
-															</div>
-															<div class="info-post ml-2">
-																<p class="username">{{ proposition.CreatedBy_lastName }} {{ proposition.CreatedBy_firstName }}</p>
-																<p class="date text-muted"> {{ proposition.dateCreation ? proposition.dateCreation|date('Y-m-d') : '' }}</p>
-															</div>
-														</div>
-														<div class="separator-solid"></div>
-														
-														<p class="card-category text-info mb-1">
-															<span class="text-success  rounded-circle border border-black"> valide</span>
+									{% endif %}		
+										<div class="col-lg-4 card-group-row__col">
 
-														<h3 class="card-title">
-																<a class="kanban-title" href="{{ path('proposition_show', {'id': proposition.id}) }}">
-																<B>{{ proposition.titre }}</B></a>
-														</h3>
-														<div class="avatar-group">
-															<div class="avatar avatar-xs">
-																<img src="https://avatars.dicebear.com/v2/initials/{{ proposition.CreatedBy_lastName }}%20{{ proposition.CreatedBy_firstName }}.svg" alt="..." class="avatar-img rounded-circle border border-white">
-															</div>
-															<div class="avatar avatar-xs">
-																<img src="https://avatars.dicebear.com/v2/initials/{{ proposition.CreatedBy_lastName }}%20{{ proposition.CreatedBy_firstName }}.svg" alt="..." class="avatar-img rounded-circle border border-white">
-															</div>
-															<div class="avatar avatar-xs">
-																<img src="https://avatars.dicebear.com/v2/initials/{{ proposition.CreatedBy_lastName }}%20{{ proposition.CreatedBy_firstName }}.svg" alt="..." class="avatar-img rounded-circle border border-white">
-															</div>
-															<div class="avatar avatar-xs">
-																<span class="avatar-title rounded-circle border border-white">21</span>
-															</div>
+											<div class="card card-group-row__card p-16pt">
+
+
+
+												<div class="d-flex">
+													<div class="d-flex flex-column flex">
+														<a href="{{ path('proposition_show', {'id': proposition.id}) }}" class="mb-8pt"><strong>{{ proposition.titre }}</strong></a>
+														<div class="d-flex align-items-center mb-8pt">
+
+															<a href="" class="mr-4pt"><span class="indicator-line rounded bg-primary"></span></a>
+
+															<a href="" class="mr-4pt"><span class="indicator-line rounded bg-accent"></span></a>
+
 														</div>
-														<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-														<a href="#" class="btn btn-primary btn-rounded btn-sm">Read More</a>
-														{% for action in ActionsBtns %}
-																<a href="{{  action.url }}" class="btn"> {{ action.Title }} </a>
-														{% endfor %}
 													</div>
+													<a href="#"  data-toggle="dropdown" data-caret="false" class="text-muted" aria-expanded="false"><i class="material-icons text-50">more_horiz</i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right" style="">
+                                                        <a href="{{ path('proposition_show', {'id': proposition.id}) }}" class="dropdown-item">Validee</a>
+                                                        <a href="{{ path('proposition_show', {'id': proposition.id}) }}" class="dropdown-item">rejeter</a>
+                                                        </div>
+												</div>
+												<div class="d-flex align-items-center">
+                                                
+													<div class="flex d-flex align-items-center">
+													{% if proposition.statut == 'enAttente' %}
+                                                        <span class="badge badge-secondary">En Attente</span>
+                                                     {% elseif proposition.statut == 'reject' %}
+                                                        <span class="badge badge-secondary">Rejetée</span>
+                                                    {% elseif proposition.statut == 'valide' %}
+                                                        <span class="badge badge-primary">validée</span>
+                                                     {% endif %}
+                                                        
+
+
+														 
+
+
+
+													</div>
+													<div class="d-flex align-items-center">
+														<div class="avatar-group flex mr-8pt">
+                                                            <small class="text-50 mr-16pt">{{ proposition.dateCreation ? proposition.dateCreation|date('Y-m-d') : '' }}</small>
+
+															<div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="{{ proposition.CreatedBy_lastName }} {{ proposition.CreatedBy_firstName }}">
+																<img src="https://avatars.dicebear.com/v2/initials/{{ proposition.CreatedBy_lastName }}%20{{ proposition.CreatedBy_firstName }}.svg" alt="..." class="avatar-img rounded-circle border border-white">															</div>
+																
+															</div>
+ 													</div>
 												</div>
 											</div>
-									
 
-
-									
+										</div>
 							{% endfor %}	
+						{% else %}                                    
+					
+									<div class="col-md-4">
+										<div class="card card-post card-round">
+										<div class="card-body">
+										<p class="text-danger"> Aucune proposition trouvée </p>
+										</div>
+										</div>
+									</div>
+						{% endif %}	
+ 
 							
-					
-						
-					</div>
+                         
 
-							{% else %}                                    
-					
-					<div class="col-md-4">
-					    <div class="card card-post card-round">
-						   <div class="card-body">
-						   <p class="text-danger"> Aucune proposition trouvée </p>
-						   </div>
-						</div>
-					</div>
-					{% endif %}	
+                      
 
-					
-				</div>
+                    </div>
 
-				<div class="mt-1 mb-2">
-								
+                    <div class="card p-8pt mb-0 d-inline-block">
 
-								<ul class="pagination justify-content-center mb-5 mb-sm-0">	
-								<p class="text-muted"> Affiche 1 à 10 de {{ propositions.getTotalItemCount }} entrées  </p>							
-									<li class="page-item">
-										{{ knp_pagination_render(propositions, null, {}, {
+                        {{ knp_pagination_render(propositions, null, {}, {
 											'position': 'right',
 											'size': 'small',
 											'rounded': true,
 										}) }}
-									</li>								
-								</ul>
-					</div>
-			</div>
-			
-		</div>
+
+                    </div>
+
+                </div>
+            </div>
+                
+            </div>
+            {% endblock %}
+            <!-- // END content -->
 
 
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
 
 
+        </div>
+        <!-- // END drawer-layout__content -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	{% block footer %}
-      {{ parent() }}  
-    {% endblock %}
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
 
 
     {% block javascripts %}
-            {{ parent() }}
+	{{ parent() }}  
     {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
 
 
-   
 
 
 
-           
-           
-  {% endblock %}
-
-    
 
 
-{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+ 

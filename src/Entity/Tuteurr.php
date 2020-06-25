@@ -29,9 +29,15 @@ class Tuteurr
      */
     private $propositions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Realisation::class, mappedBy="tuteur")
+     */
+    private $realisations;
+
     public function __construct()
     {
         $this->propositions = new ArrayCollection();
+        $this->realisations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +82,37 @@ class Tuteurr
             // set the owning side to null (unless already changed)
             if ($proposition->getTuteurr() === $this) {
                 $proposition->setTuteurr(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Realisation[]
+     */
+    public function getRealisations(): Collection
+    {
+        return $this->realisations;
+    }
+
+    public function addRealisation(Realisation $realisation): self
+    {
+        if (!$this->realisations->contains($realisation)) {
+            $this->realisations[] = $realisation;
+            $realisation->setTuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealisation(Realisation $realisation): self
+    {
+        if ($this->realisations->contains($realisation)) {
+            $this->realisations->removeElement($realisation);
+            // set the owning side to null (unless already changed)
+            if ($realisation->getTuteur() === $this) {
+                $realisation->setTuteur(null);
             }
         }
 

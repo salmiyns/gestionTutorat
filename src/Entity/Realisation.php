@@ -61,6 +61,11 @@ class Realisation
      */
     private $date_fin;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Tuteurr::class, inversedBy="realisations")
+     */
+    private $tuteur;
+
     public function __construct()
     {
         $this->seances = new ArrayCollection();
@@ -212,6 +217,18 @@ class Realisation
     public function __toString()
     {
         return  $this->getTitre();
+    }
+
+    public function getTuteur(): ?Tuteurr
+    {
+        return $this->tuteur;
+    }
+
+    public function setTuteur(?Tuteurr $tuteur): self
+    {
+        $this->tuteur = $tuteur;
+
+        return $this;
     }
    
 

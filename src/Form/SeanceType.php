@@ -56,7 +56,9 @@ class SeanceType extends AbstractType
 
 
         $builder
-            ->add('titre')
+            ->add('titre',TextareaType::class,[
+                'required'=>false,
+            ])
             ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
             ->add('temps', DateTimeType::class,array(
                 'widget' => 'single_text',

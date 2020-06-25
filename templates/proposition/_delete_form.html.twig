@@ -1,4 +1,6 @@
 <form method="post" action="{{ path('proposition_delete', {'id': proposition.id}) }}" id="formSuprimer"   onsubmit="return confirm('Êtes-vous sûr de bien vouloir supprimer cet élément?');">
+   <a href="{{ path('proposition_index') }}">Retour à la liste</a> | 
+   <a href="{{ path('proposition_edit', {'id': proposition.id}) }}"><i class="la flaticon-pencil"> </i> Modifier</a>|
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ proposition.id) }}">
     <button  style="     padding: 0px; margin-top: -5px" id="sbtnSuprimer" class="btn btn-link"><i class="flaticon-interface-5"></i>  Supprimer</button>

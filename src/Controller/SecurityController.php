@@ -70,7 +70,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('danger', 'Cette adresse e-mail est inconnue');
                 
                 // On retourne sur la page de connexion
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_forgotten_password');
             }
 
             // On génère un token
@@ -84,7 +84,7 @@ class SecurityController extends AbstractController
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_forgotten_password');
             }
 
             // On génère l'URL de réinitialisation de mot de passe

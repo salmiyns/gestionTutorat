@@ -49,10 +49,10 @@ class RegistrationController extends AbstractController
             //   génère un token et on l'enregistre
             $user->setActivationToken(md5(uniqid()));
             $user->setIsActive(false);
-            $user->isVerified(false);
+            $user->setVerified(false);
             $user->setCreatedAt(new DateTime());
             
-
+            
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

@@ -6,25 +6,78 @@ use App\Entity\Enseignant;
 use App\Form\EnseignantType;
 use App\Repository\EnseignantRepository;
 use App\Repository\EtudiantRepository;
+use App\Repository\PropositionRepository;
+use App\Repository\TuteurRepository;
+use App\Repository\TuteurrRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/enseignant")
+ * @Security("is_granted('ROLE_ENSEIGNANT') ")
+ * 
  */
 class EnseignantController extends AbstractController
 {
     /**
      * @Route("/", name="enseignant_index", methods={"GET"})
      */
-    public function index(EnseignantRepository $enseignantRepository): Response
+    public function index(EnseignantRepository $enseignantRepository ,PropositionRepository $repository ,TuteurrRepository $tuteurRepository,Request $request,  PaginatorInterface $paginator): Response
     {
+
+        $q = $request->query->get('q');
+        $queryBuilder = $repository->getWithSearchQueryBuilder_withStatus('valide',$q); 
+        
+        $propositions = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            9/*limit per page*/
+        );     
+
+
+
         return $this->render('enseignant/index.html.twig', [
-            'enseignants' => $enseignantRepository->findAll(),
+            'propositions' => $enseignantRepository->findAll(),
         ]);
     }
+
+
+        /**
+     * @Route("/propositions", name="propositions_enseignant_index", methods={"GET"})
+     */
+    public function propositions_index(EnseignantRepository $enseignantRepository ,PropositionRepository $repository ,TuteurrRepository $tuteurRepository,Request $request,  PaginatorInterface $paginator): Response
+    {
+
+        $q = $request->query->get('q');
+        $statut = $request->query->get('statut');
+        if( !$statut == 'valide' || !$statut == 'reject' || !$statut == 'enAttente' ){
+            $queryBuilder = $repository->getWithSearchQueryBuilder($q); 
+           
+        }
+        else{
+            $queryBuilder = $repository->getWithSearchQueryBuilder_withStatus($statut,$q); 
+        }
+        
+        $propositions = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            9/*limit per page*/
+        );     
+
+        //dd($propositions);
+
+        return $this->render('enseignant/proposiotions.index.html.twig', [
+            'title' => $statut,
+            'propositions' => $propositions,
+        ]);
+    }
+
+
 
 
         /**

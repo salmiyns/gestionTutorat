@@ -50,7 +50,25 @@ class RealisationType extends AbstractType
             );
         }
 
-        $tuteur = $this->tuteurRepository->findByConnectedUserId($user);
+        $etudiant=$user->getEtudiant();
+        if(is_null($etudiant)){
+            throw new \LogicException(
+                "ce compte etudiant n'existe pas au base donnee"
+            );
+            
+        }
+
+        $tuteur =$etudiant->getTuteurr();
+
+        if(is_null($tuteur)){
+            throw new \LogicException(
+                "ce compte Tuteur n'existe pas au base donnee"
+            );
+            
+          
+        }
+
+        //$tuteur = $this->tuteurRepository->findByConnectedUserId($user);
  
         $builder
             ->add('titre')
@@ -79,7 +97,7 @@ class RealisationType extends AbstractType
                 'choices' => $this->coursRepository->find_Cours_ByTuteurId($tuteur),
 
                
-            ])
+            ]) 
           
         ;
     }

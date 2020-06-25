@@ -39,9 +39,14 @@ class CoursType extends AbstractType
     {
         $user = $this->security->getUser();
         
+        
         /** @var Cours|null $cours */
         $cours =$options['data']??null;
         $isEdit = $cours ?? $cours->getId();
+
+      
+
+
 
         if (!$user) {
             throw new \LogicException(
@@ -49,7 +54,29 @@ class CoursType extends AbstractType
             );
         }
 
-        $tuteur = $this->tuteurRepository->findByConnectedUserId($user);
+        $etudiant=$user->getEtudiant();
+        if(is_null($etudiant)){
+            throw new \LogicException(
+                "ce compte etudiant n'existe pas au base donnee"
+            );
+            
+        }
+
+        $tuteur =$etudiant->getTuteurr();
+        $propositions=$tuteur->getPropositions();
+        
+
+        if(is_null($tuteur)){
+            throw new \LogicException(
+                "ce compte Tuteur n'existe pas au base donnee"
+            );
+            
+          
+        }
+
+
+       
+         //$tuteur = $this->tuteurRepository->findByConnectedUserId($user);
 
         $builder
             ->add('nom_cours')
@@ -90,7 +117,7 @@ class CoursType extends AbstractType
             //->add('dernier_modification')
             ->add('proposition', EntityType::class, [
                 'class' => Proposition::class,
-                'choices' => $this->propositionRepository->findPropositionByTuteurId($tuteur),
+                'choices' => $propositions,
 
                
             ])

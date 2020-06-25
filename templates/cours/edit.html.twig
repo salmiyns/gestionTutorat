@@ -41,7 +41,7 @@
 
 
                             <ol class="breadcrumb p-0 m-0">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('cours_index') }}">Home</a></li>
 
                                 <li class="breadcrumb-item active">
 
@@ -66,10 +66,11 @@
                          </form>
  
                         </div>
-                        
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
                         <div class="col-auto border-left">
                             <a href="" class="btn btn-accent">Nouveau cours</a>
                         </div>
+                        {% endif %}
                     </div>
 
                 </div>
@@ -129,17 +130,20 @@
     										<div class="d-flex align-items-center">
                                         		<div class="mr-3">
                                             			<div class="avatar avatar-xl">
-                                                			<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="people" class="avatar-img rounded-circle">
-                                            			</div>
+														    {% if vich_uploader_asset(app.user, 'imageFile') is null %}
+															<img src="https://avatars.dicebear.com/v2/initials/{{ user.firstname }}%20{{ user.lastname }}.svg"  alt="Avatar" class="rounded-circle mr-8pt" >
+															{% else %}
+																<img src="{{ vich_uploader_asset(user, 'imageFile') }}" class="rounded-circle mr-8pt"><br>
+															{% endif %}
+                                             			</div>
                                         		 </div>
                                             <div class="flex">
-                                           		 <h4 class="mb-0">Michelle Smith</h4>
-                                            	 <p class="text-50 mb-0">Personal Development Teacher since 2014</p>
+                                           		 <h4 class="mb-0">{{user.firstname}} {{user.lastname}}</h4>
+                                            	 <p class="text-50 mb-0">{{user.about}}</p>
                                         	</div>
                                     	</div>
                                  </div>
 								 <!-- end card-->
-
 
 
 
@@ -151,40 +155,7 @@
 		                            </div>
 									<br/>
 									<!-- // Realisateurs -->
-									<div class="page-separator">
-										<div class="page-separator__text">Realisateurs </div>
-									</div>
-
-									<div class="mb-4">
-									   <div class="card card-body">
-												<div class="d-flex align-items-center mb-2">
-														<a href="" class="avatar avatar-xs mr-8pt">
-															<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="course" class="avatar-img rounded-circle">
-														</a>
-														<a href="" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
-														
-												 </div>
-												 <div class="page-separator">
- 												 </div>
-												 <div class="d-flex align-items-center mb-2">
-														<a href="" class="avatar avatar-xs mr-8pt">
-															<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="course" class="avatar-img rounded-circle">
-														</a>
-														<a href="" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
-														
-												 </div>
-												 <div class="page-separator">
- 												 </div>
-												 <div class="d-flex align-items-center mb-2">
-														<a href="" class="avatar avatar-xs mr-8pt">
-															<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="course" class="avatar-img rounded-circle">
-														</a>
-														<a href="" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
-														
-												 </div>
-										</div>
-												 
-									</div>
+									 
 									
 									 <!-- // End Realisateurs -->
 									

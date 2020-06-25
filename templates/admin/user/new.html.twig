@@ -1,6 +1,17 @@
 {% extends "huma.demo9.base.html.twig" %}
 
 {% block title %}Utilisateurs : Ajouter Utilisateur {% endblock %}
+{% block stylesheets %}
+{{ parent() }}  
+        <!-- Flatpickr -->
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr.rtl.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('build/assets/css/flatpickr-airbnb.rtl.css')}}" rel="stylesheet">
+    <!-- DateRangePicker -->
+     <link type="text/css" href="{{ asset('build/assets/vendor/daterangepicker.css')}}" rel="stylesheet">
+
+{% endblock %}
 
 {% block body %}
 
@@ -102,7 +113,10 @@
 
     {% block javascripts %}
 	{{ parent() }}  
-        
+          <!-- DateRangePicker -->
+    <script src="{{ asset('build/assets/vendor/moment.min.js') }}"></script>
+    <script src="{{ asset('build/assets/vendor/daterangepicker.js') }}"></script>
+    <script src="{{ asset('build/assets/js/daterangepicker.js') }}"></script>
     {% endblock %}
  
 

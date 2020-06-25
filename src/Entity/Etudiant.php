@@ -41,6 +41,11 @@ class Etudiant
      */
     private $tuteurr;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Tutoree::class, mappedBy="etudiant", cascade={"persist", "remove"})
+     */
+    private $tutoree;
+
  
     
 
@@ -116,6 +121,24 @@ class Etudiant
         $newEtudiant = null === $tuteurr ? null : $this;
         if ($tuteurr->getEtudiant() !== $newEtudiant) {
             $tuteurr->setEtudiant($newEtudiant);
+        }
+
+        return $this;
+    }
+
+    public function getTutoree(): ?Tutoree
+    {
+        return $this->tutoree;
+    }
+
+    public function setTutoree(?Tutoree $tutoree): self
+    {
+        $this->tutoree = $tutoree;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newEtudiant = null === $tutoree ? null : $this;
+        if ($tutoree->getEtudiant() !== $newEtudiant) {
+            $tutoree->setEtudiant($newEtudiant);
         }
 
         return $this;
