@@ -1,37 +1,294 @@
-{% extends 'base.html.twig' %}
+{% extends "huma.demo9.base.html.twig" %}
 
 {% block title %}Inscription index{% endblock %}
 
 {% block body %}
-    <h1>Inscription index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date_inscrption</th>
-                <th>Statut</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for inscription in inscriptions %}
-            <tr>
-                <td>{{ inscription.id }}</td>
-                <td>{{ inscription.dateInscrption ? inscription.dateInscrption|date('Y-m-d') : '' }}</td>
-                <td>{{ inscription.statut }}</td>
-                <td>
-                    <a href="{{ path('inscription_show', {'id': inscription.id}) }}">show</a>
-                    <a href="{{ path('inscription_edit', {'id': inscription.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('inscription_new') }}">Create new</a>
-{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page-content">
+
+            <!-- Header -->
+
+
+
+
+             {% block MainHeader %}
+			 
+				{{ parent() }}  
+             {% endblock %}
+
+
+
+            <!-- // END Header -->
+            
+            <!-- //  Page Header -->
+            {% block PageHeader %}
+			<div class="border-bottom-2 py-32pt position-relative z-1">
+                <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                    <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+
+                        <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                            <h2 class="mb-0">Inscription</h2>
+
+
+                            <ol class="breadcrumb p-0 m-0">
+                                <li class="breadcrumb-item"><a href="{{ path('inscription_index') }}">Home</a></li>
+
+                                <li class="breadcrumb-item active">
+
+                                    Inscription
+
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                        
+                    </div>
+
+
+                    <div class="row" role="tablist">
+                        <div class="col-auto d-flex flex-column">
+
+                        <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
+                            <input type="text" class="form-control pl-0" placeholder="Rechercher un cours" name="q" value="{{ app.request.query.get('q') }}">
+                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
+                         </form>
+ 
+                        </div>
+                         <div class="col-auto border-left">
+                            <a href="{{ path('inscription_new') }}" class="btn btn-accent">Nouvelle Inscription</a>
+                        </div>
+						 
+                    </div>
+
+                </div>
+            </div>
+				
+            {% endblock %}
+            <!-- // END Page Header -->
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <!-- //   Page Content -->
+            
+				<div class="container-fluid page__container page__container page-section">
+                  
+                 {% block Content %}
+				  <div class="row">
+				  		<div class="col-md-12">
+                          <div class="card-header">
+                            <div class="row align-items-center" style="white-space: nowrap;">
+                                
+                                <div class="col-lg d-flex flex-wrap align-items-center">
+                                    <div class="ml-lg-auto dropdown">
+                                        <a href="#" class="btn btn-link dropdown-toggle text-70" data-toggle="dropdown">Par Statut</a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="{{ path('inscription_index') }}?statut=1" class="dropdown-item active">Validée</a>
+                                            <a href="{{ path('inscription_index') }}?statut=2" class="dropdown-item">Refusé</a>
+                                            <a href="{{ path('inscription_index') }}?statut=3" class="dropdown-item">En Attente</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <a href="{{ path('inscription_new') }}" class="btn btn-accent">Ajouter Nouvelle Inscription</a>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="card table-responsive">
+                                                <table class="table table-flush table-nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><a class="sortable" href="/seance/?sort=id&amp;direction=asc&amp;page=1" title="Id">Id</a>
+    .                                                           </th>
+                                                                <th><a class="sortable" href="/seance/?sort=temps&amp;direction=asc&amp;page=1" title="Date">Date</a>
+                                                                </th>
+                                                                <th class="text-center"><a class="sortable" href="/seance/?sort=duree&amp;direction=asc&amp;page=1" title="Durée">Statut</a>
+                                                                </th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                         {% for  inscription in inscriptions %}
+                                                            <tr>
+                                                                <td><a href="/seance/176" class="text-underline">{{ inscription.id }}</a></td>
+                                                                <td>{{ inscription.dateInscrption ? inscription.dateInscrption|date('Y-m-d') : '' }}</td>
+                                                                <td class="text-center">
+                                                                    {% if  inscription.statut == 3 %}
+                                                                            <span class="badge badge-secondary">En Attente</span>
+                                                                    
+                                                                     {% elseif  inscription.statut == 2 %}
+                                                                            <span class="badge  badge-dark ">Refusé</span>
+                                                                      {% elseif  inscription.statut == 1  %}
+                                                                            <span class="badge badge-success">Validée</span>
+                                                                    {% endif %}
+                                                                
+                                                                
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <div class="d-inline-flex align-items-center">
+                                                                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') or is_granted('ROLE_TUTORE') %}
+                                                                        <a href="{{ path('inscription_valider', {'id': inscription.id}) }}" class="btn btn-sm btn-outline-secondary mr-16pt" onclick="return confirm('Vous voulez Valider cette inscription?')">Valider <i class="icon--right material-icons">keyboard_arrow_right</i></a>
+                                                                        <a href="{{ path('inscription_refuse', {'id': inscription.id}) }}"  class="btn btn-sm btn-outline-secondary mr-16pt" onclick="return confirm('Vous voulez refuser cette Proposition?')" >Refuser <i class="icon--right material-icons">keyboard_arrow_right</i></a>
+                                                                        {% endif %}
+                                                                        <a href="{{ path('inscription_edit', {'id': inscription.id}) }}" class="btn btn-sm btn-outline-secondary mr-16pt">Modifier <i class="icon--right material-icons">keyboard_arrow_right</i></a>
+                                                                         {{ include('inscription/_delete_form.html.twig') }}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            {% else %}
+                                                             <div class="alert alert-soft-warning mb-0 p-8pt">
+                                                                        <div class="d-flex align-items-start">
+                                                                            <div class="mr-8pt">
+                                                                                <i class="material-icons">error_outline</i>
+                                                                            </div>
+                                                                            <div class="flex">
+                                                                                <small class="text-100"> Vous avez acune Inscription .</small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                        {% endfor %}
+
+                                                                
+
+                                                            
+
+                                                        </tbody>
+                                                        
+                                                 </table>
+                                                 {{ knp_pagination_render(inscriptions) }}
+                                                
+                                               
+
+                                            </div>
+
+
+
+
+
+
+
+ 
+
+                             
+                        </div>
+
+					 
+							  
+
+							 
+
+						
+				  </div>
+
+               
+
+                
+            </div>
+            {% endblock %}
+            <!-- // END content -->
+
+
+            <!-- // Footer -->
+             {% block footer %}
+				{{ parent() }}  
+            {% endblock %}
+             <!-- // END footer -->
+            
+
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        {% block drawerSideBar %}
+			{{ parent() }}  
+        {% endblock %}
+        {% block Settings %}
+		{{ parent() }}  
+        {% endblock %}
+
+
+    {% block javascripts %}
+	{{ parent() }}  
+    {% endblock %}
+ 
+
+ {% endblock %}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 

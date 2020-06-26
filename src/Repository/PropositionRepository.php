@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Proposition;
+use App\Entity\Tuteurr;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -85,6 +86,34 @@ class PropositionRepository extends ServiceEntityRepository
             
         ;
     }
+
+
+    public function getWithSearchQueryBuilderByTuteur_withStatus(?Tuteurr $tuteurr, $value,?string $term): QueryBuilder
+    {   
+         $qb = $this->createQueryBuilder('p')
+        ->addSelect('user.id as PropositionUserId, user.firstName as CreatedBy_firstName,user.lastName as CreatedBy_lastName , p.id	, p.titre	, p.description , p.date_creation as dateCreation, p.statut')
+        ->leftJoin('p.tuteurr', 'tuteurr') 
+        ->leftJoin('tuteurr.etudiant', 'etudiant')   
+        ->leftJoin('etudiant.idUser', 'user')     
+        ->andWhere('p.statut = :val')
+        ->andWhere('tuteurr = :tuteurr')
+        ->setParameter('val', $value)
+        ->setParameter('tuteurr', $tuteurr)
+
+        ;
+        if ($term) {
+            $qb->andWhere(' p.titre LIKE :term OR p.description LIKE :term OR p.statut LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('p.date_creation', 'DESC')
+            
+            
+        ;
+    }
+
 
 
     public function getWithSearchQueryBuilder(?string $term): QueryBuilder

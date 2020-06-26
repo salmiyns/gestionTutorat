@@ -1,18 +1,41 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Login</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="../assets/img/icon.ico" type="image/x-icon"/>
 
-{% block title %}Log in!{% endblock %}
+		<!-- CSS Files -->
+    {% block stylesheets %}
+	                {{encore_entry_link_tags('app')}}
+                    {{encore_entry_link_tags('bootstrap')}}
+                    {{encore_entry_link_tags('atlantisCss')}}
+                    {{encore_entry_link_tags('fonts')}}
 
+
+    {% endblock %}
+	<!-- Fonts and icons -->
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Droid Sans', 'Droid Serif']
+    }
+  });
+</script>	  
+
+ 
+	
+
+ 
+</head>
+
+<body class="login">
 {% block body %}
-{% for message in app.flashes('message') %}
-        {{ message }}
-{% endfor %}
-{% for message in app.flashes('danger') %}
-        {{ message }}
-{% endfor %}
-{% for message in app.flashes('warning') %}
-        {{ message }}
-{% endfor %}
-<form method="post">
+
+	<div class="wrapper wrapper-login">
+    <form    method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -22,30 +45,77 @@
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+		<div class="container container-login animated fadeIn">
+			<h3 class="text-center">Sign In To Admin</h3>
+			<div class="login-form">
+				<div class="form-group form-floating-label">
+					<input id="email" name="email" value ="{{ last_username }}" type="email" class="form-control input-border-bottom" required>
+					<label for="email" class="placeholder">Username</label>
+				</div>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+ 				<div class="form-group form-floating-label">
+					<input id="password" name="password" type="password" class="form-control input-border-bottom" required>
+					<label for="password" class="placeholder">Password</label>
+					<div class="show-password">
+						<i class="icon-eye"></i>
+					</div>
+				</div>               
+				<div class="form-group form-floating-label">
+                    <input type="hidden" name="_csrf_token"
+                        value="{{ csrf_token('authenticate') }}"
+                    >
+				</div>
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
+				<div class="row form-sub m-0">
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"  name="_remember_me" id="rememberme">
+						<label class="custom-control-label" for="rememberme">Remember Me</label>
+					</div>
+					
+					<a href=" {{ path('app_forgotten_password') }}" class="link float-right">Mot de passe oublié?</a>
+				</div>
+				<div class="form-action mb-3">
+					<button type="submit" class="btn btn-primary btn-rounded btn-login">Se connecter</button>
+				</div>
+				<div class="login-account">
+					<span class="msg">Vous n'avez pas encore de compte ?</span>
+					<a href="{{ path('app_register') }}" id="show-signup" class="link">S'inscrire</a>
+				</div>
+			</div>
+		</div>
+    </form>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+
+
+
+
+
+
+
+
+
+
+
+ 
+	</div>
+       
+ {% endblock %}
+</body>
+
+	<!--   Core JS Files   -->
+    {% block javascripts %}
+          {{ encore_entry_script_tags('app')}}
+          {{ encore_entry_script_tags('jquery')}}
+          {{ encore_entry_script_tags('popperjs')}}
+		  {{ encore_entry_script_tags('jquery-ui')}}
+		  {{ encore_entry_script_tags('jquery-ui-touch-punch')}}
+
+          {{ encore_entry_script_tags('atlantis')}}
+
 {% endblock %}
+
+
+
+</html>

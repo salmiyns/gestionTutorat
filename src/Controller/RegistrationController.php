@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Etudiant;
+use App\Entity\Tutoree;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -43,7 +45,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
             //   génère un token et on l'enregistre
@@ -51,11 +53,19 @@ class RegistrationController extends AbstractController
             $user->setIsActive(false);
             $user->setVerified(false);
             $user->setCreatedAt(new DateTime());
+            $user->setRoles(['ROLE_TUTORE']);
+            $etudiant = new Etudiant();
+            $etudiant->setIdUser($user);
+            $tutore = new Tutoree();
+            $tutore->setEtudiant($etudiant);
             
-            
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->persist($etudiant);
+            $entityManager->persist($tutore);
+
             $entityManager->flush();
 
             // On crée le message
@@ -77,13 +87,16 @@ class RegistrationController extends AbstractController
 
             //dd($user->getActivationToken());
 
-
+            $this->addFlash('message', 'Votre compte est crée avec succès');
+            $this->addFlash('message', 'Un email de verification été envoyer a votre address email');
+            /*
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
                 'main' // firewall name in security.yaml
-            );
+            );*/
+            return $this->redirectToRoute('app_homepage');
         }
 
         return $this->render('registration/register.html.twig', [

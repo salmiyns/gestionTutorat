@@ -129,9 +129,9 @@
                                         		<div class="mr-3">
                                             			<div class="avatar avatar-xl">
 														    {% if vich_uploader_asset(app.user, 'imageFile') is null %}
-															<img src="https://avatars.dicebear.com/v2/initials/{{ user.firstname }}%20{{ user.lastname }}.svg"  alt="Avatar" class="rounded-circle mr-8pt" >
+															<img src="https://avatars.dicebear.com/v2/initials/{{ user.firstname }}%20{{ user.lastname }}.svg"  alt="Avatar" class="avatar-img rounded-circle" >
 															{% else %}
-																<img src="{{ vich_uploader_asset(user, 'imageFile') }}" class="rounded-circle mr-8pt"><br>
+																<img src="{{ vich_uploader_asset(user, 'imageFile') }}" class="avatar-img rounded-circle"><br>
 															{% endif %}
                                              			</div>
                                         		 </div>
@@ -153,43 +153,7 @@
 		                                </div>
 		                            </div>
 									<br/>
-									<!-- // Realisateurs -->
-									<div class="page-separator">
-										<div class="page-separator__text">Realisateurs </div>
-									</div>
-
-									<div class="mb-4">
-									   <div class="card card-body">
-												<div class="d-flex align-items-center mb-2">
-														<a href="" class="avatar avatar-xs mr-8pt">
-															<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="course" class="avatar-img rounded-circle">
-														</a>
-														<a href="" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
-														
-												 </div>
-												 <div class="page-separator">
- 												 </div>
-												 <div class="d-flex align-items-center mb-2">
-														<a href="" class="avatar avatar-xs mr-8pt">
-															<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="course" class="avatar-img rounded-circle">
-														</a>
-														<a href="" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
-														
-												 </div>
-												 <div class="page-separator">
- 												 </div>
-												 <div class="d-flex align-items-center mb-2">
-														<a href="" class="avatar avatar-xs mr-8pt">
-															<img src="http://luma.humatheme.com/build/assets/images/256_michael-dam-258165-unsplash.jpg" alt="course" class="avatar-img rounded-circle">
-														</a>
-														<a href="" class="flex mr-2 text-body"><strong>Luci Bryant</strong></a>
-														
-												 </div>
-										</div>
-												 
-									</div>
-									
-									 <!-- // End Realisateurs -->
+									 
 									
 						</div>
 

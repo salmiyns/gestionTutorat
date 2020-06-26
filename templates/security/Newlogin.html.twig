@@ -35,28 +35,47 @@
 {% block body %}
 
 	<div class="wrapper wrapper-login">
+		
     <form    method="post">
+	{% if app.session.flashbag.peekAll|length > 0 %}
+                        {% for type, messages in app.session.flashbag.all %}
+                            {% for message in messages %}    
+					<div class="mb-3 flex {{ type ? type : '' }}" >
+           			  <div class="alert alert-danger"><strong>{{ message|trans({}, domain|default('messages')) }}</strong> </div>
+        			</div>
+					 {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+					 
+	    			
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
+		 
+           
+                 	  
+                       
+                    
+         
     {% if app.user %}
+
         <div class="mb-3">
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
 		<div class="container container-login animated fadeIn">
-			<h3 class="text-center">Sign In To Admin</h3>
+		   
+			<h3 class="text-center"><img class="sidebar-brand-icon" src="/build/assets/images/logo/accent-teal-100@2x.png" alt="Huma"><br>HUMA<br>TUTO</h3>
 			<div class="login-form">
 				<div class="form-group form-floating-label">
 					<input id="email" name="email" value ="{{ last_username }}" type="email" class="form-control input-border-bottom" required>
-					<label for="email" class="placeholder">Username</label>
+					<label for="email" class="placeholder">Utilisateur</label>
 				</div>
 
 
  				<div class="form-group form-floating-label">
 					<input id="password" name="password" type="password" class="form-control input-border-bottom" required>
-					<label for="password" class="placeholder">Password</label>
+					<label for="password" class="placeholder">Mot de Passe</label>
 					<div class="show-password">
 						<i class="icon-eye"></i>
 					</div>

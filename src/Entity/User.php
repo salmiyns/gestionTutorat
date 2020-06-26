@@ -13,6 +13,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 /**
@@ -33,7 +35,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
       
           /**
            * @ORM\Column(type="string", length=180, unique=true)
-           */
+           * @Assert\NotBlank(message="Ajoutez une valide adresse email")
+           * */
           private $email;
       
           /**
@@ -44,16 +47,18 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
           /**
            * @var string The hashed password
            * @ORM\Column(type="string")
-           */
+          */
           private $password;
       
           /**
            * @ORM\Column(type="string", length=255, nullable=false)
+           * @Assert\NotBlank(message="insérez un prénom")
            */
           private $firstName;
       
           /**
            * @ORM\Column(type="string", length=255, nullable=false)
+           * @Assert\NotBlank(message="insérez un nom")
            */
           private $lastName;
       
@@ -74,6 +79,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
          private $imageFile;
           /**
            * @ORM\Column(type="string", length=255, nullable=true)
+            * @Assert\NotBlank(message="Please provide a number")
+            * @Assert\Length(
+            *     min=8,
+            *     max=12,
+            *     minMessage="numero tephone doit contenir au moins 8 chiffrer",
+            *     maxMessage="numero tephone  doit contenir au maximum 12 chiffres"
+            * )
+            * @Assert\Regex(
+            *     pattern="/^[0-9]+$/",
+            *     message="Seuls les numéros sont autorisés"
+            * )
            */
           private $telephone;
       
@@ -183,7 +199,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
           {
               $roles = $this->roles;
               // guarantee every user at least has ROLE_USER
-              $roles[] = 'ROLE_Etudiant';
+              $roles[] = 'ROLE_TUTORE';
       
               return array_unique($roles);
           }

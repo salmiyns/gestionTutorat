@@ -146,7 +146,8 @@ class AdminController extends AbstractController
                 elseif ($role== 'ROLE_TUTEUR' || $role == 'ROLE_TUTORE'){
                     
                     $etudiant = new Etudiant();
-                    if($role == 'ROLE_TUTEUR' ){
+                    $etudiant->setIdUser($user);
+                     if($role == 'ROLE_TUTEUR' ){
                        // $tuteur=new Tuteur();
                         $tuteur=new Tuteurr();
                         $tuteur->setEtudiant($etudiant);
@@ -159,7 +160,7 @@ class AdminController extends AbstractController
                      }
 
                      
-                     $etudiant->setIdUser($user);
+                     
                      $entityManager->persist($etudiant);
 
                     
@@ -171,6 +172,8 @@ class AdminController extends AbstractController
             $user->setActivationToken(md5(uniqid()));
             $user->setIsActive(false);
             $user->setVerified(false);
+
+
 
             
 
@@ -286,7 +289,7 @@ class AdminController extends AbstractController
                             $tutore= $tutoreRepository->findOneBy(['etudiant'=>$etudiant]);
                             //dd($tutore);
                             if(is_null($tutore)){
-                            $tutore=new Tutoree();
+                            $tutore= new Tutoree();
                             $tutore->setEtudiant($etudiant);
                             $entityManager->persist($tutore);
                             }

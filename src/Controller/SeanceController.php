@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Seance;
 use App\Form\SeanceType;
 use App\Repository\SeanceRepository;
+use DateTime;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,20 @@ class SeanceController extends AbstractController
     public function index(SeanceRepository $seanceRepository,Request $request ,PaginatorInterface $paginator): Response
     {
         $q = $request->query->get('q');
-        $queryBuilder = $seanceRepository->findAll(); 
+        $date=$request->query->get('date');
+        if ($date == 'today' || $date == 'week' ){
+            if ($date == 'today'){ 
+                $queryBuilder = $seanceRepository->findBy(['temps'=> new DateTime() ], ['id' => 'DESC']); 
+            }
+            else{
+                $queryBuilder=$seanceRepository->findBy_currentWeek();
+       
+            }
+        }
+        else {
+            $queryBuilder=$seanceRepository->findAll();
+        }
+        
         $list_Seances = $paginator->paginate(
             $queryBuilder, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,

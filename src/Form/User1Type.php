@@ -6,8 +6,10 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -33,7 +35,10 @@ class User1Type extends AbstractType
         }
 
         $builder
-            ->add('email')
+            ->add('email',EmailType::class, [
+                'required' => false,
+                 
+            ])
             //->add('roles')
             ->add('roles',ChoiceType::class,[
                 'choices'=>[
@@ -49,8 +54,14 @@ class User1Type extends AbstractType
 
             ])
             //->add('password')
-            ->add('firstName')
-            ->add('lastName')
+            ->add('firstName',TextType::class, [
+                'required' => false,
+                 
+            ])
+            ->add('lastName',TextType::class, [
+                'required' => false,
+                 
+            ])
             ->add('date_of_birth', DateTimeType::class,array(
                 'widget' => 'single_text',
                 'html5'  => false,
@@ -92,7 +103,10 @@ class User1Type extends AbstractType
                  'attr' => ['Style' => 'display:none;'],
                 
             ])
-            ->add('telephone')
+            ->add('telephone',TextType::class, [
+                'required' => false,
+                 
+            ])
             ->add('sexe',ChoiceType::class, [
                 'choices'  => [
                     'Homme' => true,
@@ -102,7 +116,10 @@ class User1Type extends AbstractType
                  
             ])
             ->add('adresse',TextareaType::class)
-            ->add('about')
+            ->add('about',TextareaType::class, [
+                'required' => false,
+                 
+            ])
             //->add('isActive')
             //->add('createdAt')
             //->add('updatedAt')

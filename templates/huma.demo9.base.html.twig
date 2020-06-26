@@ -281,7 +281,7 @@
 
 
                             <ol class="breadcrumb p-0 m-0">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_homepage') }}">Home</a></li>
 
                                 <li class="breadcrumb-item active">
 
@@ -516,7 +516,7 @@
                     <div class="sidebar-heading">Overview</div>
                     <ul class="sidebar-menu">
                         <li class="sidebar-menu-item active">
-                            <a class="sidebar-menu-button" href="index.html">
+                            <a class="sidebar-menu-button" href="{{ path('app_homepage') }}">
                                 <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">insert_chart_outlined</span>
                                 <span class="sidebar-menu-text">Dashboard</span>
                             </a>
@@ -556,13 +556,14 @@
                                 <span class="ml-auto sidebar-menu-toggle-icon"></span>
                             </a>
                             <ul class="sidebar-submenu collapse sm-indent" id="productivity_menu">
-                                <li class="sidebar-menu-item">
+                               
+                                <!-- Ensignant menu -->
+                                 {% if is_granted('ROLE_ENSEIGNANT')  %}
+                                  <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button" href="{{ path('propositions_enseignant_index') }}">
                                         <span class="sidebar-menu-text">Propositions 	</span>
                                     </a>
                                 </li>
-                                <!-- Ensignant menu -->
-                                 {% if is_granted('ROLE_ENSEIGNANT')  %}
                                
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button" href="{{ path('propositions_enseignant_index') }}?statut=valide">
@@ -586,7 +587,13 @@
 
 
 
-                                 {% if is_granted('ROLE_TUTEUR') or is_granted('ROLE_ADMIN') %}
+                               
+                                  <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ path('proposition_index') }}">
+                                        <span class="sidebar-menu-text">Propositions 	</span>
+                                    </a>
+                                </li>
+                                  {% if is_granted('ROLE_TUTEUR') or is_granted('ROLE_ADMIN') %}
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button" href="{{ path('proposition_new') }}">
                                         <span class="sidebar-menu-text">Ajouter Proposition</span>
@@ -735,6 +742,59 @@
                             </ul>
                         </li>
 
+                        {% if is_granted('ROLE_TUTEUR') or is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTORE') %}
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" data-toggle="collapse" href="#inscription_menu">
+                                <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">access_time</span>
+                                Inscriptions
+                                <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                            </a>
+                            <ul class="sidebar-submenu collapse sm-indent" id="inscription_menu">
+                                <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ path('inscription_index') }}">
+                                        <span class="sidebar-menu-text">Inscriptions 	</span>
+                                    </a>
+                                </li>
+                                
+                                <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ path('inscription_new') }}">
+                                        <span class="sidebar-menu-text">Ajouter Inscriptions</span>
+                                    </a>
+                                </li>
+
+                                 <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ path('inscription_index') }}?statut=1">
+                                        <span class="sidebar-menu-text">Inscriptions Validée</span>
+                                    </a>
+                                </li>
+
+                                 <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ path('inscription_index') }}?statut=2">
+                                        <span class="sidebar-menu-text">Inscriptions Rajetée</span>
+                                    </a>
+                                </li>
+
+                                 <li class="sidebar-menu-item">
+                                    <a class="sidebar-menu-button" href="{{ path('inscription_index') }}?statut=3">
+                                        <span class="sidebar-menu-text">Inscriptions En Attente</span>
+                                    </a>
+                                </li>
+                               
+                                
+                                
+                                <!-- <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button disabled" href="task-details.html">
+                                    <span class="sidebar-menu-text">Task Details</span>
+                                </a>
+                                </li>
+                                <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button disabled" href="team-members.html">
+                                    <span class="sidebar-menu-text">Team Members</span>
+                                </a>
+                                </li> -->
+                            </ul>
+                        </li>
+                         {% endif %}
 
                     </ul>
 
@@ -770,7 +830,7 @@
                             <div class="py-16pt pl-16pt menu">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#apps-dashboards" data-toggle="tab">Dashboards</a>
+                                        <a class="nav-link active" href="{{ path('app_homepage') }}" data-toggle="tab">Dashboards</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#apps-enterprise" data-toggle="tab">Enterprise</a>

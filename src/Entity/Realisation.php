@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RealisationRepository")
@@ -42,6 +43,7 @@ class Realisation
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Cours", inversedBy="realisations")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="champ vide : Aucun cours selectionée : vous devez créer un cours")
      */
     private $cours;
 
@@ -50,10 +52,7 @@ class Realisation
      */
     private $seances;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Inscription", mappedBy="realisation", orphanRemoval=true)
-     */
-    private $inscriptions;
+ 
 
    
     /**
@@ -66,10 +65,16 @@ class Realisation
      */
     private $tuteur;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="realisation")
+     */
+    private $inscriptions;
+
     public function __construct()
     {
         $this->seances = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -168,37 +173,7 @@ class Realisation
         return $this;
     }
 
-    /**
-     * @return Collection|Inscription[]
-     */
-    public function getInscriptions(): Collection
-    {
-        return $this->inscriptions;
-    }
-
-    public function addInscription(Inscription $inscription): self
-    {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions[] = $inscription;
-            $inscription->setRealisation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInscription(Inscription $inscription): self
-    {
-        if ($this->inscriptions->contains($inscription)) {
-            $this->inscriptions->removeElement($inscription);
-            // set the owning side to null (unless already changed)
-            if ($inscription->getRealisation() === $this) {
-                $inscription->setRealisation(null);
-            }
-        }
-
-        return $this;
-    }
-
+   
    
     
 
@@ -227,6 +202,37 @@ class Realisation
     public function setTuteur(?Tuteurr $tuteur): self
     {
         $this->tuteur = $tuteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscription[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setRealisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->contains($inscription)) {
+            $this->inscriptions->removeElement($inscription);
+            // set the owning side to null (unless already changed)
+            if ($inscription->getRealisation() === $this) {
+                $inscription->setRealisation(null);
+            }
+        }
 
         return $this;
     }

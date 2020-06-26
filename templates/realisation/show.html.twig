@@ -61,7 +61,7 @@
 
 
                             <ol class="breadcrumb p-0 m-0">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_homepage') }}">Home</a></li>
 
                                 <li class="breadcrumb-item active">
 
@@ -168,9 +168,9 @@
                                         		<div class="mr-3">
                                             			<div class="avatar avatar-xl">
 														    {% if vich_uploader_asset(app.user, 'imageFile') is null %}
-															<img src="https://avatars.dicebear.com/v2/initials/{{ user.firstname }}%20{{ user.lastname }}.svg"  alt="Avatar" class="rounded-circle mr-8pt" >
+															<img src="https://avatars.dicebear.com/v2/initials/{{ user.firstname }}%20{{ user.lastname }}.svg"  alt="Avatar" class="avatar-img rounded-circle" >
 															{% else %}
-																<img src="{{ vich_uploader_asset(user, 'imageFile') }}" class="rounded-circle mr-8pt"><br>
+																<img src="{{ vich_uploader_asset(user, 'imageFile') }}" class="avatar-img rounded-circle"><br>
 															{% endif %}
                                              			</div>
                                         		 </div>

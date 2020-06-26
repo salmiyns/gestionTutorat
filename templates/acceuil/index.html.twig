@@ -1,6 +1,6 @@
 {% extends "huma.demo9.base.html.twig" %}
 
-{% block title %}Admin index{% endblock %}
+{% block title %}  index{% endblock %}
 
 {% block body %}
 
@@ -61,7 +61,7 @@
 
 
                             <ol class="breadcrumb p-0 m-0">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ path('app_homepage') }}">Home</a></li>
 
                                 <li class="breadcrumb-item active">
 
@@ -100,8 +100,9 @@
 
 
                     {% block Content %}
-                    {{ parent() }}  
+                            
                             <div class="container-fluid page__container">
+                                {{ parent() }}  
                                                     <div class="page-section">
 
                                                         <div class="row mb-lg-8pt">
@@ -179,7 +180,7 @@
 
                                                                     </div>
 
-                                                                
+                                                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
                                                                  <div class="col-md-3">
 
 
@@ -202,6 +203,7 @@
 
 
                                                                     </div>
+                                                                 {% endif %}
 
 
                                                                 

@@ -34,7 +34,7 @@ class PropositionController extends AbstractController
      * @Route("/", name="proposition_index", methods={"GET","POST"})
      * 
      */
-    public function index(PropositionRepository $repository ,TuteurRepository $tuteurRepository,Request $request,  PaginatorInterface $paginator ,AuthorizationCheckerInterface $authorization): Response
+    public function index(PropositionRepository $repository ,TuteurrRepository $tuteurRepository,Request $request,  PaginatorInterface $paginator ,AuthorizationCheckerInterface $authorization ,EtudiantRepository $etudiantRepository): Response
     {
 
        $user = $this->getUser();
@@ -48,51 +48,44 @@ class PropositionController extends AbstractController
            
         } 
         
- 
+        $etudiant= $etudiantRepository->findOneBy(['idUser'=>$user]);
+
+        //$user->getEtudiant();
+        if(!$etudiant){
+           
+           $this->addFlash('error', "ce compte etudiant n'existe pas au base donnee");
+           return $this->redirectToRoute('proposition_index');
+        }
+
+        $tuteur= $tuteurRepository->findOneBy(['etudiant'=>$etudiant]);
+        
+
+        if(!$tuteur){
+          
+           $this->addFlash('error', "ce compte Tutoré n'existe pas au base donnee");
+           return $this->redirectToRoute('proposition_index');
+        }
   
        // dd($auth);
                
         //dd($user);
        
-        $queryBuilder = $repository->getWithSearchQueryBuilder_withStatus($statut,$q); 
+        $queryBuilder = $repository->getWithSearchQueryBuilderByTuteur_withStatus($tuteur,$statut,$q); 
         $propositions = $paginator->paginate(
             $queryBuilder, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             9/*limit per page*/
         );     
         
-        $proposition = new Proposition();
-
         
-        $tuteur =  $tuteurRepository->findByUserId($user);
+   
 
-        $form = $this->createForm(PropositionType::class, $proposition);
-        if (empty($tuteur)  ) { 
-            $form->addError(new FormError('Aucun compte tuteur pour cet utilisateur , pour ajouter une proposition, vous devez avoir un compte avec un rôle de tuteur'));
-        }
-
-        
-
-        $form->handleRequest($request);
-
- 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $proposition->setDateCreation(new \DateTime());
-            $proposition->setDateModification(new \DateTime());
-            $proposition->setStatut('valide');
-            $proposition->setTuteur($tuteur[0]);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($proposition);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('proposition_index');
-        }
+  
         
         return $this->render('proposition/index.html.twig', [
             'title' => 'Tous',
             'propositions' => $propositions,
-            'form' => $form->createView(),
+            //'form' => $form->createView(),
             //'propositionVaidees' => $propositionByStatus,
             //'propositionByStatut' => $propositionByStatus,
         ]); 
@@ -165,7 +158,6 @@ class PropositionController extends AbstractController
 
     /**
      * @Route("/{id}", name="proposition_show", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') or is_granted('ROLE_ENSEIGNANT')")
      */
     public function show(Proposition $proposition,PaginatorInterface $paginator ,Request $request): Response
     {

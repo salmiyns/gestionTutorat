@@ -1,6 +1,34 @@
 {{ form_start(registrationForm) }}
 <div class=" py-32pt py-lg-64pt">
-                <div class="container-fluid page__container">
+                <div class="container-fluid page__container" style="    background: #fff;text-align: left;">
+                {% if not registrationForm.vars.valid %}
+                        <div class="alert alert-light border-1 border-left-4 border-left-warning mb-0" role="alert">
+
+                        {% for child in registrationForm.children %}
+                            {%for error in child.vars.errors%}
+
+
+                                                    <div class="d-flex flex-wrap align-items-start">
+                                                        <div class="mr-8pt">
+                                                            <i class="material-icons">access_time</i>
+                                                        </div>
+                                                        <div class="flex" style="min-width: 180px">
+                                                            <small class="text-black-100">
+                                                                <strong>Attentien!</strong> {{error.message}}
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                            
+                            {% endfor %}
+                        {% endfor %}   
+                            
+                                
+                                
+                                
+                            
+                            
+                        </div>
+                        {% endif %}
                     <div class="col-lg-10 p-0 mx-auto">
                         <div class="row">
                             <div class="col-md-6 mb-24pt mb-md-0">
@@ -39,13 +67,22 @@
                                             )  }}                                    
                                     </div>
 
+
                                     <div class="form-group">
-                                        {{ form_label(registrationForm.plainPassword, null, {
-                                                    'label': 'Mot de Passe',
-                                                    'label_attr': {'class': 'form-label col-form-label '}
+                                        {{ form_label(registrationForm.telephone, null, {
+                                                    'label': 'telephone',
+                                                    'label_attr': {'class': 'form-label col-form-label col-sm-3'}
                                             }) }}
 
-                                            {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'votre mot de passe'}}
+                                            {{ form_widget(registrationForm.telephone, {'attr': {'placeholder': 'ex:14376889888'}}
+                                            
+                                            )  }}                                    
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        
+                                            {{ form_widget(registrationForm.password, {'attr': {'placeholder': 'votre mot de passe'}}
                                             
                                             )  }}                                    
                                     </div>

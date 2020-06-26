@@ -30,7 +30,7 @@ class CoursController extends AbstractController
     public function index(CoursRepository $coursRepository ,Request $request ,PaginatorInterface $paginator): Response
     {
         $q = $request->query->get('q');
-        $index=$request->query->get('index');
+        $pps=$request->query->get('pps');
 
        // dd($index) ;
 
@@ -64,7 +64,7 @@ class CoursController extends AbstractController
 
         //cours/index.html.twig
         //https://127.0.0.1:8000/cours/?index=all
-        if($index == 'all'){
+        if(!$pps){
             $list_cours_DESC = $paginator->paginate(
                 $queryBuilder, /* query NOT result */
                 $request->query->getInt('page', 1)/*page number*/,
@@ -75,6 +75,20 @@ class CoursController extends AbstractController
                 'cours' => $list_cours_DESC,
                  
             ]);
+        }else{
+            $queryBuilder = $coursRepository->findBy(['proposition'=> $pps ], ['id' => 'DESC']); 
+
+            $list_cours_DESC = $paginator->paginate(
+                $queryBuilder, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                6/*limit per page*/
+            );  
+            return $this->render('cours/index.all.html.twig', [
+                'PageTitle'=>'Tous Les Cours',
+                'cours' => $list_cours_DESC,
+                 
+            ]);
+
         }
         
         return $this->render('cours/index1.html.twig', [

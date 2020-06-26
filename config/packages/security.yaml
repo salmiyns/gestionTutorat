@@ -51,7 +51,8 @@ security:
     access_control:        
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/forgot_password$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forgot_password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset_pass, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
         #- { path: ^/dashboord_etudiant$, roles: ROLE_Etudiant }
         - { path: ^/etudiant$, roles: ROLE_Etudiant }

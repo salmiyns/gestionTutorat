@@ -16,69 +16,37 @@ class Inscription
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tutore", inversedBy="inscriptions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Tutore;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Realisation", inversedBy="inscriptions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Realisation;
+ 
+     
 
     /**
      * @ORM\Column(type="date")
      */
     private $date_inscrption;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tutore", inversedBy="inscriptions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $tutore;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Realisation", inversedBy="inscriptions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $realisation;
-
+ 
+   
     /**
      * @ORM\Column(type="integer")
      */
     private $statut;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Realisation::class, inversedBy="inscriptions")
+     */
+    private $realisation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Tutoree::class, inversedBy="inscriptions")
+     */
+    private $tutore;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTutore(): ?Tutore
-    {
-        return $this->Tutore;
-    }
-
-    public function setTutore(?Tutore $Tutore): self
-    {
-        $this->Tutore = $Tutore;
-
-        return $this;
-    }
-
-    public function getRealisation(): ?Realisation
-    {
-        return $this->Realisation;
-    }
-
-    public function setRealisation(?Realisation $Realisation): self
-    {
-        $this->Realisation = $Realisation;
-
-        return $this;
-    }
-
+    
     public function getDateInscrption(): ?\DateTimeInterface
     {
         return $this->date_inscrption;
@@ -99,6 +67,30 @@ class Inscription
     public function setStatut(int $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getRealisation(): ?Realisation
+    {
+        return $this->realisation;
+    }
+
+    public function setRealisation(?Realisation $realisation): self
+    {
+        $this->realisation = $realisation;
+
+        return $this;
+    }
+
+    public function getTutore(): ?Tutoree
+    {
+        return $this->tutore;
+    }
+
+    public function setTutore(?Tutoree $tutore): self
+    {
+        $this->tutore = $tutore;
 
         return $this;
     }
