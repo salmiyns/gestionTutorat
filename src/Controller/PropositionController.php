@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\TuteurrRepository;
+use App\Repository\TutoreeRepository;
 use Symfony\Component\Validator\Constraints\IsNull;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -34,7 +35,7 @@ class PropositionController extends AbstractController
      * @Route("/", name="proposition_index", methods={"GET","POST"})
      * 
      */
-    public function index(PropositionRepository $repository ,TuteurrRepository $tuteurRepository,Request $request,  PaginatorInterface $paginator ,AuthorizationCheckerInterface $authorization ,EtudiantRepository $etudiantRepository): Response
+    public function index(PropositionRepository $repository ,TuteurrRepository $tuteurRepository,TutoreeRepository $tutoreRepository,Request $request,  PaginatorInterface $paginator ,AuthorizationCheckerInterface $authorization ,EtudiantRepository $etudiantRepository): Response
     {
 
        $user = $this->getUser();
@@ -58,19 +59,24 @@ class PropositionController extends AbstractController
         }
 
         $tuteur= $tuteurRepository->findOneBy(['etudiant'=>$etudiant]);
-        
-
+        $tuttore= $tutoreRepository->findOneBy(['etudiant'=>$etudiant]);
+        $queryBuilder = $repository->getWithSearchQueryBuilder_withStatus($statut,$q); 
         if(!$tuteur){
-          
-           $this->addFlash('error', "ce compte Tutoré n'existe pas au base donnee");
+
+            if(!$tuttore){
+            $this->addFlash('error', "ce compte Tutoré n'existe pas au base donnee");
            return $this->redirectToRoute('proposition_index');
+            }
+        }
+        else{
+            $queryBuilder = $repository->getWithSearchQueryBuilderByTuteur_withStatus($tuteur,$statut,$q); 
         }
   
        // dd($auth);
                
         //dd($user);
        
-        $queryBuilder = $repository->getWithSearchQueryBuilderByTuteur_withStatus($tuteur,$statut,$q); 
+        
         $propositions = $paginator->paginate(
             $queryBuilder, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,

@@ -58,14 +58,7 @@
 
 
                     <div class="row" role="tablist">
-                        <div class="col-auto d-flex flex-column">
-
-                        <form   class="search-form sidebar-m-b sidebar-p-l mx-16pt pr-0 search-form--light">
-                            <input type="text" class="form-control pl-0" placeholder="Rechercher un cours" name="q" value="{{ app.request.query.get('q') }}">
-                            <button class="btn" type="submit"><i class="material-icons">search</i></button>
-                         </form>
- 
-                        </div>
+                        
                         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TUTEUR') %}
                         <div class="col-auto border-left">
                             <a href="" class="btn btn-accent">Nouveau cours</a>
